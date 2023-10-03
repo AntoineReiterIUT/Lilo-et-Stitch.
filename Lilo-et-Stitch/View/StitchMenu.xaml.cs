@@ -25,13 +25,28 @@ namespace Lilo_et_Stitch.View
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// button which can change the page to go to StitchTransform.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewModel_Click(object sender, RoutedEventArgs e)
         {
             StitchTransform stitchTransform = new StitchTransform();
 
-            stitchTransform.Show();  // Affichez la nouvelle fenêtre
-            this.Close();  // Fermez la fenêtre actuelle si nécessai
+            stitchTransform.Show();  // display new page
+            this.Close();  // close the firt one
+        }
+        /// <summary>
+        /// button which can change the page to go to StitchModels.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ModelServ_Click(object sender, RoutedEventArgs e)
+        {
+            StitchModels stitchModels = new StitchModels();
+            stitchModels.Show(); // display new page 
+            this.Close(); // close the firt one
         }
     }
 }

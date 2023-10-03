@@ -16,7 +16,7 @@
         <Label Content="Acceuil" HorizontalAlignment="Left" Margin="319,43,0,0" VerticalAlignment="Top" Height="42" Width="108" FontSize="20"/>
         <Label Content="Stitch" HorizontalAlignment="Left" Margin="366,0,0,0" VerticalAlignment="Center" Height="77" Width="169" FontSize="30"/>
         <Button Content="Créer un nouveau modèle" HorizontalAlignment="Left" Margin="183,49,0,0" Grid.Row="1" VerticalAlignment="Top" Height="60" Width="166" Name="NewModel" Click="NewModel_Click"/>
-        <Button Content="choix d’un modèle serveur " HorizontalAlignment="Left" Margin="450,49,0,0" Grid.Row="1" VerticalAlignment="Top" Height="60" Width="184"/>
+        <Button Content="choix d’un modèle serveur " HorizontalAlignment="Left" Margin="450,49,0,0" Grid.Row="1" VerticalAlignment="Top" Height="60" Width="184" Name="ModelServ" Click="ModelServ_Click"/>
 
     </Grid>
 </Window>
