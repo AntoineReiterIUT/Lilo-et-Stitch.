@@ -40,7 +40,7 @@
 
         <Label Name="NbColorsTitle" Grid.Column="5" Content="Couleurs : 0" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Margin="0,22,0,0"/>
 
-        <ListBox Name="UsedColorList" Grid.Column="2" Grid.ColumnSpan="9" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="141,17,0,6" Grid.RowSpan="2" SelectionChanged="ListBox_SelectionChanged" />
+        <ListBox Name="UsedColorList" Grid.Column="2" Grid.ColumnSpan="9" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="141,17,0,6" Grid.RowSpan="2" />
 
         <Canvas Name="PrevImgCanva"  Grid.Column="2" Grid.ColumnSpan="2" Background="Gray" Grid.Row="1"  />
         <Canvas Name="NewImgCanva" Grid.Column="7" Grid.ColumnSpan="2" Background="Green" Grid.Row="1"/>
