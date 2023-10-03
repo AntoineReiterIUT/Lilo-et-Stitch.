@@ -28,19 +28,23 @@
             <RowDefinition Height="48*"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="54" Width="80"/>
-        <Button Grid.Column="3" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="54" Width="62"/>
 
-        <Button Grid.Column="7" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="55" Width="62"/>
-        <Button Grid.Column="8" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="54" Width="62"/>
-        <Slider Grid.Column="5" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Width="120"/>
-        <Label Grid.Column="5" Content="Nombre de couleur" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Margin="0,22,0,0"/>
+        <Button Name="InsertBtn" Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
+        <Button Name="TransformBtn" Grid.Column="3" Content="Transformer" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
+        <Button Name="SaveBtn" Grid.Column="7" Content="Sauvegarder" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
+        <Button Name="PublishBtn" Grid.Column="8" Content="Publier" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="62"/>
+        <Button Name="UpdatePaletteBtn" Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Height="55" Width="62"/>
+        <Button Name="HomeBtn" Grid.Column="1" Content="HOME" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Center" Height="55" Width="62"/>
 
-        <Button Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Height="55" Width="62"/>
-        <ListBox Grid.Column="2" Grid.ColumnSpan="9" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="141,17,0,6" Grid.RowSpan="2" />
-        <Canvas Grid.Column="2" Grid.ColumnSpan="2" Background="Gray" Grid.Row="1"  />
-        <Canvas Grid.Column="7" Grid.ColumnSpan="2" Background="Green" Grid.Row="1"/>
-        <Button Grid.Column="1" Content="HOME" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Center" Height="55" Width="62"/>
+        <Slider Name="NbColorsSlider" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Width="110" TickFrequency="1" Minimum="0" Maximum="50"/>
+
+        <Label Name="NbColorsTitle" Grid.Column="5" Content="Couleurs : 0" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Margin="0,22,0,0"/>
+
+        <ListBox Name="UsedColorList" Grid.Column="2" Grid.ColumnSpan="9" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="141,17,0,6" Grid.RowSpan="2" SelectionChanged="ListBox_SelectionChanged" />
+
+        <Canvas Name="PrevImgCanva"  Grid.Column="2" Grid.ColumnSpan="2" Background="Gray" Grid.Row="1"  />
+        <Canvas Name="NewImgCanva" Grid.Column="7" Grid.ColumnSpan="2" Background="Green" Grid.Row="1"/>
+
 
 
 
