@@ -10,7 +10,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 
 namespace Lilo_et_Stitch.View
 {
@@ -22,6 +24,14 @@ namespace Lilo_et_Stitch.View
         public StitchMenu()
         {
             InitializeComponent();
+        }
+
+        private void NewModel_Click(object sender, RoutedEventArgs e)
+        {
+            StitchModels stitchModels = new StitchModels();
+
+            stitchModels.Show();  // Affichez la nouvelle fenêtre
+            this.Close();  // Fermez la fenêtre actuelle si nécessai
         }
     }
 }
