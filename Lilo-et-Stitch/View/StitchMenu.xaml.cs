@@ -28,9 +28,9 @@ namespace Lilo_et_Stitch.View
 
         private void NewModel_Click(object sender, RoutedEventArgs e)
         {
-            StitchModels stitchModels = new StitchModels();
+            StitchTransform stitchTransform = new StitchTransform();
 
-            stitchModels.Show();  // Affichez la nouvelle fenêtre
+            stitchTransform.Show();  // Affichez la nouvelle fenêtre
             this.Close();  // Fermez la fenêtre actuelle si nécessai
         }
     }
