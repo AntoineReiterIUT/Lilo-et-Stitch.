@@ -7,6 +7,41 @@
         mc:Ignorable="d"
         Title="StitchTransform" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="47*"/>
+            <ColumnDefinition Width="141*"/>
+            <ColumnDefinition Width="141*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="141*"/>
+            <ColumnDefinition Width="141*"/>
+            <ColumnDefinition Width="47*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="254*"/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="68*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="54" Width="80"/>
+        <Button Grid.Column="3" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="54" Width="62"/>
+
+        <Button Grid.Column="7" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="55" Width="62"/>
+        <Button Grid.Column="8" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="54" Width="62"/>
+        <Slider Grid.Column="5" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Width="120"/>
+        <Label Grid.Column="5" Content="Nombre de couleur" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Margin="0,22,0,0"/>
+
+        <Button Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Height="55" Width="62"/>
+        <ListBox Grid.Column="2" Grid.ColumnSpan="9" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="141,17,0,6" Grid.RowSpan="2" />
+        <Canvas Grid.Column="2" Grid.ColumnSpan="2" Background="Gray" Grid.Row="1"  />
+        <Canvas Grid.Column="7" Grid.ColumnSpan="2" Background="Green" Grid.Row="1"/>
+
+
+
     </Grid>
 </Window>
