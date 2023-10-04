@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ namespace Lilo_et_Stitch.Model.Transform
         private Coordinate coord1;
         private Coordinate coord2;
 
-        private Color couleur;
+        private RGB colorRGB;
+        private RGB colorDMC;
         private List<Pixel> pixels;
 
         /// <summary>
@@ -28,7 +30,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Property : read or edit the color value.
         /// </summary>
-        public Color Couleur { get => couleur; set => couleur = value; }
+        public RGB ColorRGB { get => colorRGB; set => colorRGB = value; }
 
         /// <summary>
         /// Constructor of the case
@@ -39,7 +41,8 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             // initialization
             pixels = new List<Pixel>();
-            couleur = Color.FromArgb(0, 0, 0);
+            RGB colorRGB = new RGB(0,0,0);
+            RGB colorDMC = new RGB(0,0,0);
 
             this.coord1 = c1;
             this.coord2 = c2;
