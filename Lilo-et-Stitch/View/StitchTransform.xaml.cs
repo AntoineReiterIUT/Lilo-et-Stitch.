@@ -125,7 +125,12 @@ namespace Lilo_et_Stitch.View
                     imagePrev.Source = bitmap;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Show a dialog box with the error message
+                System.Windows.MessageBox.Show("Une erreur s'est produite : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         }
 
