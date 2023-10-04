@@ -29,7 +29,8 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
 
-        <Button Name="InsertBtn" Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
+        <Button  Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80" Click="SelectionnerIMG_Click" />
+
         <Button Name="TransformBtn" Grid.Column="3" Content="Transformer" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
         <Button Name="SaveBtn" Grid.Column="7" Content="Sauvegarder" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
         <Button Name="PublishBtn" Grid.Column="8" Content="Publier" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="62"/>
@@ -42,8 +43,9 @@
 
         <ListBox Name="UsedColorList" Grid.Column="2" Grid.ColumnSpan="9" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="141,17,0,6" Grid.RowSpan="2" />
 
-        <Canvas Name="PrevImgCanva"  Grid.Column="2" Grid.ColumnSpan="2" Background="Gray" Grid.Row="1"  />
+
         <Canvas Name="NewImgCanva" Grid.Column="7" Grid.ColumnSpan="2" Background="Green" Grid.Row="1"/>
+        <Image Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" Height="255" VerticalAlignment="Top" Name="imagePrev"/>
 
 
 
