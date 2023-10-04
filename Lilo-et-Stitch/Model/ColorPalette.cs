@@ -503,7 +503,8 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         public ColorPalette()
         {
-            
+            dmcColors = new Dictionary<string, RGB>();
+            colorMatches = new Dictionary<RGB, RGB>();
         }
         #endregion
     }
