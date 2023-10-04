@@ -11,6 +11,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Forms;
+using System.IO;
+
+
+
 
 namespace Lilo_et_Stitch.View
 {
@@ -19,6 +24,7 @@ namespace Lilo_et_Stitch.View
     /// </summary>
     public partial class StitchTransform : Window
     {
+        int i = 0;
         public StitchTransform()
         {
             InitializeComponent();
@@ -30,8 +36,11 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void InsertBtn_Click(object sender, RoutedEventArgs e)
+        private void InsertBtn(object sender, RoutedEventArgs e)
         {
+
+
+
 
         }
 
@@ -84,5 +93,39 @@ namespace Lilo_et_Stitch.View
         {
 
         }
+
+        private void SelectionnerIMG_Click(object sender, RoutedEventArgs e)
+        {
+
+            // Créez un OpenFileDialog
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            // Filtrez les fichiers pour n'afficher que les fichiers PNG
+            openFileDialog.Filter = "Fichiers PNG (*.png)|*.png|Fichier JPG (*.jpg)|*.jpg|Fichier GIF (*.gif)|*.gif|Fichier BMP (*.bmp)|*.bmp";
+
+            // Affichez la boîte de dialogue et attendez que l'utilisateur sélectionne un fichier
+            DialogResult result = openFileDialog.ShowDialog();
+
+            // Si l'utilisateur a sélectionné un fichier, importez l'image dans l'application
+            if (result != null)
+            {
+                // Chemin du fichier sélectionné par l'utilisateur
+                string cheminFichierSource = openFileDialog.FileName;
+                // Copiez le fichier dans un répertoire de votre application
+                string cheminDestination = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+                File.Copy(cheminFichierSource, cheminDestination, true);
+                // Chargez l'image dans une Image WPF
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(cheminFichierSource);
+                bitmap.EndInit();
+
+                // Affichez l'image dans votre contrôle Image dans votre interface utilisateur
+                imagePrev.Source = bitmap;
+            }
+
+        }
+
+
     }
 }
