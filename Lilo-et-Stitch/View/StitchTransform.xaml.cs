@@ -102,27 +102,30 @@ namespace Lilo_et_Stitch.View
 
             // Filtrez les fichiers pour n'afficher que les fichiers PNG
             openFileDialog.Filter = "Fichiers PNG (*.png)|*.png|Fichier JPG (*.jpg)|*.jpg|Fichier GIF (*.gif)|*.gif|Fichier BMP (*.bmp)|*.bmp";
-
-            // Affichez la boîte de dialogue et attendez que l'utilisateur sélectionne un fichier
-            DialogResult result = openFileDialog.ShowDialog();
-
-            // Si l'utilisateur a sélectionné un fichier, importez l'image dans l'application
-            if (result != null)
+            try
             {
-                // Chemin du fichier sélectionné par l'utilisateur
-                string cheminFichierSource = openFileDialog.FileName;
-                // Copiez le fichier dans un répertoire de votre application
-                string cheminDestination = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
-                File.Copy(cheminFichierSource, cheminDestination, true);
-                // Chargez l'image dans une Image WPF
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(cheminFichierSource);
-                bitmap.EndInit();
+                // Affichez la boîte de dialogue et attendez que l'utilisateur sélectionne un fichier
+                DialogResult result = openFileDialog.ShowDialog();
 
-                // Affichez l'image dans votre contrôle Image dans votre interface utilisateur
-                imagePrev.Source = bitmap;
+                // Si l'utilisateur a sélectionné un fichier, importez l'image dans l'application
+                if (result != null)
+                {
+                    // Chemin du fichier sélectionné par l'utilisateur
+                    string cheminFichierSource = openFileDialog.FileName;
+                    // Copiez le fichier dans un répertoire de votre application
+                    string cheminDestination = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+                    File.Copy(cheminFichierSource, cheminDestination, true);
+                    // Chargez l'image dans une Image WPF
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(cheminFichierSource);
+                    bitmap.EndInit();
+
+                    // Affichez l'image dans votre contrôle Image dans votre interface utilisateur
+                    imagePrev.Source = bitmap;
+                }
             }
+            catch { }
 
         }
 

@@ -16,6 +16,7 @@ namespace TestLilo_et_Stitch
         /// <summary>
         /// Will test if the RGB color is created properly.
         /// </summary>
+        /// <author>MaximeLAFFAYE</author>
         [Fact]
         public void newRGB()
         {
