@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
+    /// <summary>
+    /// Represent a case in the 
+    /// </summary>
     public class Case
     {
         //attributes
@@ -31,6 +34,15 @@ namespace Lilo_et_Stitch.Model.Transform
         /// Property : read or edit the color value.
         /// </summary>
         public RGB ColorRGB { get => colorRGB; set => colorRGB = value; }
+
+        /// <summary>
+        /// Property : read or edit the list of Pixels
+        /// </summary>
+        public List<Pixel> Pixels
+        {
+            get => pixels;
+            set => pixels = value;
+        }
 
         /// <summary>
         /// Constructor of the case
