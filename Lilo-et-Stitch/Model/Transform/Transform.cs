@@ -32,7 +32,8 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         public void MakeGrid()
         {
-
+            Coordinate c1 = new Coordinate(0, 0);
+            Coordinate c2 = new Coordinate(0, 0);
         }
         /// <summary>
         /// do the average of the color of all pixels in a case
@@ -47,6 +48,11 @@ namespace Lilo_et_Stitch.Model.Transform
         public void ToDMC()
         {
 
+        }
+        public Transform()
+        {
+            this.cases = new List<Case>();
+            this.step = 0;
         }
     }
 }
