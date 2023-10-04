@@ -59,7 +59,7 @@ namespace Lilo_et_Stitch.Model.Transform
                     }
                     else
                     {
-                        case1 = new Case(c1, c2);
+                        case1 = new Case(c1, c2); //put in the list of cases
                         c1.X = c2.X; //we shift point 1
                     }
                 }
