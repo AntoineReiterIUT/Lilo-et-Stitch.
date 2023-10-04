@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lilo_et_Stitch.Data
+namespace Lilo_et_Stitch.Model.Transform
 {
-    internal class transform
+    internal class Transform
     {
     }
 }
