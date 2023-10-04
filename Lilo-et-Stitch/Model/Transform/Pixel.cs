@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lilo_et_Stitch.Model
+namespace Lilo_et_Stitch.Model.Transform
 {
     internal class Pixel
     {
