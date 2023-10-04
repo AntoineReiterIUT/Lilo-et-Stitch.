@@ -30,10 +30,13 @@ namespace Lilo_et_Stitch.Model.Transform
                 if (value < 0)
                 {
                     r = 0;
-                }
-                if (value > 255)
+                }else if (value > 255)
                 {
                     r = 255;
+                }
+                else
+                {
+                    r = value;
                 }
             }
         }
@@ -49,9 +52,13 @@ namespace Lilo_et_Stitch.Model.Transform
                 {
                     g = 0;
                 }
-                if (value > 255)
+                else if (value > 255)
                 {
                     g = 255;
+                }
+                else
+                {
+                    g = value;
                 }
             }
         }
@@ -66,9 +73,13 @@ namespace Lilo_et_Stitch.Model.Transform
                 {
                     b = 0;
                 }
-                if (value > 255)
+                else if (value > 255)
                 {
                     b = 255;
+                }
+                else
+                {
+                    b = value;
                 }
             }
         }
