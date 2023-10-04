@@ -102,7 +102,30 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         public void ToDMC()
         {
-          
+            ColorPalette colorPalette = new ColorPalette();
+            colorPalette.LoadColors();
+            int sum;
+            int bestsum = 765;
+            string bestColor = "White";
+
+           foreach (Case box in cases)
+            {
+                foreach (string code in colorPalette.DMCColors.Keys) //Trier les couleurs DMC ?
+                {
+                    RGB colorDMC = colorPalette.DMCColors[code];
+                    sum = Math.Abs(colorDMC.R - box.ColorRGB.R);
+                    sum += Math.Abs(colorDMC.G - box.ColorRGB.G);
+                    sum += Math.Abs(colorDMC.B - box.ColorRGB.B);
+
+                    if (sum < bestsum)
+                    {
+                        bestsum = sum;
+                        bestColor = code;
+                    }
+
+
+                } 
+            }
         }
         /// <summary>
         /// contructor of Transform
