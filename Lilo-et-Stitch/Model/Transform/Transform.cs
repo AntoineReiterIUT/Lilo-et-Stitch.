@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -68,18 +69,40 @@ namespace Lilo_et_Stitch.Model.Transform
             
         }
         /// <summary>
-        /// do the average of the color of all pixels in a case
+        /// Will find the avg color of the case (using each pixel's color)
         /// </summary>
+        /// <author>MaximeLAFFAYE</author>
         public void CaseAverage()
         {
+            int sumR = 0;
+            int sumG = 0;
+            int sumB = 0;
 
+            int avgR = 0;
+            int avgG = 0;
+            int avgB = 0;
+
+            foreach (Case tempCase in Cases)
+            {
+                foreach (Pixel pixel in tempCase.Pixels)
+                {
+                    sumR += pixel.ColorRGB.R;
+                    sumG += pixel.ColorRGB.G;
+                    sumB += pixel.ColorRGB.B;
+                }
+                avgR = sumR / tempCase.Pixels.Count;
+                avgG = sumG / tempCase.Pixels.Count;
+                avgB = sumB / tempCase.Pixels.Count;
+
+                tempCase.ColorRGB = new RGB(sumR, sumG, sumB);
+            }
         }
         /// <summary>
-        /// change a RGB color in a DMC color existing
+        /// change a RGB color in a DMC color existing 
         /// </summary>
         public void ToDMC()
         {
-
+          
         }
         /// <summary>
         /// contructor of Transform
