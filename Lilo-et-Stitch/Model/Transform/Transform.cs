@@ -34,6 +34,8 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             Coordinate c1 = new Coordinate(0, 0);
             Coordinate c2 = new Coordinate(0, 0);
+
+
         }
         /// <summary>
         /// do the average of the color of all pixels in a case
@@ -49,10 +51,13 @@ namespace Lilo_et_Stitch.Model.Transform
         {
 
         }
+        /// <summary>
+        /// contructor of Transform
+        /// </summary>
         public Transform()
         {
             this.cases = new List<Case>();
-            this.step = 0;
+            this.step = 5;
         }
     }
 }
