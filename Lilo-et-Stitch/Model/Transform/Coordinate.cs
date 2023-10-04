@@ -11,9 +11,15 @@ namespace Lilo_et_Stitch.Model.Transform
     /// </summary>
     public class Coordinate
     {
+        #region attributes
+
+        
         private int x;
         private int y;
 
+        #endregion
+
+        #region properties
         /// <summary>
         /// Property : read or edit the X value.
         /// </summary>
@@ -23,8 +29,9 @@ namespace Lilo_et_Stitch.Model.Transform
         /// Property : read or edit the Y value.
         /// </summary>
         public int Y { get { return y; } set { y = value; } }
+        #endregion
 
-
+        #region operations
         /// <summary>
         /// Constructor of the coordinate.
         /// </summary>
@@ -36,5 +43,7 @@ namespace Lilo_et_Stitch.Model.Transform
             this.x = x;
             this.y = y;
         }
+
+        #endregion
     }
 }
