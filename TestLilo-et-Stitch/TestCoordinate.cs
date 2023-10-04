@@ -17,6 +17,7 @@ namespace TestLilo_et_Stitch
         /// <summary>
         /// Will test if the coordinate is created properly.
         /// </summary>
+        /// <author>MaximeLAFFAYE</author>
         [Fact]
         public void NewCoord()
         {
