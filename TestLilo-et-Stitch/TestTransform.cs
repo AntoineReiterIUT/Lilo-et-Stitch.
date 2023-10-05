@@ -20,7 +20,7 @@ namespace TestLilo_et_Stitch
 
             //we record an image
             img = Image.FromFile(imagePath);
-            Transform trans = new Transform(img);
+            ImgTransform trans = new ImgTransform(img);
 
             //the size of the image to test is 800 by 800
             trans.MakeGrid();
