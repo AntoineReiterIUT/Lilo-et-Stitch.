@@ -48,6 +48,7 @@ namespace Lilo_et_Stitch.Model.Transform
         public List<Case> TransformingIMG(Image img)
         {
             MakeGrid();
+            FillPixels();
             CaseAverage();
             ToDMC();
             return this.Cases;
@@ -58,38 +59,43 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         public void MakeGrid()
         {
-            Coordinate c1 = new Coordinate(0, 0);
-            Coordinate c2 = new Coordinate(0, 0);
-
-            Case case1 = new Case(c1, c2);
-
-            while (c2.Y < this.img.Height) //we go through the columns
+            for (int y = 0; y < this.img.Height; y += this.step)
             {
-                c2.Y = c2.Y + this.step;
-
-                //we reset the coordinates of the line
-                c1.X = 0; 
-                c2.X = 0;
-
-                while (c2.X < this.img.Width) //we go through  the lines
+                for (int x = 0; x < this.img.Width; x += this.step)
                 {
-                    c2.X = c2.X + this.step;
+                    int rightX = Math.Min(x + this.step, this.img.Width);
+                    int bottomY = Math.Min(y + this.step, this.img.Height);
 
-                    if  (c2.X > this.img.Width)
+                    Coordinate c1 = new Coordinate(x, y);
+                    Coordinate c2 = new Coordinate(rightX, bottomY);
+
+                    Case case1 = new Case(c1, c2);
+                    cases.Add(case1);
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Will create and add the pixels to each case
+        /// </summary>
+        public void FillPixels()
+        {
+            foreach (Case c in this.cases)
+            {
+                for (int i = c.Coord1.X; i <= c.Coord2.X; i++)
+                {
+                    for (int j = c.Coord1.Y; j <= c.Coord2.Y; j++)
                     {
-                        //we do nothing and we go out
-                    }
-                    else
-                    {
-                        case1 = new Case(c1, c2); //we create the case
-                        cases.Add(case1); //put in the list of cases
-                        c1.X = c2.X; //we shift point 1
+                        Pixel nvPixel = new Pixel(new RGB(0, 0, 0), new Coordinate(i, j));
+                        c.Pixels.Add(nvPixel);
                     }
                 }
-                c1.Y = c2.Y; //we shift point 1
             }
-            
         }
+
+
         /// <summary>
         /// Will find the avg color of the case (using each pixel's color)
         /// </summary>

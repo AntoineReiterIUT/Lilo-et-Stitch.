@@ -31,7 +31,7 @@
 
         <Button Grid.Column="2" Content="Insérer une image" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="121" Click="SelectionnerIMG_Click" />
 
-        <Button Name="TransformBtn" Grid.Column="3" Content="Transformer" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
+        <Button Name="TransformBtn" Grid.Column="3" Content="Transformer" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80" Click="TransformBtn_Click_1"/>
         <Button Name="SaveBtn" Grid.Column="7" Content="Sauvegarder" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
         <Button Name="PublishBtn" Grid.Column="8" Content="Publier" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="62"/>
         <Button Name="UpdatePaletteBtn" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="68" Width="62" Click="UpdatePaletteBtn_Click_1" Margin="10,0,0,0">

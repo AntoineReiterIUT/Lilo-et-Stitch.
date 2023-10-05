@@ -1,4 +1,5 @@
 ﻿using Lilo_et_Stitch.Model;
+using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Drawing;
 using System.IO;
@@ -42,27 +43,6 @@ namespace Lilo_et_Stitch.View
 
         }
 
-        /// <summary>
-        /// This function will be called when the TransformBtn is clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TransformBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if(imagePrev.Source != null)
-            {
-                Bitmap bitmap;
-                using (var stream = new MemoryStream())
-                {
-                    var encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)imagePrev.Source));
-                    encoder.Save(stream);
-                    bitmap = new Bitmap(stream);
-                }
-                MainStitch mainstitch = new MainStitch(bitmap);
-            }
-            
-        }
 
         /// <summary>
         /// This function will be called when the "SaveBtn" is clicked.
@@ -134,6 +114,29 @@ namespace Lilo_et_Stitch.View
         private void slider1_value_changeds(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             txtSlider1.Text = NbColorsSlider.Value.ToString();
+        }
+
+        /// <summary>
+        /// This function will be called when the TransformBtn is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>MaximeLAFFAYE</author>
+        private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (imagePrev.Source != null)
+            {
+                Bitmap bitmap;
+                using (var stream = new MemoryStream())
+                {
+                    var encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)imagePrev.Source));
+                    encoder.Save(stream);
+                    bitmap = new Bitmap(stream);
+                }
+                MainStitch mainstitch = new MainStitch(bitmap);
+                var(resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
+            }
         }
     }
 

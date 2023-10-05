@@ -55,7 +55,7 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public (Image,List<RGB>) TransformImage()
+        public (Image, Dictionary<RGB, String>) TransformImage()
         {
             ImgTransform transform = new ImgTransform(prevImage);
             List<Case> cases = new List<Case>();
@@ -76,7 +76,7 @@ namespace Lilo_et_Stitch.Model
                 }
             }
 
-            return ((Image)bitNewImage,listUsedColor);
+            return ((Image)bitNewImage,usedColors);
         }
 
         #endregion

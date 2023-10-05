@@ -30,8 +30,7 @@ namespace Lilo_et_Stitch.Model
 
         public (Image, Dictionary<RGB, string>) TransformImage()
         {
-            //return this._imageStitch.TransformImage()
-           throw new NotImplementedException();
+            return this._imageStitch.TransformImage();
         }
 
         public MainStitch(Image img)
