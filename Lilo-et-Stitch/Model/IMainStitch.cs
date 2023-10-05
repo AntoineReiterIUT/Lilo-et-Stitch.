@@ -18,7 +18,7 @@ namespace Lilo_et_Stitch.Model
         /// Will transform the image,
         /// </summary>
         /// <returns>Image : New cross image. | Dictionnary<RGB,string> : Used color  </returns>
-        public (Image, Dictionary<RGB,string>) TransformImage();
+        public (Image, Dictionary<string,RGB>) TransformImage();
 
         /*
         /// <summary>
