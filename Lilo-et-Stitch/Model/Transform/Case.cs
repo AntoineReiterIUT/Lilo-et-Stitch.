@@ -26,14 +26,21 @@ namespace Lilo_et_Stitch.Model.Transform
         /// Property : read or edit the Coord1 value.
         /// </summary>
         public Coordinate Coord1 { get => coord1; set => coord1 = value; }
+
         /// <summary>
         /// Property : read or edit the Coord2 value.
         /// </summary>
         public Coordinate Coord2 { get => coord2; set => coord2 = value; }
+
         /// <summary>
         /// Property : read or edit the color value.
         /// </summary>
         public RGB ColorRGB { get => colorRGB; set => colorRGB = value; }
+
+        /// <summary>
+        /// Property : read or edit the colorDMC value.
+        /// </summary>
+        public RGB ColorDMC { get => colorDMC; set => colorDMC = value; }
 
         /// <summary>
         /// Property : read or edit the list of Pixels

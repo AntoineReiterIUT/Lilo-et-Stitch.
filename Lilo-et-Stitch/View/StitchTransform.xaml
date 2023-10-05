@@ -29,7 +29,7 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
 
-        <Button  Grid.Column="2" Content="Insérer une image" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="121" Click="SelectionnerIMG_Click" />
+        <Button Grid.Column="2" Content="Insérer une image" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="121" Click="SelectionnerIMG_Click" />
 
         <Button Name="TransformBtn" Grid.Column="3" Content="Transformer" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
         <Button Name="SaveBtn" Grid.Column="7" Content="Sauvegarder" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
@@ -46,7 +46,8 @@
         <ListBox Name="UsedColorList" Grid.Column="2" Grid.ColumnSpan="9" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="77,17,0,6" Grid.RowSpan="2" />
 
 
-        <Canvas Name="NewImgCanva" Grid.Column="7" Grid.ColumnSpan="2" Background="Green" Grid.Row="1"/>
+
+        <Image Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Name="NewImg" />
         <Image Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Name="imagePrev" />
         <TextBox Grid.Column="5" HorizontalAlignment="Right" Margin="0,28,18,0" Grid.Row="4" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" Grid.ColumnSpan="2" RenderTransformOrigin="-0.297,0.271"/>
 

@@ -1,10 +1,11 @@
 ﻿using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+
 
 namespace Lilo_et_Stitch.Model
 {
@@ -56,7 +57,26 @@ namespace Lilo_et_Stitch.Model
         /// <exception cref="NotImplementedException"></exception>
         public (Image,List<RGB>) TransformImage()
         {
-            throw new NotImplementedException();
+            ImgTransform transform = new ImgTransform(prevImage);
+            List<Case> cases = new List<Case>();
+            cases = transform.TransformingIMG(prevImage);
+            List<RGB> listUsedColor = new List<RGB>();
+
+            Bitmap bitNewImage = new Bitmap(prevImage);
+
+            foreach(Case c in cases)
+            {
+                listUsedColor.Add(c.ColorDMC);
+                for (int i = c.Coord1.X; i < c.Coord2.X; i++)
+                {
+                    for(int j= c.Coord1.Y; j < c.Coord2.Y; j++)
+                    {
+                        bitNewImage.SetPixel(i, j, Color.FromArgb(c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
+                    }
+                }
+            }
+
+            return ((Image)bitNewImage,listUsedColor);
         }
 
         #endregion
