@@ -129,32 +129,35 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// change a RGB color in a DMC color existing 
         /// </summary>
+        /// <author>Antoine Sakkalis</author>
         public void ToDMC()
         {
             ColorPalette colorPalette = new ColorPalette();
             colorPalette.LoadColors();
-            int sum;
-            int bestsum = 765;
-            string bestColor = "White";
+
+            int bestDistance;
+            string closestDMCColorCode = "White";
 
            foreach (Case box in cases)
             {
+                bestDistance = 766;
                 foreach (string code in colorPalette.DMCColors.Keys) //Trier les couleurs DMC ?
                 {
+                    //Calculate the color distance
                     RGB colorDMC = colorPalette.DMCColors[code];
-                    sum = Math.Abs(colorDMC.R - box.ColorRGB.R);
-                    sum += Math.Abs(colorDMC.G - box.ColorRGB.G);
-                    sum += Math.Abs(colorDMC.B - box.ColorRGB.B);
+                    int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
+                    + Math.Abs(colorDMC.G - box.ColorRGB.G)
+                    + Math.Abs(colorDMC.B - box.ColorRGB.B);
 
-                    if (sum < bestsum)
+                    if (distance < bestDistance)
                     {
-                        bestsum = sum;
-                        bestColor = code;
+                        bestDistance = distance;
+                        closestDMCColorCode = code;
                     }
                 }
-                box.ColorDMC = colorPalette.DMCColors[bestColor];
+                box.ColorDMC = colorPalette.DMCColors[closestDMCColorCode];
 
-                ImageStitch.UsedColors[bestColor] = colorPalette.DMCColors[bestColor];
+                ImageStitch.UsedColors[closestDMCColorCode] = colorPalette.DMCColors[closestDMCColorCode];
 
             }
         }
