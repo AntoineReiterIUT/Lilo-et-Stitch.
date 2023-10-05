@@ -16,15 +16,20 @@ namespace TestLilo_et_Stitch
         public void TestMakeGrid()
         {
             
-            string imagePath = "C:\\Users\\matga\\Source\\Repos\\dept-info-iut-dijon\\Lilo-et-Stitch\\TestLilo-et-Stitch\\image\\pierre-d-argent800.jpg";
+
+            string cheminDestination = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pierre-d-argent800.jpg");
 
             //we record an image
-            img = Image.FromFile(imagePath);
+            img = Image.FromFile(cheminDestination);
             ImgTransform trans = new ImgTransform(img);
 
             //the size of the image to test is 800 by 800
             trans.MakeGrid();
             Assert.Equal(25600,trans.Cases.Count());
+
+        }
+        public void TestCaseAverage()
+        {
 
         }
     }
