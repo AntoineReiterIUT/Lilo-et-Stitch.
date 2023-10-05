@@ -57,6 +57,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// generates a box grid
         /// </summary>
+        /// <author>MattisGALOPPIN - MaximeLAFFAYE</author>
         public void MakeGrid()
         {
             for (int y = 0; y < this.img.Height; y += this.step)
