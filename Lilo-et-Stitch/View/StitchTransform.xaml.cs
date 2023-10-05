@@ -132,6 +132,10 @@ namespace Lilo_et_Stitch.View
             }
         }
 
+        private void UpdatePaletteBtn_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 
