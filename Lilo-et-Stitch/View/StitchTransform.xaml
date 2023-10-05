@@ -29,7 +29,7 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
 
-        <Button  Grid.Column="2" Content="Button" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80" Click="SelectionnerIMG_Click" />
+        <Button  Grid.Column="2" Content="importer image" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="108" Click="SelectionnerIMG_Click" />
 
         <Button Name="TransformBtn" Grid.Column="3" Content="Transformer" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
         <Button Name="SaveBtn" Grid.Column="7" Content="Sauvegarder" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80"/>
