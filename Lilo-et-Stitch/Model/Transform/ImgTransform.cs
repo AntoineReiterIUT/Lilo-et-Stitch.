@@ -151,9 +151,11 @@ namespace Lilo_et_Stitch.Model.Transform
                         bestsum = sum;
                         bestColor = code;
                     }
+                }
+                box.ColorDMC = colorPalette.DMCColors[bestColor];
 
+                ImageStitch.UsedColors[bestColor] = colorPalette.DMCColors[bestColor];
 
-                } 
             }
         }
         /// <summary>

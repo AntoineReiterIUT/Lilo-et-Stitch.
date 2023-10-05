@@ -11,7 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="image\pierre-d-argent800.jpg" />
+    <Compile Remove="image\**" />
+    <EmbeddedResource Remove="image\**" />
+    <None Remove="image\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lilo-et-Stitch\Lilo-et-Stitch.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="image\pierre-d-argent800.jpg" />
   </ItemGroup>
 
 </Project>
