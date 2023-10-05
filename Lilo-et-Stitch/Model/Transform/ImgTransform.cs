@@ -4,36 +4,53 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Drawing;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
-    public class Transform
+    public class ImgTransform
     {
-        //attributes
+        #region attributes
         private int step;
         private List<Case> cases;
         private Image img;
+        #endregion
+
+
+        #region properties
         /// <summary>
         /// Property : read or edit the step value.
         /// </summary>
         public int Step { get { return step; } set {  step = value; } }
+       
+        
         /// <summary>
         /// Property : read or edit the list of cases value.
         /// </summary>
         public List<Case> Cases { get {  return cases; } set { cases = value; } }
+       
+        
         /// <summary>
         /// Property : read only the image value.
         /// </summary>
         public Image Img { get { return img; } }
+        #endregion
+
+
+        #region operations
+
         /// <summary>
         /// transforms the base image into a cross stitch
         /// </summary>
         /// <param name="img">Image of origin</param>
         /// <returns>return a list of new cases</returns>
+        /// <author>MaximeLAFFAYE</author>
         public List<Case> TransformingIMG(Image img)
         {
-            return new List<Case>();
+            MakeGrid();
+            CaseAverage();
+            ToDMC();
+            return this.Cases;
         }
 
         /// <summary>
@@ -130,12 +147,14 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// contructor of Transform
         /// </summary>
-        public Transform(Image image)
+        public ImgTransform(Image image)
         {
             //initialization
             this.cases = new List<Case>();
             this.step = 5;
             this.img = image;
         }
+
+        #endregion
     }
 }
