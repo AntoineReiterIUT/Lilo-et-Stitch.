@@ -136,6 +136,15 @@ namespace Lilo_et_Stitch.View
         {
 
         }
+        /// <summary>
+        /// uptdate the value of the slider in the Textbox
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e"></param>
+        private void slider1_value_changeds(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            txtSlider1.Text = NbColorsSlider.Value.ToString();
+        }
     }
 
 

@@ -39,15 +39,16 @@
         </Button>
         <Button Name="HomeBtn" Grid.Column="1" Content="HOME" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Center" Height="55" Width="62"/>
 
-        <Slider Name="NbColorsSlider" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Width="110" TickFrequency="1" Minimum="0" Maximum="50"/>
+        <Slider Name="NbColorsSlider" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Width="110" TickFrequency="1" Minimum="0" Maximum="50" ValueChanged="slider1_value_changeds" IsSnapToTickEnabled="True"/>
 
-        <Label Name="NbColorsTitle" Grid.Column="5" Content="Couleurs : 0" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Margin="0,22,0,0"/>
+        <Label Name="NbColorsTitle" Grid.Column="4" Content="Couleurs :" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Margin="5,24,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2" />
 
         <ListBox Name="UsedColorList" Grid.Column="2" Grid.ColumnSpan="9" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="77,17,0,6" Grid.RowSpan="2" />
 
 
         <Canvas Name="NewImgCanva" Grid.Column="7" Grid.ColumnSpan="2" Background="Green" Grid.Row="1"/>
         <Image Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Name="imagePrev" />
+        <TextBox Grid.Column="5" HorizontalAlignment="Right" Margin="0,28,18,0" Grid.Row="4" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" Grid.ColumnSpan="2" RenderTransformOrigin="-0.297,0.271"/>
 
 
 
