@@ -14,6 +14,7 @@ namespace Lilo_et_Stitch.Model
     public class MainStitch : IMainStitch
     {
         private ImageStitch _imageStitch;
+        private Image img;
 
         public void ChangePalette()
         {
@@ -22,6 +23,7 @@ namespace Lilo_et_Stitch.Model
 
         public void ImportImage(Image img)
         {
+            this.img = img;
             throw new NotImplementedException();
         }
 
@@ -32,7 +34,7 @@ namespace Lilo_et_Stitch.Model
 
         public MainStitch()
         {
-            this._imageStitch = new ImageStitch();
+            this._imageStitch = new ImageStitch(img);
         }
     }
 }
