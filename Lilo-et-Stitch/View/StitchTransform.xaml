@@ -37,7 +37,7 @@
         <Button Name="UpdatePaletteBtn" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="68" Width="62" Click="UpdatePaletteBtn_Click_1" Margin="10,0,0,0">
             <TextBlock TextWrapping="Wrap">Changer la<LineBreak/>palette</TextBlock>
         </Button>
-        <Button Name="HomeBtn" Grid.Column="1" Content="HOME" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Center" Height="55" Width="62"/>
+        <Button Name="HomeBtn" Grid.Column="1" Content="HOME" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Center" Height="55" Width="62" Click="HomeBtn_Click"/>
 
         <Slider Name="NbColorsSlider" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Width="110" TickFrequency="1" Minimum="0" Maximum="50" ValueChanged="slider1_value_changeds" IsSnapToTickEnabled="True"/>
 
