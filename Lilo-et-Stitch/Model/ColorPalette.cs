@@ -36,7 +36,9 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         public void LoadColors()
         {
-            using (TextFieldParser sr = new TextFieldParser("DATA/InUsePalette.csv"))
+            var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            var file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
+            using (TextFieldParser sr = new TextFieldParser(file))
             {
                 // Lire les lignes du fichier
                 while (!sr.EndOfData)
@@ -64,6 +66,8 @@ namespace Lilo_et_Stitch.Model
             dmcColors = new Dictionary<string, RGB>();
             colorMatches = new Dictionary<RGB, RGB>();
         }
+
+
         #endregion
     }
 }
