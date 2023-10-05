@@ -15,9 +15,10 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void TestMakeGrid()
         {
-            
 
-            string cheminDestination = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pierre-d-argent800.jpg");
+            var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            var file = Path.Combine(projectFolder, @"../TestImages/pierre-d-argent800.jpg");
+            string cheminDestination = file;
 
             //we record an image
             img = Image.FromFile(cheminDestination);
