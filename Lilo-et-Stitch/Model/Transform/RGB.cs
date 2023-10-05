@@ -99,6 +99,27 @@ namespace Lilo_et_Stitch.Model.Transform
             G = g;
             B = b;
         }
+
+        /// <summary>
+        /// Checks if two RGB color objects have the same values.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current RGB object.</param>
+        /// <returns> if the specified object is equal to the current RGB object </returns>
+        public override bool Equals(object? obj)
+        {
+            bool areEqual = false;
+
+            if (obj is RGB other)
+            {
+                areEqual = r == other.r && g == other.g && b == other.b;
+            }
+
+            return areEqual;
+        }
+
+
+
+
         #endregion
 
     }
