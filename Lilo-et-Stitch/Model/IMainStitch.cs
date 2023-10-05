@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Drawing;
 
 namespace Lilo_et_Stitch.Model
 {
@@ -20,12 +20,13 @@ namespace Lilo_et_Stitch.Model
         /// <returns>Image : New cross image. | Dictionnary<RGB,string> : Used color  </returns>
         public (Image, Dictionary<RGB,string>) TransformImage();
 
+        /*
         /// <summary>
         /// Will import an image to the model.
         /// </summary>
         /// <param name="img">The image to be imported.</param>
         public void ImportImage(Image img);
-
+        */
         /// <summary>
         /// Will update the palette
         /// </summary>

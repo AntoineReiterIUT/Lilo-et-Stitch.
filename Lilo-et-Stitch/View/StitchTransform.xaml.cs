@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Forms;
+﻿using Lilo_et_Stitch.Model;
+using System;
+using System.Drawing;
 using System.IO;
-
-
-
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 
 namespace Lilo_et_Stitch.View
 {
@@ -30,19 +19,6 @@ namespace Lilo_et_Stitch.View
             InitializeComponent();
         }
 
-
-        /// <summary>
-        /// This function will be called when the "InsertBtn" is clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void InsertBtn(object sender, RoutedEventArgs e)
-        {
-
-
-
-
-        }
 
         /// <summary>
         /// This function will be called when the "HomeBtn" is clicked.
@@ -71,7 +47,19 @@ namespace Lilo_et_Stitch.View
         /// <param name="e"></param>
         private void TransformBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if(imagePrev.Source != null)
+            {
+                Bitmap bitmap;
+                using (var stream = new MemoryStream())
+                {
+                    var encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)imagePrev.Source));
+                    encoder.Save(stream);
+                    bitmap = new Bitmap(stream);
+                }
+                MainStitch mainstitch = new MainStitch(bitmap);
+            }
+            
         }
 
         /// <summary>

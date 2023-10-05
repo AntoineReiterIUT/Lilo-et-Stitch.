@@ -1,10 +1,11 @@
 ﻿using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+
 
 namespace Lilo_et_Stitch.Model
 {
@@ -21,19 +22,21 @@ namespace Lilo_et_Stitch.Model
             throw new NotImplementedException();
         }
 
-        public void ImportImage(Image img)
+        /*public void ImportImage(Image img)
         {
             this.img = img;
             throw new NotImplementedException();
-        }
+        }*/
 
         public (Image, Dictionary<RGB, string>) TransformImage()
         {
-            throw new NotImplementedException();
+            //return this._imageStitch.TransformImage()
+           throw new NotImplementedException();
         }
 
-        public MainStitch()
+        public MainStitch(Image img)
         {
+            this.img = img;
             this._imageStitch = new ImageStitch(img);
         }
     }

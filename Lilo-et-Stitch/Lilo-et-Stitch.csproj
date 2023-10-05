@@ -13,4 +13,8 @@
     <Folder Include="View\Images\Images2\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
+  </ItemGroup>
+
 </Project>

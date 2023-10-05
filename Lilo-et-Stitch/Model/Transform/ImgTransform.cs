@@ -63,21 +63,26 @@ namespace Lilo_et_Stitch.Model.Transform
 
             Case case1 = new Case(c1, c2);
 
-            while (c2.Y < this.img.Height) //traversal of lines
+            while (c2.Y < this.img.Height) //we go through the columns
             {
                 c2.Y = c2.Y + this.step;
 
-                while (c2.X < this.img.Width) //we go through the columns
+                //we reset the coordinates of the line
+                c1.X = 0; 
+                c2.X = 0;
+
+                while (c2.X < this.img.Width) //we go through  the lines
                 {
                     c2.X = c2.X + this.step;
 
                     if  (c2.X > this.img.Width)
                     {
-                        //we do nothing
+                        //we do nothing and we go out
                     }
                     else
                     {
-                        case1 = new Case(c1, c2); //put in the list of cases
+                        case1 = new Case(c1, c2); //we create the case
+                        cases.Add(case1); //put in the list of cases
                         c1.X = c2.X; //we shift point 1
                     }
                 }
