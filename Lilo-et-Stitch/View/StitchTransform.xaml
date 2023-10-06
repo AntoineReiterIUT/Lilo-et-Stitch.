@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         mc:Ignorable="d"
         Title="StitchTransform" Height="450" Width="800">
+  
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
@@ -51,7 +52,7 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="{Binding Key}" />
-                        <TextBlock Text="{Binding Value}" />
+                        
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
