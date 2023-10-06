@@ -29,6 +29,8 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
 
+        
+
         <Button Grid.Column="2" Content="Insérer une image" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="121" Click="SelectionnerIMG_Click" />
 
         <Button Name="TransformBtn" Grid.Column="3" Content="Transformer" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="40" Width="80" Click="TransformBtn_Click_1"/>
@@ -46,24 +48,23 @@
 
 
 
-        <ListBox Name="UsedColorList" Grid.Column="3" Grid.ColumnSpan="7" Grid.Row="3" Grid.RowSpan="1" d:ItemsSource="{d:SampleData ItemCount=5}" Background="AliceBlue">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Key}" />
-                        <TextBlock Text="{Binding Value}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Canvas Grid.Column="3" Grid.ColumnSpan="7" Grid.Row="3" Grid.RowSpan="1" Background="Gray"></Canvas>
+        <ScrollViewer Grid.Column="3" Grid.ColumnSpan="7" Grid.Row="3" Grid.RowSpan="1" VerticalScrollBarVisibility="Auto" Margin="2" Background="White">
+            <StackPanel x:Name="usedColorList" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                
+            </StackPanel>
+         </ScrollViewer>
+           
+        
 
 
         <Image Grid.Column="7" Grid.ColumnSpan="2" Grid.Row="1" Name="NewImg" />
         <Image Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Name="imagePrev" />
+        
         <TextBox Grid.Column="5" HorizontalAlignment="Right" Margin="0,28,18,0" Grid.Row="4" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" Grid.ColumnSpan="2" RenderTransformOrigin="-0.297,0.271"/>
 
 
-
+        
 
     </Grid>
 </Window>

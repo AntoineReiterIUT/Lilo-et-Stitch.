@@ -126,7 +126,7 @@ namespace Lilo_et_Stitch.View
             txtSlider1.Text = NbColorsSlider.Value.ToString();
         }
 
-        private WriteableBitmap writeableBitmap;
+
 
         /// <summary>
         /// This function will be called when the TransformBtn is clicked.
@@ -136,6 +136,8 @@ namespace Lilo_et_Stitch.View
         /// <author>MaximeLAFFAYE</author>
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {
+
+            WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
             {
                 Bitmap bitmap;
@@ -147,12 +149,31 @@ namespace Lilo_et_Stitch.View
                     bitmap = new Bitmap(stream);
                 }
                 MainStitch mainstitch = new MainStitch(bitmap);
-                var (resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
-                UsedColorList.ItemsSource = resultatDictionnaire.ToList();
+                var (editedImage, colorFromImage) = mainstitch.TransformImage();
+
+
+                //
+                foreach(string code in colorFromImage.Keys)
+                {
+                    RGB rgb = colorFromImage[code];
+
+                    Canvas c = new Canvas();
+                    c.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)rgb.R, (byte)rgb.G, (byte)rgb.B));
+                    c.Width = 10;
+                    c.Height = 10;
+
+                    System.Windows.Controls.Label label = new System.Windows.Controls.Label();
+                    label.Content = code;
+
+
+                    usedColorList.Children.Add(c);
+                    usedColorList.Children.Add(label);
+                }
+
                 BitmapImage bitmapImage = new BitmapImage();
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    resultatImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); // Vous pouvez ajuster le format si nécessaire
+                    editedImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); // Vous pouvez ajuster le format si nécessaire
                     memoryStream.Seek(0, SeekOrigin.Begin);
 
                     bitmapImage.BeginInit();
@@ -161,10 +182,10 @@ namespace Lilo_et_Stitch.View
                     bitmapImage.EndInit();
                 }
 
-                // Créer un WriteableBitmap à partir du BitmapImage
-                WriteableBitmap writeableBitmap = new WriteableBitmap(bitmapImage);
 
-                // Afficher l'image dans NewImg
+                writeableBitmap = new WriteableBitmap(bitmapImage);
+
+
                 NewImg.Source = writeableBitmap;
 
             }
