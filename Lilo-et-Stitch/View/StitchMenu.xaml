@@ -7,16 +7,35 @@
         mc:Ignorable="d"
         Title="StitchMenu" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
 
         </Grid.RowDefinitions>
-        <Label Content="Acceuil" HorizontalAlignment="Left" Margin="319,43,0,0" VerticalAlignment="Top" Height="42" Width="108" FontSize="20"/>
-        <Label Content="Stitch" HorizontalAlignment="Left" Margin="366,0,0,0" VerticalAlignment="Center" Height="77" Width="169" FontSize="30"/>
-        <Button Content="Créer un nouveau modèle" HorizontalAlignment="Left" Margin="183,49,0,0" Grid.Row="1" VerticalAlignment="Top" Height="60" Width="166" Name="NewModel" Click="NewModel_Click"/>
-        <Button Content="choix d’un modèle serveur " HorizontalAlignment="Left" Margin="450,49,0,0" Grid.Row="1" VerticalAlignment="Top" Height="60" Width="184" Name="ModelServ" Click="ModelServ_Click"/>
+
+        <Viewbox Grid.Column="1" Grid.Row="0" Stretch="Uniform">
+            <Label Content="Acceuil" FontSize="20" Margin="5"/>
+        </Viewbox>
+
+        <Viewbox Grid.Row="0" Grid.Column="2" Stretch="Uniform">
+            <Label Content="Stitch"  FontSize="20" Margin="5"/>
+        </Viewbox>
+
+        <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+            <Button Content="Créer un nouveau modèle" Name="NewModel" Click="NewModel_Click" Margin="10" Height="100"/>
+        </Viewbox>
+
+
+        <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform">
+            <Button Content="choix d’un modèle serveur "  Click="ModelServ_Click" Margin="10" Height="100"/>
+        </Viewbox>
 
     </Grid>
 </Window>
