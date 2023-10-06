@@ -60,14 +60,45 @@ namespace Lilo_et_Stitch.Model
 
             foreach(Case c in cases)
             {
+                //0,0
+                //5,5
+
                 listUsedColor.Add(c.ColorDMC);
                 for (int i = c.Coord1.X; i < c.Coord2.X; i++)
                 {
-                    for(int j= c.Coord1.Y; j < c.Coord2.Y; j++)
+
+                    for (int j= c.Coord1.Y; j < c.Coord2.Y; j++)
                     {
                         bitNewImage.SetPixel(i, j, Color.FromArgb(c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
+
                     }
                 }
+
+                //DarkGrid
+                for (int i = Math.Max(c.Coord1.X, 0); i <= Math.Min(c.Coord2.X, bitNewImage.Width - 1); i++)
+                {
+                    if (c.Coord1.Y >= 0 && c.Coord1.Y < bitNewImage.Height)
+                    {
+                        bitNewImage.SetPixel(i, c.Coord1.Y, Color.FromArgb(0, 0, 0));
+                    }
+                    if (c.Coord2.Y >= 0 && c.Coord2.Y < bitNewImage.Height)
+                    {
+                        bitNewImage.SetPixel(i, c.Coord2.Y, Color.FromArgb(0, 0, 0));
+                    }
+                }
+
+                for (int j = Math.Max(c.Coord1.Y, 0); j <= Math.Min(c.Coord2.Y, bitNewImage.Height - 1); j++)
+                {
+                    if (c.Coord1.X >= 0 && c.Coord1.X < bitNewImage.Width)
+                    {
+                        bitNewImage.SetPixel(c.Coord1.X, j, Color.FromArgb(0, 0, 0));
+                    }
+                    if (c.Coord2.X >= 0 && c.Coord2.X < bitNewImage.Width)
+                    {
+                        bitNewImage.SetPixel(c.Coord2.X, j, Color.FromArgb(0, 0, 0));
+                    }
+                }
+
             }
 
             return ((Image)bitNewImage,usedColors);

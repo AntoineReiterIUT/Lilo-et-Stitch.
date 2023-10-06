@@ -33,11 +33,8 @@ namespace Lilo_et_Stitch.View
         /// <param name="rgb">code RGB</param>
         /// <author>MaximeLAFFAYE</author>
         public void setValues(string code, RGB rgb)
-        {
-            
+        {  
             colorDisplay.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)rgb.R, (byte)rgb.G, (byte)rgb.B));
-            //c.Width = 10;
-            //c.Height = 10;
             colorDisplay.Width = 250;
             colorDisplay.Height = 80;
             colorDmc.Content = code;
