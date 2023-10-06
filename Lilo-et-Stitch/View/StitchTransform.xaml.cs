@@ -21,15 +21,28 @@ namespace Lilo_et_Stitch.View
     /// </summary>
     public partial class StitchTransform : Window
     {
-        int i = 0;
+        
         public StitchTransform()
         {
             InitializeComponent();
+            CenterWindow();
 
 
         }
 
-
+        /// <summary>
+        /// Will center the window
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        private void CenterWindow()
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double windowWidth = Width;
+            double windowHeight = Height;
+            Left = (screenWidth - windowWidth) / 2;
+            Top = (screenHeight - windowHeight) / 2;
+        }
         /// <summary>
         /// This function will be called when the "HomeBtn" is clicked.
         /// </summary>
@@ -126,8 +139,17 @@ namespace Lilo_et_Stitch.View
                     // Write the CSV data to a new file in the specified directory
                     var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                     var file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
-                    string targetFilePath = file.ToString();
-                    File.WriteAllText(targetFilePath, csvData);
+
+                    FileInfo fileInfo = new FileInfo(file);
+                    if (fileInfo.Length == 0)
+                    {
+                        System.Windows.MessageBox.Show("La palette saisie est vide, elle ne sera pas utilisée");
+                    }
+                    else
+                    {
+                        string targetFilePath = file.ToString();
+                        File.WriteAllText(targetFilePath, csvData);
+                    }
                 }
 
                 catch (Exception ex)
@@ -172,7 +194,7 @@ namespace Lilo_et_Stitch.View
                 MainStitch mainstitch = new MainStitch(bitmap);
                 var (editedImage, colorFromImage) = mainstitch.TransformImage();
 
-                //usedColorList.Children.Clear();
+                usedColorList.Children.Clear();
 
                 //
                 foreach (string code in colorFromImage.Keys)
