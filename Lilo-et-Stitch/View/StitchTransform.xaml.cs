@@ -21,15 +21,28 @@ namespace Lilo_et_Stitch.View
     /// </summary>
     public partial class StitchTransform : Window
     {
-        int i = 0;
+        
         public StitchTransform()
         {
             InitializeComponent();
+            CenterWindow();
 
 
         }
 
-
+        /// <summary>
+        /// Will center the window
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        private void CenterWindow()
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double windowWidth = Width;
+            double windowHeight = Height;
+            Left = (screenWidth - windowWidth) / 2;
+            Top = (screenHeight - windowHeight) / 2;
+        }
         /// <summary>
         /// This function will be called when the "HomeBtn" is clicked.
         /// </summary>
