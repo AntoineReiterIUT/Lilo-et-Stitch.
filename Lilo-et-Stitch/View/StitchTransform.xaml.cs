@@ -110,7 +110,7 @@ namespace Lilo_et_Stitch.View
             catch (Exception ex)
             {
                 // Show a dialog box with the error message
-                System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit vous n'en avez pas selectionné");
+                System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectionné est soit incompatible, soit vous n'en avez pas selectionné");
             }
         }
 

@@ -10,7 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="View\Images\Images2\" />
+    <Compile Remove="View\Images\Images2\**" />
+    <EmbeddedResource Remove="View\Images\Images2\**" />
+    <None Remove="View\Images\Images2\**" />
+    <Page Remove="View\Images\Images2\**" />
   </ItemGroup>
 
   <ItemGroup>
