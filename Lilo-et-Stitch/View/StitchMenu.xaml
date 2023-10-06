@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <Viewbox Grid.Column="1" Grid.Row="0" Stretch="Uniform">
-            <Label Content="Acceuil" FontSize="20" Margin="5"/>
+            <Label Content="Accueil" FontSize="20" Margin="5"/>
         </Viewbox>
 
         <Viewbox Grid.Row="0" Grid.Column="2" Stretch="Uniform">
@@ -29,12 +29,12 @@
         </Viewbox>
 
         <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
-            <Button Content="Nouveau model" Name="NewModel" Click="NewModel_Click" Margin="10" Height="100" />
+            <Button Content="Nouveau modèle " Name="NewModel" Click="NewModel_Click" Margin="10" Height="100" />
         </Viewbox>
 
 
         <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform">
-            <Button Content="Liste des models "  Click="ModelServ_Click" Margin="10" Height="100"/>
+            <Button Content="Liste des modèles"  Click="ModelServ_Click" Margin="10" Height="100"/>
         </Viewbox>
 
         <Image Margin="50" Source="Images/logo.png"/>

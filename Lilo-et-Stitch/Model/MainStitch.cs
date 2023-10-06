@@ -14,9 +14,12 @@ namespace Lilo_et_Stitch.Model
     /// </summary>
     public class MainStitch : IMainStitch
     {
+        #region attributes
         private ImageStitch _imageStitch;
         private Image img;
+        #endregion
 
+        #region operations
         public (Image, Dictionary<string,RGB>) TransformImage()
         {
             return this._imageStitch.TransformImage();
@@ -27,5 +30,6 @@ namespace Lilo_et_Stitch.Model
             this.img = img;
             this._imageStitch = new ImageStitch(img);
         }
+        #endregion
     }
 }
