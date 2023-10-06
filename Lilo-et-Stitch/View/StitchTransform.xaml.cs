@@ -23,7 +23,7 @@ namespace Lilo_et_Stitch.View
         {
             InitializeComponent();
 
-            
+
         }
 
 
@@ -109,9 +109,32 @@ namespace Lilo_et_Stitch.View
             }
         }
 
+        /// <summary>
+        /// Handles the palette click event, allowing the user to change the color palette by selecting a CSV file.
+        /// </summary>
+        /// <param name="sender">The sender object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void UpdatePaletteBtn_Click_1(object sender, RoutedEventArgs e)
         {
+            // Create a file dialog for selecting a CSV file
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string selectedFilePath = openFileDialog.FileName;
+
+                string csvData = File.ReadAllText(selectedFilePath);
+
+
+                // Write the CSV data to a new file in the specified directory
+                var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                var file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
+                string targetFilePath = file.ToString();
+                File.WriteAllText(targetFilePath, csvData);
+
+            }
         }
         /// <summary>
         /// uptdate the value of the slider in the Textbox
@@ -157,8 +180,9 @@ namespace Lilo_et_Stitch.View
                 NewImg.Source = bitmapImage;
 
             }
+        }
+
+
     }
-
-
 }
 
