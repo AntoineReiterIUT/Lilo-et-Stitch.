@@ -83,13 +83,15 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         public void FillPixels()
         {
+            Bitmap bitNewImage = new Bitmap(img);
             foreach (Case c in this.cases)
             {
-                for (int i = c.Coord1.X; i <= c.Coord2.X; i++)
+                for (int i = c.Coord1.X; i < c.Coord2.X; i++)
                 {
-                    for (int j = c.Coord1.Y; j <= c.Coord2.Y; j++)
+                    for (int j = c.Coord1.Y; j < c.Coord2.Y; j++)
                     {
-                        Pixel nvPixel = new Pixel(new RGB(0, 0, 0), new Coordinate(i, j));
+                        Color color = bitNewImage.GetPixel(i, j);
+                        Pixel nvPixel = new Pixel(new RGB(color.R, color.G, color.B), new Coordinate(i, j));
                         c.Pixels.Add(nvPixel);
                     }
                 }
@@ -123,7 +125,7 @@ namespace Lilo_et_Stitch.Model.Transform
                 avgG = sumG / tempCase.Pixels.Count;
                 avgB = sumB / tempCase.Pixels.Count;
 
-                tempCase.ColorRGB = new RGB(sumR, sumG, sumB);
+                tempCase.ColorRGB = new RGB(avgR, avgG, avgB);
             }
         }
         /// <summary>

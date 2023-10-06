@@ -135,9 +135,21 @@ namespace Lilo_et_Stitch.View
                     bitmap = new Bitmap(stream);
                 }
                 MainStitch mainstitch = new MainStitch(bitmap);
-                var(resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
+                var (resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
+
+                BitmapImage bitmapImage = new BitmapImage();
+                byte[] imageData = new byte[] { };
+                using (var stream = new MemoryStream(imageData))
+                {
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.StreamSource = stream;
+                    bitmapImage.EndInit();
+                }
+
+                NewImg.Source = bitmapImage;
+
             }
-        }
     }
 
 
