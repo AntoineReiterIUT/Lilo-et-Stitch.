@@ -1,11 +1,15 @@
 ﻿using Lilo_et_Stitch.Model;
 using Lilo_et_Stitch.Model.Transform;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+
 
 namespace Lilo_et_Stitch.View
 {
@@ -18,6 +22,8 @@ namespace Lilo_et_Stitch.View
         public StitchTransform()
         {
             InitializeComponent();
+
+            
         }
 
 
@@ -93,6 +99,7 @@ namespace Lilo_et_Stitch.View
 
                     // Affichez l'image dans votre contrôle Image dans votre interface utilisateur
                     imagePrev.Source = bitmap;
+
                 }
             }
             catch (Exception ex)
@@ -136,7 +143,13 @@ namespace Lilo_et_Stitch.View
                 }
                 MainStitch mainstitch = new MainStitch(bitmap);
                 var(resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
+                UsedColorList.ItemsSource =  resultatDictionnaire.ToList();
             }
+        }
+
+        private void UsedColorList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 
