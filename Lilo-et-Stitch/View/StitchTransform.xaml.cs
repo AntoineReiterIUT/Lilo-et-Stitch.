@@ -75,34 +75,37 @@ namespace Lilo_et_Stitch.View
 
         }
 
+        /// <summary>
+        /// open the file browser and make the user select a file at the correct format
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <autor>Reiter Antoine</autor>
         private void SelectionnerIMG_Click(object sender, RoutedEventArgs e)
         {
-
-            // Créez un OpenFileDialog
             System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
 
-            // Filtrez les fichiers pour n'afficher que les fichiers PNG
+            // Filter files to only display PNG / JPG / GIF / BMP files
             openFileDialog.Filter = "Fichiers PNG (*.png)|*.png|Fichier JPG (*.jpg)|*.jpg|Fichier GIF (*.gif)|*.gif|Fichier BMP (*.bmp)|*.bmp";
             try
             {
-                // Affichez la boîte de dialogue et attendez que l'utilisateur sélectionne un fichier
+                // Show the dialog and wait for the user to select a file
                 DialogResult result = openFileDialog.ShowDialog();
 
                 // Si l'utilisateur a sélectionné un fichier, importez l'image dans l'application
                 if (result != null)
                 {
-                    // Chemin du fichier sélectionné par l'utilisateur
+                    // File path selected by the user
                     string cheminFichierSource = openFileDialog.FileName;
-                    // Copiez le fichier dans un répertoire de votre application
+                    // Copy the file to an application directory
                     string cheminDestination = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
                     File.Copy(cheminFichierSource, cheminDestination, true);
-                    // Chargez l'image dans une Image WPF
+                    // Load the image into a WPF Image
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.UriSource = new Uri(cheminFichierSource);
                     bitmap.EndInit();
-
-                    // Affichez l'image dans votre contrôle Image dans votre interface utilisateur
+                    // Display the image in the Image control in the UI
                     imagePrev.Source = bitmap;
 
                 }
