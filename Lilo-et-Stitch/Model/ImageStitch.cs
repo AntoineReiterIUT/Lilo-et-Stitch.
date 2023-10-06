@@ -5,10 +5,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Media.Imaging;
 
 namespace Lilo_et_Stitch.Model
 {
+    /// <summary>
+    /// This class will be used as a link with the mainStitch and the imgTransform.
+    /// It will color the pixels.
+    /// </summary>
+    /// <author>MaximeLAFFAYE</author>
     public class ImageStitch
     {
         #region attributes
@@ -58,7 +63,7 @@ namespace Lilo_et_Stitch.Model
 
             Bitmap bitNewImage = new Bitmap(prevImage);
 
-            foreach(Case c in cases)
+            foreach (Case c in cases)
             {
                 //0,0
                 //5,5
@@ -98,6 +103,7 @@ namespace Lilo_et_Stitch.Model
                         bitNewImage.SetPixel(c.Coord2.X, j, Color.FromArgb(0, 0, 0));
                     }
                 }
+
 
             }
 
