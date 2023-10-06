@@ -109,9 +109,6 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <author>MaximeLAFFAYE</author>
         public void CaseAverage()
         {
-            
-
-          
 
             foreach (Case tempCase in Cases)
             {
@@ -191,7 +188,7 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             //initialization
             this.cases = new List<Case>();
-            this.step = 5;
+            this.step = 15;
             this.img = image;
             colorMatches = new();
         }
