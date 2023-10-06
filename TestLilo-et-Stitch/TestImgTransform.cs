@@ -56,7 +56,26 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void TestFillPixel()
         {
+            bool test = true;
+            transImg.MakeGrid();// create the case
+            transImg.FillPixels(); //create the pixels
+            List<Pixel>PixelC3 = new List<Pixel>(); //list pixel of the case number 3
 
+            PixelC3 = transImg.Cases[2].Pixels; //we test the third case
+
+            foreach (Pixel p in PixelC3) //we check if the coordinate of Pixel in this case are okay
+            {
+                Coordinate coord = new Coordinate(0,0);
+                if( (p.Coord.X < 10) || (p.Coord.X > 15)) //check x
+                {
+                    test = false;
+                }
+                if ( (p.Coord.Y <0 ) || (p.Coord.Y > 5)) //check y
+                {
+                    test = false;
+                }
+                Assert.True(test);
+            }
         }
     }
 }
