@@ -172,7 +172,7 @@ namespace Lilo_et_Stitch.View
                 MainStitch mainstitch = new MainStitch(bitmap);
                 var (editedImage, colorFromImage) = mainstitch.TransformImage();
 
-                //usedColorList.Children.Clear();
+                usedColorList.Children.Clear();
 
                 //
                 foreach (string code in colorFromImage.Keys)
