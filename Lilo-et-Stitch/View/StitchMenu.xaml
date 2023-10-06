@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         mc:Ignorable="d"
-        Title="StitchMenu" Height="450" Width="800">
+        Title="StitchMenu" Height="600" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -29,13 +29,18 @@
         </Viewbox>
 
         <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
-            <Button Content="Créer un nouveau modèle" Name="NewModel" Click="NewModel_Click" Margin="10" Height="100"/>
+            <Button Content="Nouveau model" Name="NewModel" Click="NewModel_Click" Margin="10" Height="100" />
         </Viewbox>
 
 
         <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform">
-            <Button Content="choix d’un modèle serveur "  Click="ModelServ_Click" Margin="10" Height="100"/>
+            <Button Content="Liste des models "  Click="ModelServ_Click" Margin="10" Height="100"/>
         </Viewbox>
+
+        <Image Margin="50" Source="Images/logo.png"/>
+
+
+
 
     </Grid>
 </Window>

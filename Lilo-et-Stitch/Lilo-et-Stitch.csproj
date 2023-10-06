@@ -17,7 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="View\Images\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Images\logo.png" />
   </ItemGroup>
 
 </Project>
