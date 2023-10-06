@@ -15,7 +15,6 @@ namespace Lilo_et_Stitch.Model
         private Image prevImage;
         private Image newImage;
         private static Dictionary<string,RGB> usedColors = new Dictionary<string,RGB>();
-        private bool changedPalette;
         #endregion
 
         #region properties
@@ -33,11 +32,6 @@ namespace Lilo_et_Stitch.Model
         /// Colors used to make the transformed image with his DMC code
         /// </summary>
         public static Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
-
-        /// <summary>
-        /// Tells when the palet has been changed
-        /// </summary>
-        public bool ChangedPalette { get => changedPalette; set => changedPalette = value; }
         #endregion
 
         #region operations

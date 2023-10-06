@@ -19,17 +19,5 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <returns>Image : New cross image. | Dictionnary<RGB,string> : Used color  </returns>
         public (Image, Dictionary<string,RGB>) TransformImage();
-
-        /*
-        /// <summary>
-        /// Will import an image to the model.
-        /// </summary>
-        /// <param name="img">The image to be imported.</param>
-        public void ImportImage(Image img);
-        */
-        /// <summary>
-        /// Will update the palette
-        /// </summary>
-        public void ChangePalette();
     }
 }

@@ -17,17 +17,6 @@ namespace Lilo_et_Stitch.Model
         private ImageStitch _imageStitch;
         private Image img;
 
-        public void ChangePalette()
-        {
-            throw new NotImplementedException();
-        }
-
-        /*public void ImportImage(Image img)
-        {
-            this.img = img;
-            throw new NotImplementedException();
-        }*/
-
         public (Image, Dictionary<string,RGB>) TransformImage()
         {
             return this._imageStitch.TransformImage();
