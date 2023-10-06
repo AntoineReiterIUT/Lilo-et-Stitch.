@@ -23,5 +23,12 @@ namespace Lilo_et_Stitch.View
         {
             InitializeComponent();
         }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            StitchMenu stitchMenu = new StitchMenu();
+            stitchMenu.Show(); // display new page 
+            this.Close(); // close the first one
+        }
     }
 }

@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="StitchModels" Height="450" Width="800">
     <Grid>
-        
+        <Button Content="Retourner à l'accueil" HorizontalAlignment="Center" VerticalAlignment="Center" Height="54" Width="170" Click="HomeButton_Click"/>
+        <Label Content="Page en Construction" FontSize="17" HorizontalAlignment="Center" Margin="0,151,0,0" VerticalAlignment="Top" Height="34" Width="170"/>
+
     </Grid>
 </Window>
