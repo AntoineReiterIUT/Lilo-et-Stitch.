@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Documents;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -51,6 +52,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <author>MaximeLAFFAYE</author>
         public List<Case> TransformingIMG(Image img)
         {
+            ChoiceStep();
             MakeGrid();
             FillPixels();
             CaseAverage();
@@ -64,12 +66,12 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <author>MattisGALOPPIN - MaximeLAFFAYE</author>
         public void MakeGrid()
         {
-            for (int y = 0; y < this.img.Height; y += this.step)
+            for (int y = 0; y < this.img.Height; y += this.Step)
             {
-                for (int x = 0; x < this.img.Width; x += this.step)
+                for (int x = 0; x < this.img.Width; x += this.Step)
                 {
-                    int rightX = Math.Min(x + this.step, this.img.Width);
-                    int bottomY = Math.Min(y + this.step, this.img.Height);
+                    int rightX = Math.Min(x + this.Step, this.img.Width);
+                    int bottomY = Math.Min(y + this.Step, this.img.Height);
 
                     Coordinate c1 = new Coordinate(x, y);
                     Coordinate c2 = new Coordinate(rightX, bottomY);
@@ -181,7 +183,43 @@ namespace Lilo_et_Stitch.Model.Transform
             }
         }
 
+        /// <summary>
+        /// choose the step according to the length and width of the image
+        /// </summary>
+        public void ChoiceStep()
+        {
 
+            int largeur = this.img.Width;
+            int longeur = this.img.Height;
+            int res = 0;
+
+            this.step = 15; //initialization to 15
+
+            List<int> diviseurs = new List<int>(); //list of common divisors
+
+            for (int i = 5; i < 21; i++) // we try to find a common divisor between 5 and 20
+            {
+                res = largeur % i; 
+
+                if (res == 0) // if width is divisible
+                {
+                    res = longeur % i;
+
+                    if (res == 0) //if length is also divible
+                    {
+                        diviseurs.Add(i); //put in the commun list
+                    }
+                }
+            }
+        
+          
+          if (diviseurs.Count() != 0) //if  if the list is not empty
+           {
+                int mediane = diviseurs.Count() / 2;
+                this.step = diviseurs[mediane];
+            }
+          
+        }
         /// <summary>
         /// contructor of Transform
         /// </summary>
@@ -189,11 +227,11 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             //initialization
             this.cases = new List<Case>();
-            this.step = 15;
             this.img = image;
             colorMatches = new();
         }
 
         #endregion
     }
+
 }

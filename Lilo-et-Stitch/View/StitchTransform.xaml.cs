@@ -110,7 +110,7 @@ namespace Lilo_et_Stitch.View
             catch (Exception ex)
             {
                 // Show a dialog box with the error message
-                System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit vous n'en avez pas selectionné");
+                System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectionné est soit incompatible, soit vous n'en avez pas selectionné");
             }
         }
 
@@ -139,8 +139,17 @@ namespace Lilo_et_Stitch.View
                     // Write the CSV data to a new file in the specified directory
                     var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                     var file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
-                    string targetFilePath = file.ToString();
-                    File.WriteAllText(targetFilePath, csvData);
+
+                    FileInfo fileInfo = new FileInfo(file);
+                    if (fileInfo.Length == 0)
+                    {
+                        System.Windows.MessageBox.Show("La palette saisie est vide, elle ne sera pas utilisée");
+                    }
+                    else
+                    {
+                        string targetFilePath = file.ToString();
+                        File.WriteAllText(targetFilePath, csvData);
+                    }
                 }
 
                 catch (Exception ex)

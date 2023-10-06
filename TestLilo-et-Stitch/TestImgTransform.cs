@@ -19,7 +19,10 @@ namespace TestLilo_et_Stitch
         public void TestMakeGrid()
         {
             //the size of the image to test is 800 by 800
+
+            transImg.Step = 5; //the step is initialized to 5
             transImg.MakeGrid();
+            
             Assert.Equal(25600,transImg.Cases.Count());
 
         }
@@ -65,22 +68,41 @@ namespace TestLilo_et_Stitch
             transImg.MakeGrid();// create the case
             transImg.FillPixels(); //create the pixels
             List<Pixel>PixelC3 = new List<Pixel>(); //list pixel of the case number 3
-
+            int step = transImg.Step;
+            
             PixelC3 = transImg.Cases[2].Pixels; //we test the third case
-
+            
             foreach (Pixel p in PixelC3) //we check if the coordinate of Pixel in this case are okay
             {
                 Coordinate coord = new Coordinate(0,0);
-                if( (p.Coord.X < 10) || (p.Coord.X > 15)) //check x
+                if( (p.Coord.X < Nbstep(step,2)) || (p.Coord.X > Nbstep(step,3))) //check x
                 {
                     test = false;
                 }
-                if ( (p.Coord.Y <0 ) || (p.Coord.Y > 5)) //check y
+                if ( (p.Coord.Y <0 ) || (p.Coord.Y > step)) //check y
                 {
                     test = false;
                 }
                 Assert.True(test);
             }
+        }
+        /// <summary>
+        /// give the result of the number of step
+        /// </summary>
+        /// <param name="nbFois">number of step</param>
+        /// <param name="step">the step of the Grid</param>
+        /// <returns>the step * nbFois</returns>
+        public int Nbstep(int nbFois,int step)
+        {
+            step = nbFois * step;
+            return step;
+
+        }
+        [Fact]
+        public void TestChoiceStep()
+        {
+            transImg.ChoiceStep();
+            Assert.Equal(10, transImg.Step); 
         }
     }
 }
