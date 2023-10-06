@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         mc:Ignorable="d"
-        Title="StitchMenu" Height="450" Width="800">
+        Title="StitchMenu" Height="600" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
