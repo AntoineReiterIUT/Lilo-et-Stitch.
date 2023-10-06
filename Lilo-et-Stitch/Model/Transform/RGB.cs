@@ -117,6 +117,10 @@ namespace Lilo_et_Stitch.Model.Transform
             return areEqual;
         }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(R, G, B);
+        }
 
 
 
