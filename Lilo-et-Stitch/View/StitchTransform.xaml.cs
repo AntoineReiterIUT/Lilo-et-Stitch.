@@ -185,9 +185,10 @@ namespace Lilo_et_Stitch.View
                 MainStitch mainstitch = new MainStitch(bitmap);
                 var (editedImage, colorFromImage) = mainstitch.TransformImage();
 
+                //usedColorList.Children.Clear();
 
                 //
-                foreach(string code in colorFromImage.Keys)
+                foreach (string code in colorFromImage.Keys)
                 {
                     RGB rgb = colorFromImage[code];
 
@@ -199,7 +200,7 @@ namespace Lilo_et_Stitch.View
                     System.Windows.Controls.Label label = new System.Windows.Controls.Label();
                     label.Content = code;
 
-
+                    
                     usedColorList.Children.Add(c);
                     usedColorList.Children.Add(label);
                 }

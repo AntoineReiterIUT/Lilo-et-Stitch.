@@ -140,6 +140,7 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             ColorPalette colorPalette = new ColorPalette();
             colorPalette.LoadColors();
+            ImageStitch.UsedColors.Clear();
 
             foreach (Case box in cases)
             {
