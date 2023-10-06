@@ -98,5 +98,11 @@ namespace TestLilo_et_Stitch
             return step;
 
         }
+        [Fact]
+        public void TestChoiceStep()
+        {
+            transImg.ChoiceStep();
+            Assert.Equal(10, transImg.Step); 
+        }
     }
 }
