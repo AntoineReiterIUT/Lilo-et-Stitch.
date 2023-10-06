@@ -197,26 +197,21 @@ namespace Lilo_et_Stitch.View
                 MainStitch mainstitch = new MainStitch(bitmap);
                 var (editedImage, colorFromImage) = mainstitch.TransformImage();
 
-                usedColorList.Children.Clear();
+                //clearing the list so we don't stack all colors
+                usedColorList.Children.Clear(); 
 
-                //
+                //adding the code - rgb color to the scrollViewer
                 foreach (string code in colorFromImage.Keys)
                 {
                     RGB rgb = colorFromImage[code];
 
-                    Canvas c = new Canvas();
-                    c.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)rgb.R, (byte)rgb.G, (byte)rgb.B));
-                    c.Width = 10;
-                    c.Height = 10;
-
-                    System.Windows.Controls.Label label = new System.Windows.Controls.Label();
-                    label.Content = code;
-
+                    UsedColorTemplate current = new UsedColorTemplate();
+                    current.setValues(code, rgb);
                     
-                    usedColorList.Children.Add(c);
-                    usedColorList.Children.Add(label);
+                    usedColorList.Children.Add(current);
                 }
 
+                //rebuilding the image
                 BitmapImage bitmapImage = new BitmapImage();
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
@@ -228,13 +223,8 @@ namespace Lilo_et_Stitch.View
                     bitmapImage.StreamSource = memoryStream;
                     bitmapImage.EndInit();
                 }
-
-
                 writeableBitmap = new WriteableBitmap(bitmapImage);
-
-
                 NewImg.Source = writeableBitmap;
-
             }
         }
 
