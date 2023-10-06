@@ -28,10 +28,30 @@ namespace TestLilo_et_Stitch
             Assert.Equal(25600,transImg.Cases.Count());
 
         }
+        /// <summary>
+        /// Test caseAverage with color pixels
+        /// </summary>
+        [Fact]
         public void TestCaseAverage()
         {
+            // Create a case with pixels of different colors
+            Case testCase = new Case(new Coordinate(0, 0), new Coordinate(10, 10));
+            testCase.Pixels.Add(new Pixel(new RGB(255, 0, 0), new Coordinate(0, 0)));
+            testCase.Pixels.Add(new Pixel(new RGB(0, 255, 0), new Coordinate(5, 5)));
+            testCase.Pixels.Add(new Pixel(new RGB(0, 0, 255), new Coordinate(10, 10)));
 
+            // Add the case to the list of cases in ImgTransform
+            transImg.Cases.Add(testCase);
+
+            // Call the CaseAverage method
+            transImg.CaseAverage();
+
+            // Check if the average color is correct
+            RGB expectedAverageColor = new RGB(85, 85, 85);
+            Assert.Equal(expectedAverageColor, testCase.ColorRGB);
         }
+
+
 
         /// <summary>
         /// Tests the method to convert RGB colors to the nearest DMC value
