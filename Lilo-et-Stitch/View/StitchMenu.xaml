@@ -36,9 +36,11 @@
         <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform">
             <Button Content="Liste des models "  Click="ModelServ_Click" Margin="10" Height="100"/>
         </Viewbox>
-        
-        
-        
+
+        <Image Margin="50" Source="Images/logo.png"/>
+
+
+
 
     </Grid>
 </Window>
