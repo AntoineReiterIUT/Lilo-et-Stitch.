@@ -15,7 +15,6 @@ namespace Lilo_et_Stitch.Model
     {
         #region attributes
         private Dictionary<string, RGB> dmcColors;
-        private Dictionary<RGB, RGB> colorMatches;
         #endregion
 
         #region properties
@@ -23,11 +22,6 @@ namespace Lilo_et_Stitch.Model
         /// Stores the DMCs colors in a Dictionnary with their RGB values and DMC value code
         /// </summary>
         public Dictionary<string, RGB> DMCColors { get { return dmcColors; } }
-
-        /// <summary>
-        /// Stores the converting occurences to reduce calculations
-        /// </summary>
-        public Dictionary<RGB, RGB> ColorMatches { get { return colorMatches; } set { colorMatches = value; } }
         #endregion
 
         #region operations
@@ -64,7 +58,6 @@ namespace Lilo_et_Stitch.Model
         public ColorPalette()
         {
             dmcColors = new Dictionary<string, RGB>();
-            colorMatches = new Dictionary<RGB, RGB>();
         }
 
 

@@ -37,10 +37,15 @@ namespace TestLilo_et_Stitch
         {
             transImg.Cases.Add(new Case(new Coordinate(1,2), new Coordinate(1, 2)));
             transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
+            transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
+
             transImg.Cases[0].ColorRGB = new RGB(12, 34, 238);
+            transImg.Cases[2].ColorRGB = new RGB(12, 34, 238);
             transImg.Cases[1].ColorRGB = new RGB(255, 0, 0);
+
             transImg.ToDMC();
             Assert.Equal(transImg.Cases[0].ColorDMC.B, new RGB(19, 71, 125).B);
+            Assert.Equal(transImg.Cases[2].ColorDMC.B, new RGB(19, 71, 125).B);
             Assert.Equal(transImg.Cases[1].ColorDMC, new RGB(250, 50, 3));
         }
         public TestImgTransform()
@@ -52,6 +57,11 @@ namespace TestLilo_et_Stitch
             //we record an image
             img = Image.FromFile(cheminDestination);
             transImg = new ImgTransform(img);
+        }
+        [Fact]
+        public void TestFillPixel()
+        {
+
         }
     }
 }

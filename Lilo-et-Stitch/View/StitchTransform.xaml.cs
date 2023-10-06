@@ -142,15 +142,21 @@ namespace Lilo_et_Stitch.View
                     bitmap = new Bitmap(stream);
                 }
                 MainStitch mainstitch = new MainStitch(bitmap);
-                var(resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
-                UsedColorList.ItemsSource =  resultatDictionnaire.ToList();
+                var (resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
+                UsedColorList.ItemsSource = resultatDictionnaire.ToList();
+                BitmapImage bitmapImage = new BitmapImage();
+                byte[] imageData = new byte[] { };
+                using (var stream = new MemoryStream(imageData))
+                {
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.StreamSource = stream;
+                    bitmapImage.EndInit();
+                }
+
+                NewImg.Source = bitmapImage;
+
             }
-        }
-
-        private void UsedColorList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 
 
