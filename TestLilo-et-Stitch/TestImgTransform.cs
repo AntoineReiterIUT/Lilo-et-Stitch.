@@ -89,6 +89,7 @@ namespace TestLilo_et_Stitch
         public void TestFillPixel()
         {
             bool test = true;
+            transImg.Step = 5;
             transImg.MakeGrid();// create the case
             transImg.FillPixels(); //create the pixels
             List<Pixel>PixelC3 = new List<Pixel>(); //list pixel of the case number 3
