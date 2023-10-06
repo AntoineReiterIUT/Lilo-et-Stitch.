@@ -9,6 +9,9 @@ namespace TestLilo_et_Stitch
 {
     public class TestCase
     {
+        /// <summary>
+        /// Test creation case
+        /// </summary>
         [Fact]
         public void TestContructor()
         {
