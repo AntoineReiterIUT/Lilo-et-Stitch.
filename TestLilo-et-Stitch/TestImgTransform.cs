@@ -58,5 +58,10 @@ namespace TestLilo_et_Stitch
             img = Image.FromFile(cheminDestination);
             transImg = new ImgTransform(img);
         }
+        [Fact]
+        public void TestFillPixel()
+        {
+
+        }
     }
 }
