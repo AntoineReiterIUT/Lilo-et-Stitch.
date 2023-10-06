@@ -14,7 +14,9 @@ namespace TestLilo_et_Stitch
     {
         private Image img;
         private ImgTransform transImg;
-
+        /// <summary>
+        /// test the Grid Creation with an image 800*800
+        /// </summary>
         [Fact]
         public void TestMakeGrid()
         {
@@ -60,7 +62,9 @@ namespace TestLilo_et_Stitch
             //we record an image
             img = Image.FromFile(cheminDestination);
             transImg = new ImgTransform(img);
-        }
+        }/// <summary>
+        /// test function FillPixel, the coordonates of the pixels in the case number 3
+        /// </summary>
         [Fact]
         public void TestFillPixel()
         {
@@ -97,7 +101,9 @@ namespace TestLilo_et_Stitch
             step = nbFois * step;
             return step;
 
-        }
+        }/// <summary>
+        /// Test choiceStep with a img 800*800
+        /// </summary>
         [Fact]
         public void TestChoiceStep()
         {
