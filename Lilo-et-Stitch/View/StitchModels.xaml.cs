@@ -19,11 +19,19 @@ namespace Lilo_et_Stitch.View
     /// </summary>
     public partial class StitchModels : Window
     {
+        /// <summary>
+        /// Window constructor
+        /// </summary>
         public StitchModels()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Returns to the menu when clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             StitchMenu stitchMenu = new StitchMenu();
