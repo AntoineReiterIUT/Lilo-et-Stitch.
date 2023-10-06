@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Lilo_et_Stitch"
              StartupUri="View/StitchTransform.xaml">
+    
     <Application.Resources>
          
     </Application.Resources>

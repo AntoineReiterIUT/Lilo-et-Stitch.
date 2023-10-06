@@ -6,7 +6,6 @@ using System.Security.Policy;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -148,7 +147,24 @@ namespace Lilo_et_Stitch.View
                 }
                 MainStitch mainstitch = new MainStitch(bitmap);
                 var (resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
-                UsedColorList.ItemsSource = resultatDictionnaire.ToList();
+
+             //  UsedColorList.ItemsSource = resultatDictionnaire.ToList();
+                foreach(RGB rgb in resultatDictionnaire.Values)
+                {
+                    Canvas c = new Canvas();
+                    c.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)rgb.R, (byte)rgb.G, (byte)rgb.B));
+
+
+
+                    UsedColorList.Items.Add(c);
+                   
+                }
+
+
+
+
+
+
                 BitmapImage bitmapImage = new BitmapImage();
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
@@ -169,6 +185,7 @@ namespace Lilo_et_Stitch.View
 
             }
         }
+
 
 
     }
