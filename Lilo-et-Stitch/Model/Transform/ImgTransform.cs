@@ -109,16 +109,16 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <author>MaximeLAFFAYE</author>
         public void CaseAverage()
         {
-            int sumR = 0;
-            int sumG = 0;
-            int sumB = 0;
-
-            int avgR = 0;
-            int avgG = 0;
-            int avgB = 0;
 
             foreach (Case tempCase in Cases)
             {
+                int sumR = 0;
+                int sumG = 0;
+                int sumB = 0;
+
+                int avgR = 0;
+                int avgG = 0;
+                int avgB = 0;
                 foreach (Pixel pixel in tempCase.Pixels)
                 {
                     sumR += pixel.ColorRGB.R;
@@ -188,7 +188,7 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             //initialization
             this.cases = new List<Case>();
-            this.step = 5;
+            this.step = 15;
             this.img = image;
             colorMatches = new();
         }
