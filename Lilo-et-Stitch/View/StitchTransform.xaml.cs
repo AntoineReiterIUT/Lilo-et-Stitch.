@@ -1,11 +1,18 @@
 ﻿using Lilo_et_Stitch.Model;
 using Lilo_et_Stitch.Model.Transform;
 using System;
+using System.Linq;
+using System.Security.Policy;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
 
 namespace Lilo_et_Stitch.View
 {
@@ -18,6 +25,8 @@ namespace Lilo_et_Stitch.View
         public StitchTransform()
         {
             InitializeComponent();
+
+            
         }
 
 
@@ -93,6 +102,7 @@ namespace Lilo_et_Stitch.View
 
                     // Affichez l'image dans votre contrôle Image dans votre interface utilisateur
                     imagePrev.Source = bitmap;
+
                 }
             }
             catch (Exception ex)
@@ -116,6 +126,8 @@ namespace Lilo_et_Stitch.View
             txtSlider1.Text = NbColorsSlider.Value.ToString();
         }
 
+        private WriteableBitmap writeableBitmap;
+
         /// <summary>
         /// This function will be called when the TransformBtn is clicked.
         /// </summary>
@@ -136,20 +148,29 @@ namespace Lilo_et_Stitch.View
                 }
                 MainStitch mainstitch = new MainStitch(bitmap);
                 var (resultatImage, resultatDictionnaire) = mainstitch.TransformImage();
-
+                UsedColorList.ItemsSource = resultatDictionnaire.ToList();
                 BitmapImage bitmapImage = new BitmapImage();
-                byte[] imageData = new byte[] { };
-                using (var stream = new MemoryStream(imageData))
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
+                    resultatImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); // Vous pouvez ajuster le format si nécessaire
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+
                     bitmapImage.BeginInit();
                     bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.StreamSource = stream;
+                    bitmapImage.StreamSource = memoryStream;
                     bitmapImage.EndInit();
                 }
 
-                NewImg.Source = bitmapImage;
+                // Créer un WriteableBitmap à partir du BitmapImage
+                WriteableBitmap writeableBitmap = new WriteableBitmap(bitmapImage);
+
+                // Afficher l'image dans NewImg
+                NewImg.Source = writeableBitmap;
 
             }
+        }
+
+
     }
 
 

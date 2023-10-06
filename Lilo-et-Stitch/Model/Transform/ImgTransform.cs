@@ -14,6 +14,7 @@ namespace Lilo_et_Stitch.Model.Transform
         private int step;
         private List<Case> cases;
         private Image img;
+        private Dictionary<RGB, RGB> colorMatches;
         #endregion
 
 
@@ -36,7 +37,10 @@ namespace Lilo_et_Stitch.Model.Transform
         public Image Img { get { return img; } }
         #endregion
 
-
+        /// <summary>
+        /// Stores the converting occurences to reduce calculations
+        /// </summary>
+        public Dictionary<RGB, RGB> ColorMatches { get { return colorMatches; } set { colorMatches = value; } }
         #region operations
 
         /// <summary>
@@ -137,32 +141,46 @@ namespace Lilo_et_Stitch.Model.Transform
             ColorPalette colorPalette = new ColorPalette();
             colorPalette.LoadColors();
 
-            int bestDistance;
-            string closestDMCColorCode = "White";
-
-           foreach (Case box in cases)
+            foreach (Case box in cases)
             {
-                bestDistance = 766;
-                foreach (string code in colorPalette.DMCColors.Keys) //Trier les couleurs DMC ?
+                int bestDistance = 766; // Initialize bestDistance here
+                RGB closestDMCColorRGB = null; // Initialize closestDMCColorRGB
+
+                if (colorMatches.ContainsKey(box.ColorRGB))
                 {
-                    //Calculate the color distance
-                    RGB colorDMC = colorPalette.DMCColors[code];
-                    int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
-                    + Math.Abs(colorDMC.G - box.ColorRGB.G)
-                    + Math.Abs(colorDMC.B - box.ColorRGB.B);
-
-                    if (distance < bestDistance)
-                    {
-                        bestDistance = distance;
-                        closestDMCColorCode = code;
-                    }
+                    // If the color is already in the dictionary, use the mapped DMC color RGB value
+                    closestDMCColorRGB = colorMatches[box.ColorRGB];
                 }
-                box.ColorDMC = colorPalette.DMCColors[closestDMCColorCode];
+                else
+                {
+                    foreach (string code in colorPalette.DMCColors.Keys)
+                    {
+                        // Calculate the color distance
+                        RGB colorDMC = colorPalette.DMCColors[code];
+                        int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
+                            + Math.Abs(colorDMC.G - box.ColorRGB.G)
+                            + Math.Abs(colorDMC.B - box.ColorRGB.B);
 
-                ImageStitch.UsedColors[closestDMCColorCode] = colorPalette.DMCColors[closestDMCColorCode];
+                        if (distance < bestDistance)
+                        {
+                            bestDistance = distance;
+                            closestDMCColorRGB = colorDMC;
+                        }
+                    }
 
+                    // Store the closest DMC color RGB value in the colorMatches dictionary
+                    colorMatches[box.ColorRGB] = closestDMCColorRGB;
+                }
+
+                // Get the DMC color code using the closest DMC color RGB value
+                string closestDMCColorCode = colorPalette.DMCColors.FirstOrDefault(x => x.Value == closestDMCColorRGB).Key;
+
+                box.ColorDMC = closestDMCColorRGB; // Set the ColorDMC of the case
+                ImageStitch.UsedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
             }
         }
+
+
         /// <summary>
         /// contructor of Transform
         /// </summary>
@@ -172,6 +190,7 @@ namespace Lilo_et_Stitch.Model.Transform
             this.cases = new List<Case>();
             this.step = 5;
             this.img = image;
+            colorMatches = new();
         }
 
         #endregion
