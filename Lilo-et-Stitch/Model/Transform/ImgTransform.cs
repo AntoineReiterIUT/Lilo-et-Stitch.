@@ -12,6 +12,7 @@ namespace Lilo_et_Stitch.Model.Transform
     public class ImgTransform
     {
         #region attributes
+        private static Dictionary<string, RGB> usedColors = new Dictionary<string, RGB>();
         private int step;
         private List<Case> cases;
         private Image img;
@@ -20,6 +21,12 @@ namespace Lilo_et_Stitch.Model.Transform
 
 
         #region properties
+        /// <summary>
+        /// Colors used to make the transformed image with his DMC code
+        /// </summary>
+        public Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
+
+
         /// <summary>
         /// Property : read or edit the step value.
         /// </summary>
@@ -38,11 +45,13 @@ namespace Lilo_et_Stitch.Model.Transform
         public Image Img { get { return img; } }
         #endregion
 
+
         /// <summary>
         /// Stores the converting occurences to reduce calculations
         /// </summary>
         public Dictionary<RGB, RGB> ColorMatches { get { return colorMatches; } set { colorMatches = value; } }
         #region operations
+
 
         /// <summary>
         /// transforms the base image into a cross stitch
@@ -59,6 +68,7 @@ namespace Lilo_et_Stitch.Model.Transform
             ToDMC();
             return this.Cases;
         }
+
 
         /// <summary>
         /// generates a box grid
@@ -81,7 +91,6 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
             }
         }
-
 
 
         /// <summary>
@@ -134,6 +143,8 @@ namespace Lilo_et_Stitch.Model.Transform
                 tempCase.ColorRGB = new RGB(avgR, avgG, avgB);
             }
         }
+
+
         /// <summary>
         /// change a RGB color in a DMC color existing 
         /// </summary>
@@ -142,7 +153,7 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             ColorPalette colorPalette = new ColorPalette();
             colorPalette.LoadColors();
-            ImageStitch.UsedColors.Clear();
+            UsedColors.Clear();
 
             foreach (Case box in cases)
             {
@@ -179,9 +190,10 @@ namespace Lilo_et_Stitch.Model.Transform
                 string closestDMCColorCode = colorPalette.DMCColors.FirstOrDefault(x => x.Value == closestDMCColorRGB).Key;
 
                 box.ColorDMC = closestDMCColorRGB; // Set the ColorDMC of the case
-                ImageStitch.UsedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
+                UsedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
             }
         }
+
 
         /// <summary>
         /// choose the step according to the length and width of the image
@@ -220,6 +232,8 @@ namespace Lilo_et_Stitch.Model.Transform
             }
           
         }
+
+
         /// <summary>
         /// contructor of Transform
         /// </summary>
