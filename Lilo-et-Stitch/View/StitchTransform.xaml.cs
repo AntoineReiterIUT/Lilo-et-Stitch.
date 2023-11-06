@@ -30,8 +30,8 @@ namespace Lilo_et_Stitch.View
 
         public StitchTransform()
         {     
-            InitializeComponent();    
-
+            InitializeComponent();
+            Button_ReintPalette(null, null);
         }
 
         /// <summary>
@@ -144,6 +144,8 @@ namespace Lilo_et_Stitch.View
                     {
                         string targetFilePath = file.ToString();
                         File.WriteAllText(targetFilePath, csvData);
+                        NbColorsSlider.Maximum = File.ReadAllLines(targetFilePath).Length;
+                        NbColorsSlider.Value = File.ReadAllLines(targetFilePath).Length;
                     }
                 }
 
@@ -176,9 +178,8 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="sender">object</param>
         /// <param name="e"></param>Object reference not set to an instance of an object.'
-
         /// <authors>Mattis galoppin</authors>
-        private void slider1_value_changeds(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void slider1_value_changed(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             txtSlider1.Text = NbColorsSlider.Value.ToString();
         }
@@ -272,6 +273,9 @@ namespace Lilo_et_Stitch.View
                 file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
                 string targetFilePath = file.ToString();
                 File.WriteAllText(targetFilePath, csvData);
+
+                NbColorsSlider.Maximum = File.ReadAllLines(targetFilePath).Length;
+                NbColorsSlider.Value = File.ReadAllLines(targetFilePath).Length;
             }
 
             catch (Exception ex)
@@ -313,8 +317,9 @@ namespace Lilo_et_Stitch.View
                 }
                 catch { }
 
-        #endregion
-
+                #endregion
+            }
+        }
     }
 }
 

@@ -14,13 +14,12 @@ namespace Lilo_et_Stitch.Model.Transform
         #region attributes
         private Dictionary<string, RGB> usedColors = new Dictionary<string, RGB>();
         private int step = 0;
-        private int maxColors;
+        private int colorsStep;
         private List<Case> cases;
         private Image img;
         private Dictionary<RGB, RGB> colorMatches;
         private ColorPalette colorPalette;
         #endregion
-
 
         #region properties
         /// <summary>
@@ -43,17 +42,18 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <authors>Mattis galoppin</authors>
         public Image Img { get { return img; } }
         #endregion
-
         /// <summary>
         /// Stores the converting occurences to reduce calculations
         /// </summary>
         public Dictionary<RGB, RGB> ColorMatches { get { return colorMatches; } set { colorMatches = value; } }
+
 
         /// <summary>
         /// Property : read or edit the Dictionary of usedColors
         /// </summary>
         public Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
         #region operations
+
 
         /// <summary>
         /// transforms the base image into a cross stitch
@@ -63,10 +63,6 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <author>MaximeLAFFAYE</author>
         public List<Case> TransformingIMG(Image img)
         {
-            //Loading the palette
-            colorPalette = new ColorPalette();
-            colorPalette.LoadColors();
-
             //appel de la methode choice step si le step n'a pas de valeur positive
             if (this.step <= 0)
                 { ChoiceStep(); }
@@ -74,6 +70,7 @@ namespace Lilo_et_Stitch.Model.Transform
                 FillPixels();
                 return this.Cases;
         }
+
 
         /// <summary>
         /// generates a box grid
@@ -96,7 +93,6 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
             }
         }
-
 
 
         /// <summary>
@@ -152,15 +148,17 @@ namespace Lilo_et_Stitch.Model.Transform
 
             caseToCheck.ColorRGB = new RGB(avgR, avgG, avgB);
         }
+
+
         /// <summary>
         /// change a RGB color in an existing DMC color
         /// </summary>
         /// <author>Antoine Sakkalis</author>
         public void ToDMC(Case box)
         {
-
             int bestDistance = 766; // Initialize bestDistance here
             RGB closestDMCColorRGB = null; // Initialize closestDMCColorRGB
+            int steps = 0;
 
             if (colorMatches.ContainsKey(box.ColorRGB))
             {
@@ -168,20 +166,25 @@ namespace Lilo_et_Stitch.Model.Transform
                 closestDMCColorRGB = colorMatches[box.ColorRGB];
             }
             else
-            {
+            {                
                 foreach (string code in colorPalette.DMCColors.Keys)
                 {
-                    // Calculate the color distance
-                    RGB colorDMC = colorPalette.DMCColors[code];
-                    int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
-                        + Math.Abs(colorDMC.G - box.ColorRGB.G)
-                        + Math.Abs(colorDMC.B - box.ColorRGB.B);
-
-                    if (distance < bestDistance)
+                    //Verify if steps is divisible by colorsStep
+                    if (steps % colorsStep == 0)
                     {
-                        bestDistance = distance;
-                        closestDMCColorRGB = colorDMC;
+                        // Calculate the color distance
+                        RGB colorDMC = colorPalette.DMCColors[code];
+                        int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
+                            + Math.Abs(colorDMC.G - box.ColorRGB.G)
+                            + Math.Abs(colorDMC.B - box.ColorRGB.B);
+
+                        if (distance < bestDistance)
+                        {
+                            bestDistance = distance;
+                            closestDMCColorRGB = colorDMC;
+                        }
                     }
+                    steps++;
                 }
 
                 // Store the closest DMC color RGB value in the colorMatches dictionary
@@ -192,14 +195,14 @@ namespace Lilo_et_Stitch.Model.Transform
             string closestDMCColorCode = colorPalette.DMCColors.FirstOrDefault(x => x.Value == closestDMCColorRGB).Key;
             if (closestDMCColorCode == null)
             {
-                closestDMCColorCode = "White";
+                closestDMCColorCode = "";
             }
                 
 
             box.ColorDMC = closestDMCColorRGB; // Set the ColorDMC of the case
             usedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
-
         }
+
 
         /// <summary>
         /// choose the step according to the length and width of the image
@@ -239,19 +242,24 @@ namespace Lilo_et_Stitch.Model.Transform
             }
 
         }
+
+
         /// <summary>
         /// contructor of Transform
         /// </summary>
         public ImgTransform(Image image,int step,int maxColors)
         {
+            //Loading the palette
+            colorPalette = new ColorPalette();
+            colorPalette.LoadColors();
+
             //initialization
             this.cases = new List<Case>();
             this.img = image;
             this.step = step;
-            this.maxColors = maxColors;
+            this.colorsStep = colorPalette.DMCColors.Count / maxColors;
             colorMatches = new();
         }
-
         #endregion
     }
 

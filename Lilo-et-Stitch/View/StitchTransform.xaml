@@ -3,9 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-
-        
-        
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         WindowState="Maximized"
         mc:Ignorable="d"
@@ -64,7 +61,7 @@
         <Viewbox Stretch="Uniform" Grid.Column="4" Grid.ColumnSpan="3" Grid.Row="4">
             <Grid>
                 <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUpColor"/>
-                <Slider Name="NbColorsSlider" TickFrequency="1" Minimum="0" Maximum="50" ValueChanged="slider1_value_changeds" IsSnapToTickEnabled="True" Margin="10,10,15,40"/>
+                <Slider Name="NbColorsSlider" TickFrequency="1" Minimum="2" ValueChanged="slider1_value_changed" IsSnapToTickEnabled="True" Margin="10,10,15,40"/>
                 <Label Name="NbColorsTitle" Content="Couleurs :" Margin="10,28,50,12" />
 
             </Grid>
