@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-
+using System.Windows.Input;
 
 namespace Lilo_et_Stitch.View
 {
@@ -254,8 +254,42 @@ namespace Lilo_et_Stitch.View
                 System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
             }
         }
+        /// <summary>
+        /// give a manual value to the slider 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <authors>Mattis Galoppin</authors>
+        private void OnTextBoxKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) //if enter is pressed
+            {
+            
+            try   // try to give a new value to the slider
+                {
+                    ChangeStepSlider.Value = int.Parse(ChangeStepText.Text);
+                }
+            catch {}
+            }
+        }
+        /// <summary>
+        /// give a manual value to the slider
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTextBoxKeyUpColor(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) // Vous pouvez utiliser une condition pour une touche spécifique si nécessaire
+            {
+                try   // try to give a new value to the slider
+                {
+                    NbColorsSlider.Value = int.Parse(txtSlider1.Text);
+                }
+                catch { }
 
-        
+            }
+        }
+
     }
 }
 
