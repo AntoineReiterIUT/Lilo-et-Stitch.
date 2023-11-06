@@ -22,6 +22,7 @@ namespace Lilo_et_Stitch.View
         /// <summary>
         /// Window constructor
         /// </summary>
+        /// <author>Antoine Sakkalis</author>
         public StitchModels()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Antoine Sakkalis</author>
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             StitchMenu stitchMenu = new StitchMenu();

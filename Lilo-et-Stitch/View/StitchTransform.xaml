@@ -7,6 +7,7 @@
         
         
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
+        WindowState="Maximized"
         mc:Ignorable="d"
         Title="StitchTransform" Height="900" Width="1600">
 
@@ -62,9 +63,10 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="4" Grid.ColumnSpan="3" Grid.Row="4">
             <Grid>
-                <Slider Name="NbColorsSlider"  Width="100" TickFrequency="1" Minimum="0" Maximum="50" ValueChanged="slider1_value_changeds" IsSnapToTickEnabled="True" Margin="10"/>
-                <Label Name="NbColorsTitle" Content="Couleurs :" Margin="10,24,30,16" />
-                <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" RenderTransformOrigin="-0.297,0.271" Margin="75,28,15,0"/>
+                <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUpColor"/>
+                <Slider Name="NbColorsSlider" TickFrequency="1" Minimum="0" Maximum="50" ValueChanged="slider1_value_changeds" IsSnapToTickEnabled="True" Margin="10,10,15,40"/>
+                <Label Name="NbColorsTitle" Content="Couleurs :" Margin="10,28,50,12" />
+
             </Grid>
         </Viewbox>
 
