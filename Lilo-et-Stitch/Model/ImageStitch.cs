@@ -19,7 +19,7 @@ namespace Lilo_et_Stitch.Model
         #region attributes
         private Image prevImage;
         private Image newImage;
-        private static Dictionary<string,RGB> usedColors = new Dictionary<string,RGB>();
+        private Dictionary<string,RGB> usedColors = new Dictionary<string,RGB>();
         #endregion
 
         #region properties
