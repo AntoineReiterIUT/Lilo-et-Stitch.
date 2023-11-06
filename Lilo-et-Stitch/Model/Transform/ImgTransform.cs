@@ -12,46 +12,44 @@ namespace Lilo_et_Stitch.Model.Transform
     public class ImgTransform
     {
         #region attributes
-        private static Dictionary<string, RGB> usedColors = new Dictionary<string, RGB>();
+        private Dictionary<string, RGB> usedColors = new Dictionary<string, RGB>();
         private int step;
         private List<Case> cases;
         private Image img;
         private Dictionary<RGB, RGB> colorMatches;
+        private ColorPalette colorPalette;
         #endregion
 
 
         #region properties
         /// <summary>
-        /// Colors used to make the transformed image with his DMC code
-        /// </summary>
-        public Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
-
-
-        /// <summary>
         /// Property : read or edit the step value.
         /// </summary>
-        public int Step { get { return step; } set {  step = value; } }
-       
-        
+        public int Step { get { return step; } set { step = value; } }
+
+
         /// <summary>
         /// Property : read or edit the list of cases value.
         /// </summary>
-        public List<Case> Cases { get {  return cases; } set { cases = value; } }
-       
-        
+        public List<Case> Cases { get { return cases; } set { cases = value; } }
+
+
         /// <summary>
         /// Property : read only the image value.
         /// </summary>
         public Image Img { get { return img; } }
         #endregion
 
-
         /// <summary>
         /// Stores the converting occurences to reduce calculations
         /// </summary>
         public Dictionary<RGB, RGB> ColorMatches { get { return colorMatches; } set { colorMatches = value; } }
-        #region operations
 
+        /// <summary>
+        /// Property : read or edit the Dictionary of usedColors
+        /// </summary>
+        public Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
+        #region operations
 
         /// <summary>
         /// transforms the base image into a cross stitch
@@ -61,14 +59,15 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <author>MaximeLAFFAYE</author>
         public List<Case> TransformingIMG(Image img)
         {
+            //Loading the palette
+            colorPalette = new ColorPalette();
+            colorPalette.LoadColors();
+
             ChoiceStep();
             MakeGrid();
             FillPixels();
-            CaseAverage();
-            ToDMC();
             return this.Cases;
         }
-
 
         /// <summary>
         /// generates a box grid
@@ -93,14 +92,17 @@ namespace Lilo_et_Stitch.Model.Transform
         }
 
 
+
         /// <summary>
-        /// Will create and add the pixels to each case
+        /// Will create and add the pixels to each case after coloring each of them
         /// </summary>
+        /// <author>MaximeLAFFAYE</author>
         public void FillPixels()
         {
             Bitmap bitNewImage = new Bitmap(img);
             foreach (Case c in this.cases)
             {
+                
                 for (int i = c.Coord1.X; i < c.Coord2.X; i++)
                 {
                     for (int j = c.Coord1.Y; j < c.Coord2.Y; j++)
@@ -110,90 +112,88 @@ namespace Lilo_et_Stitch.Model.Transform
                         c.Pixels.Add(nvPixel);
                     }
                 }
+                CaseAverage(c);
+                ToDMC(c);
             }
         }
 
 
         /// <summary>
-        /// Will find the avg color of the case (using each pixel's color)
+        /// Will find the avg color of the case given (using each pixel's color)
         /// </summary>
+        /// <param name="caseToCheck"></param>
         /// <author>MaximeLAFFAYE</author>
-        public void CaseAverage()
+        public void CaseAverage(Case caseToCheck)
         {
+            int sumR = 0;
+            int sumG = 0;
+            int sumB = 0;
 
-            foreach (Case tempCase in Cases)
+            int avgR = 0;
+            int avgG = 0;
+            int avgB = 0;
+
+            //counting each color within the pixels
+            foreach (Pixel pixel in caseToCheck.Pixels)
             {
-                int sumR = 0;
-                int sumG = 0;
-                int sumB = 0;
-
-                int avgR = 0;
-                int avgG = 0;
-                int avgB = 0;
-                foreach (Pixel pixel in tempCase.Pixels)
-                {
-                    sumR += pixel.ColorRGB.R;
-                    sumG += pixel.ColorRGB.G;
-                    sumB += pixel.ColorRGB.B;
-                }
-                avgR = sumR / tempCase.Pixels.Count;
-                avgG = sumG / tempCase.Pixels.Count;
-                avgB = sumB / tempCase.Pixels.Count;
-
-                tempCase.ColorRGB = new RGB(avgR, avgG, avgB);
+                sumR += pixel.ColorRGB.R;
+                sumG += pixel.ColorRGB.G;
+                sumB += pixel.ColorRGB.B;
             }
+            avgR = sumR / caseToCheck.Pixels.Count;
+            avgG = sumG / caseToCheck.Pixels.Count;
+            avgB = sumB / caseToCheck.Pixels.Count;
+
+            caseToCheck.ColorRGB = new RGB(avgR, avgG, avgB);
         }
-
-
         /// <summary>
-        /// change a RGB color in a DMC color existing 
+        /// change a RGB color in an existing DMC color
         /// </summary>
         /// <author>Antoine Sakkalis</author>
-        public void ToDMC()
+        public void ToDMC(Case box)
         {
-            ColorPalette colorPalette = new ColorPalette();
-            colorPalette.LoadColors();
-            UsedColors.Clear();
 
-            foreach (Case box in cases)
+            int bestDistance = 766; // Initialize bestDistance here
+            RGB closestDMCColorRGB = null; // Initialize closestDMCColorRGB
+
+            if (colorMatches.ContainsKey(box.ColorRGB))
             {
-                int bestDistance = 766; // Initialize bestDistance here
-                RGB closestDMCColorRGB = null; // Initialize closestDMCColorRGB
-
-                if (colorMatches.ContainsKey(box.ColorRGB))
-                {
-                    // If the color is already in the dictionary, use the mapped DMC color RGB value
-                    closestDMCColorRGB = colorMatches[box.ColorRGB];
-                }
-                else
-                {
-                    foreach (string code in colorPalette.DMCColors.Keys)
-                    {
-                        // Calculate the color distance
-                        RGB colorDMC = colorPalette.DMCColors[code];
-                        int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
-                            + Math.Abs(colorDMC.G - box.ColorRGB.G)
-                            + Math.Abs(colorDMC.B - box.ColorRGB.B);
-
-                        if (distance < bestDistance)
-                        {
-                            bestDistance = distance;
-                            closestDMCColorRGB = colorDMC;
-                        }
-                    }
-
-                    // Store the closest DMC color RGB value in the colorMatches dictionary
-                    colorMatches[box.ColorRGB] = closestDMCColorRGB;
-                }
-
-                // Get the DMC color code using the closest DMC color RGB value
-                string closestDMCColorCode = colorPalette.DMCColors.FirstOrDefault(x => x.Value == closestDMCColorRGB).Key;
-
-                box.ColorDMC = closestDMCColorRGB; // Set the ColorDMC of the case
-                UsedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
+                // If the color is already in the dictionary, use the mapped DMC color RGB value
+                closestDMCColorRGB = colorMatches[box.ColorRGB];
             }
-        }
+            else
+            {
+                foreach (string code in colorPalette.DMCColors.Keys)
+                {
+                    // Calculate the color distance
+                    RGB colorDMC = colorPalette.DMCColors[code];
+                    int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
+                        + Math.Abs(colorDMC.G - box.ColorRGB.G)
+                        + Math.Abs(colorDMC.B - box.ColorRGB.B);
 
+                    if (distance < bestDistance)
+                    {
+                        bestDistance = distance;
+                        closestDMCColorRGB = colorDMC;
+                    }
+                }
+
+                // Store the closest DMC color RGB value in the colorMatches dictionary
+                colorMatches[box.ColorRGB] = closestDMCColorRGB;
+            }
+
+            // Get the DMC color code using the closest DMC color RGB value
+            string closestDMCColorCode = colorPalette.DMCColors.FirstOrDefault(x => x.Value == closestDMCColorRGB).Key;
+            if (closestDMCColorCode == null)
+            {
+                closestDMCColorCode = "White";
+            }
+                
+
+            box.ColorDMC = closestDMCColorRGB; // Set the ColorDMC of the case
+            usedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
+
+        }
 
         /// <summary>
         /// choose the step according to the length and width of the image
@@ -211,7 +211,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
             for (int i = 5; i < 21; i++) // we try to find a common divisor between 5 and 20
             {
-                res = largeur % i; 
+                res = largeur % i;
 
                 if (res == 0) // if width is divisible
                 {
@@ -223,17 +223,15 @@ namespace Lilo_et_Stitch.Model.Transform
                     }
                 }
             }
-        
-          
-          if (diviseurs.Count() != 0) //if  if the list is not empty
-           {
+
+
+            if (diviseurs.Count() != 0) //if  if the list is not empty
+            {
                 int mediane = diviseurs.Count() / 2;
                 this.step = diviseurs[mediane];
             }
-          
+
         }
-
-
         /// <summary>
         /// contructor of Transform
         /// </summary>
