@@ -23,10 +23,9 @@ namespace Lilo_et_Stitch.View
     {
         
         public StitchTransform()
-        {
-            InitializeComponent();
+        {     
+            InitializeComponent();    
             CenterWindow();
-
 
         }
 
@@ -48,6 +47,7 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <authors>Mattis Galoppin</authors>
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
             StitchMenu stitchMenu = new StitchMenu();
@@ -166,13 +166,20 @@ namespace Lilo_et_Stitch.View
         /// uptdate the value of the slider in the Textbox
         /// </summary>
         /// <param name="sender">object</param>
-        /// <param name="e"></param>
+        /// <param name="e"></param>Object reference not set to an instance of an object.'
+
+        /// <authors>Mattis galoppin</authors>
         private void slider1_value_changeds(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             txtSlider1.Text = NbColorsSlider.Value.ToString();
         }
 
 
+        private void changeStepValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ChangeStepText.Text = ChangeStepSlider.Value.ToString();
+                
+        }
 
         /// <summary>
         /// This function will be called when the TransformBtn is clicked.
@@ -257,6 +264,8 @@ namespace Lilo_et_Stitch.View
                 System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
             }
         }
+
+        
     }
 }
 

@@ -23,18 +23,21 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Property : read or edit the step value.
         /// </summary>
+        /// <authors>Mattis galoppin</authors>
         public int Step { get { return step; } set {  step = value; } }
-       
-        
+
+
         /// <summary>
         /// Property : read or edit the list of cases value.
         /// </summary>
+        /// <authors>Mattis galoppin</authors>
         public List<Case> Cases { get {  return cases; } set { cases = value; } }
-       
-        
+
+
         /// <summary>
         /// Property : read only the image value.
         /// </summary>
+        /// <authors>Mattis galoppin</authors>
         public Image Img { get { return img; } }
         #endregion
 
@@ -186,6 +189,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// choose the step according to the length and width of the image
         /// </summary>
+        /// <authors>Mattis galoppin</authors>
         public void ChoiceStep()
         {
 

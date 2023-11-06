@@ -25,21 +25,25 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Property : read or edit the Coord1 value.
         /// </summary>
+        /// <authors>Mattis galoppin</authors>
         public Coordinate Coord1 { get => coord1; set => coord1 = value; }
 
         /// <summary>
         /// Property : read or edit the Coord2 value.
         /// </summary>
+        ///<authors>Mattis galoppin</authors>
         public Coordinate Coord2 { get => coord2; set => coord2 = value; }
 
         /// <summary>
         /// Property : read or edit the color value.
         /// </summary>
+        /// <authors>Mattis galoppin</authors>
         public RGB ColorRGB { get => colorRGB; set => colorRGB = value; }
 
         /// <summary>
         /// Property : read or edit the colorDMC value.
         /// </summary>
+        /// <authors>Mattis galoppin</authors>
         public RGB ColorDMC { get => colorDMC; set => colorDMC = value; }
 
         /// <summary>
@@ -56,6 +60,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <param name="c1">Coordinate 1</param>
         /// <param name="c2">Coordinate 2</param>
+        /// <authors>Mattis galoppin</authors>
         public Case(Coordinate c1, Coordinate c2) 
         {
             // initialization

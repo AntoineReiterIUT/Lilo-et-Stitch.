@@ -12,6 +12,7 @@ namespace TestLilo_et_Stitch
         /// <summary>
         /// Test creation case
         /// </summary>
+        /// <authors>Mattis galoppin</authors>
         [Fact]
         public void TestContructor()
         {
