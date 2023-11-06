@@ -13,7 +13,7 @@ namespace Lilo_et_Stitch.Model.Transform
     {
         #region attributes
         private Dictionary<string, RGB> usedColors = new Dictionary<string, RGB>();
-        private int step;
+        private int step = 0;
         private List<Case> cases;
         private Image img;
         private Dictionary<RGB, RGB> colorMatches;
@@ -66,10 +66,12 @@ namespace Lilo_et_Stitch.Model.Transform
             colorPalette = new ColorPalette();
             colorPalette.LoadColors();
 
-            ChoiceStep();
-            MakeGrid();
-            FillPixels();
-            return this.Cases;
+            //appel de la methode choice step si le step n'a pas de valeur positive
+            if (this.step <= 0)
+                { ChoiceStep(); }
+                MakeGrid();
+                FillPixels();
+                return this.Cases;
         }
 
         /// <summary>

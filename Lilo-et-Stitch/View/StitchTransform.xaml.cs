@@ -174,11 +174,15 @@ namespace Lilo_et_Stitch.View
             txtSlider1.Text = NbColorsSlider.Value.ToString();
         }
 
-
+        /// <summary>
+        /// change la valeur de la textbox par celle du slider
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        ///<authors>Mattis Galoppin</authors>
         private void changeStepValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ChangeStepText.Text = ChangeStepSlider.Value.ToString();
-                
+            ChangeStepText.Text = ChangeStepSlider.Value.ToString(); 
         }
 
         /// <summary>
