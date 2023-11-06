@@ -202,7 +202,7 @@ namespace Lilo_et_Stitch.View
                     bitmap = new Bitmap(stream);
                 }
                 MainStitch mainstitch = new MainStitch(bitmap);
-                var (editedImage, colorFromImage) = mainstitch.TransformImage();
+                var (editedImage, colorFromImage) = mainstitch.TransformImage((int)(ChangeStepSlider.Value),(int)(NbColorsSlider.Value));
 
                 //clearing the list so we don't stack all colors
                 usedColorList.Children.Clear(); 

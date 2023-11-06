@@ -14,6 +14,7 @@ namespace Lilo_et_Stitch.Model.Transform
         #region attributes
         private Dictionary<string, RGB> usedColors = new Dictionary<string, RGB>();
         private int step;
+        private int maxColors;
         private List<Case> cases;
         private Image img;
         private Dictionary<RGB, RGB> colorMatches;
@@ -239,11 +240,13 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// contructor of Transform
         /// </summary>
-        public ImgTransform(Image image)
+        public ImgTransform(Image image,int step,int maxColors)
         {
             //initialization
             this.cases = new List<Case>();
             this.img = image;
+            this.step = step;
+            this.maxColors = maxColors;
             colorMatches = new();
         }
 
