@@ -19,7 +19,7 @@ namespace Lilo_et_Stitch.Model
         #region attributes
         private Image prevImage;
         private Image newImage;
-        private static Dictionary<string,RGB> usedColors = new Dictionary<string,RGB>();
+        private Dictionary<string,RGB> usedColors = new Dictionary<string,RGB>();
         #endregion
 
         #region properties
@@ -32,11 +32,6 @@ namespace Lilo_et_Stitch.Model
         /// Image transformed to show
         /// </summary>
         public Image NewImage { get => newImage; set => newImage = value; }
-
-        /// <summary>
-        /// Colors used to make the transformed image with his DMC code
-        /// </summary>
-        public static Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
         #endregion
 
         #region operations
@@ -59,16 +54,11 @@ namespace Lilo_et_Stitch.Model
             ImgTransform transform = new ImgTransform(prevImage);
             List<Case> cases = new List<Case>();
             cases = transform.TransformingIMG(prevImage);
-            List<RGB> listUsedColor = new List<RGB>();
-
+            usedColors = transform.UsedColors;
             Bitmap bitNewImage = new Bitmap(prevImage);
 
             foreach (Case c in cases)
             {
-                //0,0
-                //5,5
-
-                listUsedColor.Add(c.ColorDMC);
                 for (int i = c.Coord1.X; i < c.Coord2.X; i++)
                 {
 
@@ -107,7 +97,7 @@ namespace Lilo_et_Stitch.Model
 
             }
 
-            return ((Image)bitNewImage,usedColors);
+            return ((Image)bitNewImage, usedColors);
         }
 
         #endregion
