@@ -21,7 +21,13 @@ namespace Lilo_et_Stitch.View
     /// </summary>
     public partial class StitchTransform : Window
     {
-        
+
+        #region attributes
+        private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(0,0,0);
+        #endregion
+
+        #region operations
+
         public StitchTransform()
         {     
             InitializeComponent();    
@@ -162,6 +168,23 @@ namespace Lilo_et_Stitch.View
                 }
             }
         }
+
+        /// <summary>
+        /// Will update the preview canva after opening the color picker dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>MaximeLAFFAYE</author>
+        private void change_grid_color(object sender, RoutedEventArgs e)
+        {
+            ColorDialog clrDiag = new ColorDialog();
+            if (clrDiag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.gridColor = System.Windows.Media.Color.FromArgb(clrDiag.Color.A, clrDiag.Color.R, clrDiag.Color.G, clrDiag.Color.B);
+                gridColorCanva.Background = new SolidColorBrush(gridColor);            
+            }
+        }
+
         /// <summary>
         /// uptdate the value of the slider in the Textbox
         /// </summary>
@@ -194,6 +217,7 @@ namespace Lilo_et_Stitch.View
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {
 
+            //Creating the bitmap
             WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
             {
@@ -206,7 +230,9 @@ namespace Lilo_et_Stitch.View
                     bitmap = new Bitmap(stream);
                 }
                 MainStitch mainstitch = new MainStitch(bitmap);
-                var (editedImage, colorFromImage) = mainstitch.TransformImage((int)(ChangeStepSlider.Value),(int)(NbColorsSlider.Value));
+
+                //Starting the transformation of the image
+                var (editedImage, colorFromImage) = mainstitch.TransformImage((int)(ChangeStepSlider.Value),(int)(NbColorsSlider.Value),gridColor);
 
                 //clearing the list so we don't stack all colors
                 usedColorList.Children.Clear(); 
@@ -269,7 +295,8 @@ namespace Lilo_et_Stitch.View
             }
         }
 
-        
+        #endregion
+
     }
 }
 

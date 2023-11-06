@@ -20,9 +20,9 @@ namespace Lilo_et_Stitch.Model
         #endregion
 
         #region operations
-        public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax)
+        public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
-            return this._imageStitch.TransformImage(step,colorMax);
+            return this._imageStitch.TransformImage(step,colorMax, gridColor);
         }
 
         public MainStitch(Image img)

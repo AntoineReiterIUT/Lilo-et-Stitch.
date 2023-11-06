@@ -44,12 +44,17 @@ namespace Lilo_et_Stitch.Model
             prevImage = img;
         }
 
+
+
         /// <summary>
-        /// Transforms the image of the user
+        /// Transforms the image
         /// </summary>
+        /// <param name="step">Step for each "case/pixel"</param>
+        /// <param name="colorMax">Max amount of color to be used</param>
+        /// <param name="gridColor">Color of the grid</param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax)
+        /// <author>MaximeLAFFAYE</author>
+        public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
             ImgTransform transform = new ImgTransform(prevImage,step,colorMax);
             List<Case> cases = new List<Case>();
@@ -64,21 +69,21 @@ namespace Lilo_et_Stitch.Model
 
                     for (int j= c.Coord1.Y; j < c.Coord2.Y; j++)
                     {
+                        //Setting the color of each pixel on the new image
                         bitNewImage.SetPixel(i, j, Color.FromArgb(c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
-
                     }
                 }
 
-                //DarkGrid
+                //Creation of the grid (using the color from the parameters)
                 for (int i = Math.Max(c.Coord1.X, 0); i <= Math.Min(c.Coord2.X, bitNewImage.Width - 1); i++)
                 {
                     if (c.Coord1.Y >= 0 && c.Coord1.Y < bitNewImage.Height)
                     {
-                        bitNewImage.SetPixel(i, c.Coord1.Y, Color.FromArgb(0, 0, 0));
+                        bitNewImage.SetPixel(i, c.Coord1.Y, Color.FromArgb(gridColor.A,gridColor.R,gridColor.G,gridColor.B));
                     }
                     if (c.Coord2.Y >= 0 && c.Coord2.Y < bitNewImage.Height)
                     {
-                        bitNewImage.SetPixel(i, c.Coord2.Y, Color.FromArgb(0, 0, 0));
+                        bitNewImage.SetPixel(i, c.Coord2.Y, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B));
                     }
                 }
 
@@ -86,11 +91,11 @@ namespace Lilo_et_Stitch.Model
                 {
                     if (c.Coord1.X >= 0 && c.Coord1.X < bitNewImage.Width)
                     {
-                        bitNewImage.SetPixel(c.Coord1.X, j, Color.FromArgb(0, 0, 0));
+                        bitNewImage.SetPixel(c.Coord1.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B));
                     }
                     if (c.Coord2.X >= 0 && c.Coord2.X < bitNewImage.Width)
                     {
-                        bitNewImage.SetPixel(c.Coord2.X, j, Color.FromArgb(0, 0, 0));
+                        bitNewImage.SetPixel(c.Coord2.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B));
                     }
                 }
 

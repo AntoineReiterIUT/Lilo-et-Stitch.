@@ -17,7 +17,10 @@ namespace Lilo_et_Stitch.Model
         /// <summary>
         /// Will transform the image,
         /// </summary>
-        /// <returns>Image : New cross image. | Dictionnary<RGB,string> : Used color  </returns>
-        public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax);
+        /// <param name="step">Step of the "pixel/case"</param>
+        /// <param name="colorMax">Max amount of color to be used </param>
+        /// <param name="gridColor">Color of the grid</param>
+        /// <returns></returns>
+        public (Image, Dictionary<string, RGB>) TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor);
     }
 }
