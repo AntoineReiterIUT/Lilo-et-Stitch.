@@ -222,9 +222,12 @@ namespace Lilo_et_Stitch.Model.Transform
             int largeur = this.img.Width;
             int longeur = this.img.Height;
             int res = 0;
-
             this.step = 15; //initialization to 15
 
+            
+        }
+
+            /*
             List<int> diviseurs = new List<int>(); //list of common divisors
 
             for (int i = 5; i < 21; i++) // we try to find a common divisor between 5 and 20
@@ -250,7 +253,7 @@ namespace Lilo_et_Stitch.Model.Transform
             }
 
         }
-
+            */
 
         /// <summary>
         /// contructor of Transform

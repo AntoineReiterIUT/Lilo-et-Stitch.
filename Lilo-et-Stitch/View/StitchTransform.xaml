@@ -118,10 +118,9 @@
             <Grid Width="142" Height="66">
 
                 <Canvas Name="gridColorCanva" Background="Black" Margin="10,37,14,10"/>
-                <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,10,14,34" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,10,14,34"/>
             </Grid>
 
         </Viewbox>
-
     </Grid>
 </Window>
