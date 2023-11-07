@@ -20,6 +20,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
         private RGB colorRGB;
         private RGB colorDMC;
+        private int opacity;
         private List<Pixel> pixels;
 
         /// <summary>
@@ -45,6 +46,11 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <authors>Mattis galoppin</authors>
         public RGB ColorDMC { get => colorDMC; set => colorDMC = value; }
+
+        /// <summary>
+        /// Property : read or edit the opacity value.
+        /// </summary>
+        public int Opacity { get => opacity; set => opacity = value; }
 
         /// <summary>
         /// Property : read or edit the list of Pixels
