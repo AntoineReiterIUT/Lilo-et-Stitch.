@@ -21,7 +21,9 @@ namespace Lilo_et_Stitch.Model
         /// <authors>Mattis Galoppin</authors>
         public ToPDF(ImgTransform imgT) 
         {
+            //initialization
             this.ImgTrans = imgT;
+            this.caseetnum = new Dictionary<Case, string>();
         }
         
         public void GeneratePDF()
