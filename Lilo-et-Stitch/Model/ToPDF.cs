@@ -11,13 +11,14 @@ namespace Lilo_et_Stitch.Model
         //attributies
         private Dictionary<RGB, int> catalog;
         private ImgTransform ImgTrans;
+        private List<string> Symbols;
+        private Dictionary<RGB, string> catalogString;
 
         /// <summary>
         /// constructor PDF
         /// </summary>
         /// <param name="imgT">ImgTransform to get the list of cases</param>
         /// <authors>Mattis Galoppin</authors>
-        /// 
 
 
 
@@ -27,7 +28,10 @@ namespace Lilo_et_Stitch.Model
             //initialization
             this.ImgTrans = imgT;
             this.catalog = new Dictionary<RGB, int>();
+            this.Symbols = new List<string> {"*","+","-","/","|","&","~","#","(","_","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+            this.catalogString = new Dictionary<RGB, string>();
             GenerateCatalog();
+            GenerateSymbols();
             WriteInPDF();
         }
        /// <summary>
@@ -52,7 +56,6 @@ namespace Lilo_et_Stitch.Model
 
             // The path to the documents directory.
             string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
-
             // Initialize document object
             Document document = new Aspose.Pdf.Document();
             document.PageInfo.Margin.Left = 5;
@@ -87,8 +90,8 @@ namespace Lilo_et_Stitch.Model
                     CountCase++;
                     //Adding cells + symbols 
                     Case c = ImgTrans.Cases[CountCase];
-                    int number = catalog[c.ColorDMC];
-                    row.Cells.Add(number.ToString());
+                    string carac = catalogString[c.ColorDMC];
+                    row.Cells.Add(carac.ToString());
                 }
             }
 
@@ -98,6 +101,25 @@ namespace Lilo_et_Stitch.Model
 
 
             //https://reference.aspose.com/tutorials/pdf/net/programming-with-tables/add-image-in-a-table-cell/
+        }
+        public void GenerateSymbols()
+        {
+            List <string> charTemp = new List<string>();
+            int i= -1;
+            int j= -1;
+            foreach (var item in this.catalog.Keys) 
+            {
+                if (!this.catalog.ContainsValue(i)) 
+                {
+                    i++;
+                    this.catalogString.Add(item, this.Symbols[i]);
+                }
+                else
+                {
+                    j++;
+                    this.catalogString.Add(item,j.ToString());
+                }
+            }
         }
     }
 }
