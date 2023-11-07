@@ -3,13 +3,14 @@ using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
 
+
 namespace Lilo_et_Stitch.Model
 {
     public class ToPDF
     {
         //attributies
         private Dictionary<RGB, int> catalog;
-        private ImgTransform ImgTrans { get; set; }
+        private ImgTransform ImgTrans;
 
         /// <summary>
         /// constructor PDF
@@ -45,8 +46,7 @@ namespace Lilo_et_Stitch.Model
         /// <summary>
         /// write in a PDF the symbols of cases
         /// </summary>
-        /// <authors>Antoine Reither - Mattis Galoppin</authors>
-        
+        /// <authors>Antoine Reither - Mattis Galoppin - MaximeLAFFAYE</authors>
         public void WriteInPDF()
         {
 
@@ -54,21 +54,50 @@ namespace Lilo_et_Stitch.Model
             string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
 
             // Initialize document object
-            Document document = new Document();
-            // Add page
+            Document document = new Aspose.Pdf.Document();
+            document.PageInfo.Margin.Left = 5;
+            document.PageInfo.IsLandscape = true;
+            // Adding the page
             Page page = document.Pages.Add();
-            // Add text to new page
-            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("Hello World!"));
-            // Save updated PDF
-            document.Save(dataDir + "HelloWorld_out.pdf");
 
-            foreach (Case c in ImgTrans.Cases) //Scrolls through boxes in the image
+
+            //Creating the table
+            Aspose.Pdf.Table table = new Aspose.Pdf.Table()
             {
-                int number = catalog[c.ColorRGB]; //the number of the case
-                 //write this number
-            }
+                // Set the table border color as LightGray
+                Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black),
+                // Set the border for table cells
+                DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black)
+            };
             
+            table.ColumnWidths = "10 10 10";
+
+            //Calculating the amount of cells and rows
+            int nbCol = Math.Max(this.ImgTrans.Img.Width / this.ImgTrans.Step,0);
+            int nbRows = Math.Max(this.ImgTrans.Img.Height / this.ImgTrans.Step,0);
+            
+
+            //adding rows + cells
+            int CountCase = -1;
+            for (int i = 0; i < nbRows; i++)
+            {
+                Aspose.Pdf.Row row = table.Rows.Add();
+                for(int j = 0; j < nbCol; j++)
+                {
+                    CountCase++;
+                    //Adding cells + symbols 
+                    Case c = ImgTrans.Cases[CountCase];
+                    int number = catalog[c.ColorDMC];
+                    row.Cells.Add(number.ToString());
+                }
+            }
+
+            document.Pages[1].Paragraphs.Add(table);
+            // Save updated PDF
+            document.Save(dataDir);
+
+
+            //https://reference.aspose.com/tutorials/pdf/net/programming-with-tables/add-image-in-a-table-cell/
         }
-        
     }
 }
