@@ -28,24 +28,15 @@ namespace Lilo_et_Stitch.View
 
         #region operations
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public StitchTransform()
         {     
             InitializeComponent();
-            Button_ReintPalette(null, null);
+            ResetPalette_Click(null,null);
         }
 
-        /// <summary>
-        /// This function will be called when the "HomeBtn" is clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <authors>Mattis Galoppin</authors>
-        private void HomeBtn_Click(object sender, RoutedEventArgs e)
-        {
-            StitchMenu stitchMenu = new StitchMenu();
-            stitchMenu.Show(); // display new page 
-            this.Close(); // close the firt one
-        }
 
         /// <summary>
         /// This function will be called when the "SaveBtn" is clicked.
@@ -109,53 +100,6 @@ namespace Lilo_et_Stitch.View
             }
         }
 
-        /// <summary>
-        /// Handles the palette click event, allowing the user to change the color palette by selecting a CSV file.
-        /// </summary>
-        /// <param name="sender">The sender object that raised the event.</param>
-        /// <param name="e">The event arguments.</param>
-        /// <author>Antoine Sakkalis</author>
-        private void UpdatePaletteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // Create a file dialog for selecting a CSV file
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                try
-                {
-                    string selectedFilePath = openFileDialog.FileName;
-
-                    string csvData = File.ReadAllText(selectedFilePath);
-
-
-                    // Write the CSV data to a new file in the specified directory
-                    var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    var file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
-
-                    FileInfo fileInfo = new FileInfo(file);
-                    if (fileInfo.Length == 0)
-                    {
-                        System.Windows.MessageBox.Show("La palette saisie est vide, elle ne sera pas utilisée");
-                    }
-                    else
-                    {
-                        string targetFilePath = file.ToString();
-                        File.WriteAllText(targetFilePath, csvData);
-                        NbColorsSlider.Maximum = File.ReadAllLines(targetFilePath).Length;
-                        NbColorsSlider.Value = File.ReadAllLines(targetFilePath).Length;
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    // Show a dialog box with the error message
-                    System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
-                }
-            }
-        }
 
         /// <summary>
         /// Will update the preview canva after opening the color picker dialog
@@ -253,38 +197,6 @@ namespace Lilo_et_Stitch.View
         }
 
         /// <summary>
-        /// Handles the Reint click event, allowing the user to reset the color palette.
-        /// </summary>
-        /// <param name="sender">The sender object that raised the event.</param>
-        /// <param name="e">The event arguments.</param>
-        /// <author>Antoine Sakkalis</author>
-        private void Button_ReintPalette(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                var file = Path.Combine(projectFolder, @"../Data/DMCBackup/DMCcolors.csv");
-                string selectedFilePath = file.ToString(); //Path to the backup
-
-                string csvData = File.ReadAllText(selectedFilePath);
-
-
-                // Write the CSV backup data to the in use palette file
-                file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
-                string targetFilePath = file.ToString();
-                File.WriteAllText(targetFilePath, csvData);
-
-                NbColorsSlider.Maximum = File.ReadAllLines(targetFilePath).Length;
-                NbColorsSlider.Value = File.ReadAllLines(targetFilePath).Length;
-            }
-
-            catch (Exception ex)
-            {
-                // Show a dialog box with the error message
-                System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
-            }
-        }
-        /// <summary>
         /// give a manual value to the slider 
         /// </summary>
         /// <param name="sender"></param>
@@ -317,9 +229,119 @@ namespace Lilo_et_Stitch.View
                 }
                 catch { }
 
-                #endregion
+                
             }
         }
+
+        #region ToolBar's events
+
+        /// <summary>
+        /// This function will be called when the "HomeBtn" is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <authors>Mattis Galoppin</authors>
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            StitchMenu stitchMenu = new StitchMenu();
+            stitchMenu.Show(); // display new page 
+            this.Close(); // close the firt one
+        }
+
+        /// <summary>
+        /// Handles the palette click event, allowing the user to change the color palette by selecting a CSV file.
+        /// </summary>
+        /// <param name="sender">The sender object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
+        /// <author>Antoine Sakkalis</author>
+        private void ChangePalette_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a file dialog for selecting a CSV file
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    string selectedFilePath = openFileDialog.FileName;
+
+                    string csvData = File.ReadAllText(selectedFilePath);
+
+
+                    // Write the CSV data to a new file in the specified directory
+                    var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    var file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
+
+                    FileInfo fileInfo = new FileInfo(file);
+                    if (fileInfo.Length == 0)
+                    {
+                        System.Windows.MessageBox.Show("La palette saisie est vide, elle ne sera pas utilisée");
+                    }
+                    else
+                    {
+                        string targetFilePath = file.ToString();
+                        File.WriteAllText(targetFilePath, csvData);
+                        NbColorsSlider.Maximum = File.ReadAllLines(targetFilePath).Length;
+                        NbColorsSlider.Value = File.ReadAllLines(targetFilePath).Length;
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    // Show a dialog box with the error message
+                    System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the reset click event, allowing the user to reset the color palette.
+        /// </summary>
+        /// <param name="sender">The sender object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
+        /// <author>Antoine Sakkalis</author>
+        private void ResetPalette_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                var file = Path.Combine(projectFolder, @"../Data/DMCBackup/DMCcolors.csv");
+                string selectedFilePath = file.ToString(); //Path to the backup
+
+                string csvData = File.ReadAllText(selectedFilePath);
+
+
+                // Write the CSV backup data to the in use palette file
+                file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
+                string targetFilePath = file.ToString();
+                File.WriteAllText(targetFilePath, csvData);
+
+                NbColorsSlider.Maximum = File.ReadAllLines(targetFilePath).Length;
+                NbColorsSlider.Value = File.ReadAllLines(targetFilePath).Length;
+            }
+
+            catch (Exception ex)
+            {
+                // Show a dialog box with the error message
+                System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
+            }
+        }
+
+        /// <summary>
+        /// Will exit the application
+        /// </summary>
+        /// <param name="sender">The sender object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
+        /// <author>MaximeLAFFAYE</author>
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        #endregion
+
+        #endregion
 
     }
 }
