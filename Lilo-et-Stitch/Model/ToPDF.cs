@@ -11,7 +11,8 @@ namespace Lilo_et_Stitch.Model
 {
     public class ToPDF
     {
-        private Dictionary<Case, string> caseetnum;
+        private Dictionary<int, string> caseetnum = new Dictionary<int, string>();
+
         public void GeneratePDF()
         {
             string outputPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.pdf");
@@ -27,8 +28,24 @@ namespace Lilo_et_Stitch.Model
             document.Save(outputPath);
         }
         
-        public void generateINTofCASE()
+        public void generateINTofCOLOR(Dictionary<string, RGB> usedcolor)
         {
+            int i = 0;
+            foreach( string a in usedcolor.Keys )
+            {
+                i++;
+                if (caseetnum.ContainsKey(i))
+                {
+
+                }
+                else
+                {
+                    caseetnum.Add(i,a);
+                }
+                
+
+            }
+            
             
         }
         public void WriteInPDF()

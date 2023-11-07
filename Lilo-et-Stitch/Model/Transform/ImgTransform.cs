@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Documents;
+using Lilo_et_Stitch.Model;
+
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -19,6 +21,7 @@ namespace Lilo_et_Stitch.Model.Transform
         private Image img;
         private Dictionary<RGB, RGB> colorMatches;
         private ColorPalette colorPalette;
+        private ToPDF a = new ToPDF();
         #endregion
 
         #region properties
@@ -201,6 +204,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
             box.ColorDMC = closestDMCColorRGB; // Set the ColorDMC of the case
             usedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
+            a.generateINTofCOLOR(usedColors);
         }
 
 
@@ -259,6 +263,7 @@ namespace Lilo_et_Stitch.Model.Transform
             this.step = step;
             this.colorsStep = colorPalette.DMCColors.Count / maxColors;
             colorMatches = new();
+
         }
         #endregion
     }
