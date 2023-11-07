@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="View\Images\exit.png" />
+    <None Remove="View\Images\homeIcon.png" />
     <None Remove="View\Images\logo.png" />
   </ItemGroup>
 
@@ -26,7 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="View\Images\homeIcon.png" />
     <Resource Include="View\Images\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Images\exit.png" />
   </ItemGroup>
 
 </Project>

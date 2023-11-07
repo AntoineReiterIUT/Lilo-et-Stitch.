@@ -7,8 +7,8 @@
         WindowState="Maximized"
         mc:Ignorable="d"
         Title="StitchTransform" Height="900" Width="1600">
-
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="47*"/>
@@ -30,6 +30,29 @@
             <RowDefinition Height="48*"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.ColumnSpan="11">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Fichier">
+                    <MenuItem Header="_Menu principal" >
+                        <MenuItem.Icon>
+                            <Image Source="Images/homeIcon.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Changer la palette" />
+                    <MenuItem Header="_Réinitialiser la palette" />
+                    <Separator />
+                    <MenuItem Header="_Quitter" >
+                        <MenuItem.Icon>
+                            <Image Source="Images/exit.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                
+            </Menu>
+        </StackPanel>
 
 
         <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="4">
@@ -54,7 +77,7 @@
             </Button>
         </Viewbox>
 
-        <Viewbox Stretch="Uniform" Grid.Column="1" Grid.Row="0" >
+        <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="0" >
             <Button Name="HomeBtn"  Content="HOME"  Click="HomeBtn_Click" Margin="10"/>
         </Viewbox>
 
@@ -86,11 +109,11 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="5" Grid.Row="3">
             <Grid Width="142" Height="66">
-                
+
                 <Canvas Name="gridColorCanva" Background="Black" Margin="10,37,14,10"/>
                 <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,10,14,34"/>
             </Grid>
-            
+
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="3">
@@ -100,9 +123,9 @@
                 <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,14,16,43"/>
                 <Label Name="ChangeStepTitle" Content="Step :" Margin="10,39,69,12" />
             </Grid>
-            
-        </Viewbox>
 
+        </Viewbox>
+        
 
     </Grid>
 </Window>
