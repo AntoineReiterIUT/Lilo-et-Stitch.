@@ -70,7 +70,7 @@ namespace Lilo_et_Stitch.Model
                     for (int j= c.Coord1.Y; j < c.Coord2.Y; j++)
                     {
                         //Setting the color of each pixel on the new image
-                        bitNewImage.SetPixel(i, j, Color.FromArgb(c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
+                        bitNewImage.SetPixel(i, j, Color.FromArgb(c.Opacity,c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
                     }
                 }
 
