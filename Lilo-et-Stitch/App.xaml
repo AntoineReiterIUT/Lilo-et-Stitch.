@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="View\Styles\CustomSlider.xaml"/>
                 <ResourceDictionary Source="View\Styles\MenuButton.xaml"/>
+                <ResourceDictionary Source="View\Styles\TrsfrmAppbutton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

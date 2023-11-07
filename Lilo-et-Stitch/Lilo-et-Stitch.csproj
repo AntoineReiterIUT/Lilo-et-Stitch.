@@ -39,8 +39,4 @@
     <Resource Include="View\Images\exit.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="View\Styles\" />
-  </ItemGroup>
-
 </Project>
