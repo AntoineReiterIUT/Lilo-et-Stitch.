@@ -96,9 +96,9 @@
         <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="3">
 
             <Grid>
-                <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="30"  RenderTransformOrigin="-0.297,0.271" Margin="65,28,25,0"/>
-                <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,14,10,33"/>
-                <Label Name="ChangeStepTitle" Content="Step :" Margin="10,24,60,16" />
+                <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="30"  RenderTransformOrigin="-0.297,0.271" Margin="60,45,30,0" KeyUp="OnTextBoxKeyUp"/>
+                <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,14,16,43"/>
+                <Label Name="ChangeStepTitle" Content="Step :" Margin="10,39,69,12" />
             </Grid>
             
         </Viewbox>
