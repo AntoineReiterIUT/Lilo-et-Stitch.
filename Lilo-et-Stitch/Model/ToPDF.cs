@@ -31,23 +31,20 @@ namespace Lilo_et_Stitch.Model
        /// <summary>
        /// add a number for each colors
        /// </summary>
+       /// <authors>Antoine Reither - Mattis Galoppin</authors>
         public void GenerateCatalog()
         {
-      
             int i = 0;
-            foreach(Case c in ImgTrans.Cases)
+            foreach(var item in ImgTrans.UsedColors) //run the list of used color
             {
-                if(!catalog.ContainsKey(c.ColorRGB))
-                {
-                    i++;
-                    catalog.Add(c.ColorRGB, i);
-                }
-                
+                i++;
+                this.catalog.Add(item.Value, i); //add a symbol and the color to the catalog
             }
         }
         /// <summary>
         /// write in a PDF the symbols of cases
         /// </summary>
+        /// <authors>Antoine Reither - Mattis Galoppin</authors>
         /*
         public void WriteInPDF()
         {
