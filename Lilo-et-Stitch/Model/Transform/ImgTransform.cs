@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Documents;
+using Lilo_et_Stitch.Model;
+
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -259,6 +261,7 @@ namespace Lilo_et_Stitch.Model.Transform
             this.step = step;
             this.colorsStep = colorPalette.DMCColors.Count / maxColors;
             colorMatches = new();
+
         }
         #endregion
     }
