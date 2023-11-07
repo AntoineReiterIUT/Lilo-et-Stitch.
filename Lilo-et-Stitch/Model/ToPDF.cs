@@ -47,6 +47,19 @@ namespace Lilo_et_Stitch.Model
                 this.catalog.Add(item.Value, i); //add a symbol and the color to the catalog
             }
         }
+
+        /// <summary>
+        /// Adds the legend to the PDF
+        /// </summary>
+        /// <author>MaximeLAFFAYE</author>
+        private List<Page> AddLegend()
+        {
+            List<Page> Pages = new List<Page>();
+
+
+            return Pages;
+        }
+
         /// <summary>
         /// write in a PDF the symbols of cases
         /// </summary>
@@ -99,6 +112,13 @@ namespace Lilo_et_Stitch.Model
             // Save updated PDF
             document.Save(dataDir);
 
+            //Adding the legend
+            List<Page> LegendPages = AddLegend();
+            foreach (Page pageL  in LegendPages)
+            {
+                document.Pages.Add(pageL);
+            }
+            
 
             //https://reference.aspose.com/tutorials/pdf/net/programming-with-tables/add-image-in-a-table-cell/
         }

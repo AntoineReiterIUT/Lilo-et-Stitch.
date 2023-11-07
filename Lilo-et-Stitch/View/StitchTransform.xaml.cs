@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 
 namespace Lilo_et_Stitch.View
 {
@@ -90,7 +91,13 @@ namespace Lilo_et_Stitch.View
                     bitmap.EndInit();
                     // Display the image in the Image control in the UI
                     imagePrev.Source = bitmap;
-
+                    int i;
+                    int y;
+                    i = (int)bitmap.Height / 20;
+                    y = (int)bitmap.Width / 20;
+                    i = (i + y) / 2;
+                    ChangeStepSlider.Minimum = i;
+                    ChangeStepSlider.Maximum = i*2;
                 }
             }
             catch (Exception ex)
@@ -137,6 +144,7 @@ namespace Lilo_et_Stitch.View
         private void changeStepValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ChangeStepText.Text = ChangeStepSlider.Value.ToString(); 
+           
         }
 
         /// <summary>
