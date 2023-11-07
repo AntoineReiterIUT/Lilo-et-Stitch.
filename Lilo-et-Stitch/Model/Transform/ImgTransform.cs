@@ -112,7 +112,7 @@ namespace Lilo_et_Stitch.Model.Transform
                     for (int j = c.Coord1.Y; j < c.Coord2.Y; j++)
                     {
                         Color color = bitNewImage.GetPixel(i, j);
-                        Pixel nvPixel = new Pixel(new RGB(color.R, color.G, color.B), new Coordinate(i, j));
+                        Pixel nvPixel = new Pixel(new RGB(color.R, color.G, color.B), new Coordinate(i, j),color.A);
                         c.Pixels.Add(nvPixel);
                     }
                 }
@@ -132,10 +132,12 @@ namespace Lilo_et_Stitch.Model.Transform
             int sumR = 0;
             int sumG = 0;
             int sumB = 0;
+            int sumOpacity = 0;
 
             int avgR = 0;
             int avgG = 0;
             int avgB = 0;
+            int avgOpacity = 0;
 
             //counting each color within the pixels
             foreach (Pixel pixel in caseToCheck.Pixels)
@@ -143,12 +145,15 @@ namespace Lilo_et_Stitch.Model.Transform
                 sumR += pixel.ColorRGB.R;
                 sumG += pixel.ColorRGB.G;
                 sumB += pixel.ColorRGB.B;
+                sumOpacity += pixel.Opacity;
             }
             avgR = sumR / caseToCheck.Pixels.Count;
             avgG = sumG / caseToCheck.Pixels.Count;
             avgB = sumB / caseToCheck.Pixels.Count;
+            avgOpacity = sumOpacity / caseToCheck.Pixels.Count;
 
             caseToCheck.ColorRGB = new RGB(avgR, avgG, avgB);
+            caseToCheck.Opacity = avgOpacity;
         }
 
 
