@@ -9,10 +9,11 @@
         Title="StitchMenu" Height="600" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -21,24 +22,20 @@
 
         </Grid.RowDefinitions>
 
-        <Viewbox Grid.Column="1" Grid.Row="0" Stretch="Uniform">
-            <Label Content="Accueil" FontSize="20" Margin="5"/>
-        </Viewbox>
-
-        <Viewbox Grid.Row="0" Grid.Column="2" Stretch="Uniform">
-            <Label Content="Stitch"  FontSize="20" Margin="5"/>
+        <Viewbox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Stretch="Uniform">
+            <Label Content="Accueil Stitch" FontSize="20" Margin="5"/>
         </Viewbox>
 
         <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
-            <Button Content="Nouveau modèle " Name="NewModel" Click="NewModel_Click" Margin="10" Height="100" />
+            <Button Content="   Nouveau modèle   " Name="NewModel" Click="NewModel_Click" Height="40" BorderThickness="5" Style="{StaticResource MenuButton}"/>
         </Viewbox>
 
 
-        <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform">
-            <Button Content="Liste des modèles"  Click="ModelServ_Click" Margin="10" Height="100"/>
+        <Viewbox Grid.Row="1" Grid.Column="3" Stretch="Uniform">
+            <Button Content="   Liste des modèles   " Click="ModelServ_Click" Height="41" Style="{StaticResource MenuButton}"/>
         </Viewbox>
 
-        <Image Margin="50" Source="Images/logo.png"/>
+        <Image Margin="10,0,0,0" Source="Images/logo.png"/>
 
 
 
