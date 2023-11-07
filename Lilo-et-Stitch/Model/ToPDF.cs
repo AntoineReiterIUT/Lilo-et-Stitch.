@@ -1,4 +1,5 @@
-﻿using PdfSharp.Drawing;
+﻿using Lilo_et_Stitch.Model.Transform;
+using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Lilo_et_Stitch.Model
 {
     public class ToPDF
     {
+        private Dictionary<Case, string> caseetnum;
         public void GeneratePDF()
         {
             string outputPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.pdf");
@@ -23,6 +25,15 @@ namespace Lilo_et_Stitch.Model
             gfx.DrawString("hello world !",font,XBrushes.Black, new XRect(10,10,page.Width,page.Height),XStringFormat.TopLeft);
 
             document.Save(outputPath);
+        }
+        
+        public void generateINTofCASE()
+        {
+            
+        }
+        public void WriteInPDF()
+        {
+
         }
     }
 }
