@@ -70,6 +70,7 @@ namespace Lilo_et_Stitch.Model.Transform
                 { ChoiceStep(); }
                 MakeGrid();
                 FillPixels();
+            ToPDF pdf = new ToPDF(this);
                 return this.Cases;
         }
 

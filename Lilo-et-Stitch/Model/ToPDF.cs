@@ -12,11 +12,9 @@ namespace Lilo_et_Stitch.Model
     public class ToPDF
     {
         //attributies
-        private Dictionary<int, string> numetcolor;
+        private Dictionary<RGB, int> catalog;
         private ImgTransform ImgTrans { get; set; }
-        private Dictionary<string, RGB> usedcolor;
-        private Dictionary<Case, int> numetcase ;
-        private List<Case> cases ;
+
         /// <summary>
         /// constructor PDF
         /// </summary>
@@ -26,39 +24,31 @@ namespace Lilo_et_Stitch.Model
         {
             //initialization
             this.ImgTrans = imgT;
-            this.numetcolor = new Dictionary<int, string>();
-            this.numetcase = new Dictionary<Case, int>();
+            this.catalog = new Dictionary<RGB, int>();
+            GenerateCatalog();
+           // WriteInPDF();
         }
-        
-        public void generateINTofCOLOR()
+       /// <summary>
+       /// add a number for each colors
+       /// </summary>
+        public void GenerateCatalog()
         {
-            usedcolor = ImgTrans.UsedColors;
+      
             int i = 0;
-            foreach( string a in usedcolor.Keys )
+            foreach(Case c in ImgTrans.Cases)
             {
-
-                i++;
-                numetcolor.Add(i,a);
+                if(!catalog.ContainsKey(c.ColorRGB))
+                {
+                    i++;
+                    catalog.Add(c.ColorRGB, i);
+                }
                 
-                
-
-            }
-            
-            
-        }
-        public void generateINTofCASE()
-        {
-           cases = ImgTrans.Cases;
-            int i = 0;
-            foreach(Case c in cases)
-            {
-                i++;
-                numetcase[c] = i;
             }
         }
         /// <summary>
         /// write in a PDF the symbols of cases
         /// </summary>
+        /*
         public void WriteInPDF()
         {
             string outputPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.pdf");
@@ -68,14 +58,15 @@ namespace Lilo_et_Stitch.Model
             PdfPage page = document.AddPage(); //new page
             XGraphics gfx = XGraphics.FromPdfPage(page);
 
-            XFont font = new XFont("san serif", 12);
+            XFont font = new XFont("Arial", 12);
 
             foreach (Case c in ImgTrans.Cases) //Scrolls through boxes in the image
             {
-                int number = numetcase[c]; //the number of the case
+                int number = catalog[c.ColorRGB]; //the number of the case
                 gfx.DrawString(number.ToString(), font, XBrushes.Black, new XRect(10, 10, page.Width, page.Height), XStringFormat.TopLeft); //write this number
             }
             document.Save(outputPath);
         }
+        */
     }
 }
