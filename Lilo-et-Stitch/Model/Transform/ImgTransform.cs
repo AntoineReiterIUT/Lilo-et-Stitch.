@@ -21,7 +21,6 @@ namespace Lilo_et_Stitch.Model.Transform
         private Image img;
         private Dictionary<RGB, RGB> colorMatches;
         private ColorPalette colorPalette;
-        private ToPDF a = new ToPDF();
         #endregion
 
         #region properties
@@ -204,7 +203,6 @@ namespace Lilo_et_Stitch.Model.Transform
 
             box.ColorDMC = closestDMCColorRGB; // Set the ColorDMC of the case
             usedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
-            a.generateINTofCOLOR(usedColors);
         }
 
 

@@ -12,10 +12,11 @@ namespace Lilo_et_Stitch.Model
     public class ToPDF
     {
         //attributies
-        private Dictionary<Case, int> caseetnum;
+        private Dictionary<int, string> numetcolor;
         private ImgTransform ImgTrans { get; set; }
-        private List<int> Number { get; set; }
-
+        private Dictionary<string, RGB> usedcolor;
+        private Dictionary<Case, int> numetcase ;
+        private List<Case> cases ;
         /// <summary>
         /// constructor PDF
         /// </summary>
@@ -25,28 +26,35 @@ namespace Lilo_et_Stitch.Model
         {
             //initialization
             this.ImgTrans = imgT;
-            this.caseetnum = new Dictionary<Case, int>();
+            this.numetcolor = new Dictionary<int, string>();
+            this.numetcase = new Dictionary<Case, int>();
         }
         
-        public void generateINTofCOLOR(Dictionary<string, RGB> usedcolor)
+        public void generateINTofCOLOR()
         {
+            usedcolor = ImgTrans.UsedColors;
             int i = 0;
             foreach( string a in usedcolor.Keys )
             {
-                i++;
-                if (caseetnum.ContainsKey(i))
-                {
 
-                }
-                else
-                {
-                    caseetnum.Add(i,a);
-                }
+                i++;
+                numetcolor.Add(i,a);
+                
                 
 
             }
             
             
+        }
+        public void generateINTofCASE()
+        {
+           cases = ImgTrans.Cases;
+            int i = 0;
+            foreach(Case c in cases)
+            {
+                i++;
+                numetcase[c] = i;
+            }
         }
         /// <summary>
         /// write in a PDF the symbols of cases
@@ -64,7 +72,7 @@ namespace Lilo_et_Stitch.Model
 
             foreach (Case c in ImgTrans.Cases) //Scrolls through boxes in the image
             {
-                int number = caseetnum[c]; //the number of the case
+                int number = numetcase[c]; //the number of the case
                 gfx.DrawString(number.ToString(), font, XBrushes.Black, new XRect(10, 10, page.Width, page.Height), XStringFormat.TopLeft); //write this number
             }
             document.Save(outputPath);
