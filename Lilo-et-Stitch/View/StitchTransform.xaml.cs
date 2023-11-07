@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 
 namespace Lilo_et_Stitch.View
 {
@@ -91,6 +92,53 @@ namespace Lilo_et_Stitch.View
                     // Display the image in the Image control in the UI
                     imagePrev.Source = bitmap;
 
+                    if ((bitmap.Height <= 300) && (bitmap.Width <= 300))
+                    {
+                        ChangeStepSlider.Minimum = 5;
+                        ChangeStepSlider.Value = 5;
+                        
+                    }
+
+                    else if (((bitmap.Height <= 600) && (bitmap.Height >= 300)) && ((bitmap.Width <= 600) && (bitmap.Width >= 300)))
+                    {
+                        ChangeStepSlider.Minimum = 7;
+                        ChangeStepSlider.Value = 7;
+                    }
+
+                    else if (((bitmap.Height <= 900) && (bitmap.Height >= 600)) && ((bitmap.Width <= 900) && (bitmap.Width >= 600)))
+                    {
+                        ChangeStepSlider.Minimum = 10;
+                        ChangeStepSlider.Value = 10;
+                    }
+
+                    else if (((bitmap.Height <= 1200) && (bitmap.Height >= 900)) && ((bitmap.Width <= 1200) && (bitmap.Width >= 900)))
+                    {
+                        ChangeStepSlider.Minimum = 12;
+                        ChangeStepSlider.Value = 12;
+                    }
+
+                    else if (((bitmap.Height <= 1500) && (bitmap.Height >= 1200)) && ((bitmap.Width <= 1500) && (bitmap.Width >= 1200)))
+                    {
+                        ChangeStepSlider.Minimum = 15;
+                        ChangeStepSlider.Value = 15;
+                    }
+
+                    else if (((bitmap.Height <= 1800) && (bitmap.Height >= 1500)) && ((bitmap.Width <= 1800) && (bitmap.Width >= 1500)))
+                    {
+                        ChangeStepSlider.Minimum = 18;
+                        ChangeStepSlider.Value = 18;
+                    }
+
+                    else if (((bitmap.Height <= 2100) && (bitmap.Height >= 1800)) && ((bitmap.Width <= 2100) && (bitmap.Width >= 1800)))
+                    {
+                        ChangeStepSlider.Minimum = 21;
+                        ChangeStepSlider.Value = 21;
+                    }
+                    else
+                    {
+                        ChangeStepSlider.Minimum = 15;
+                        ChangeStepSlider.Value = 15;
+                    }
                 }
             }
             catch (Exception ex)
@@ -137,6 +185,7 @@ namespace Lilo_et_Stitch.View
         private void changeStepValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ChangeStepText.Text = ChangeStepSlider.Value.ToString(); 
+           
         }
 
         /// <summary>

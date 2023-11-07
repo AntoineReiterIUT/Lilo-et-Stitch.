@@ -116,7 +116,7 @@
 
             <Grid>
                 <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="30"  RenderTransformOrigin="-0.297,0.271" Margin="60,45,30,0" KeyUp="OnTextBoxKeyUp" />
-                <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,14,16,43" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
+                <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="45" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,14,16,43" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
                 <Label Name="ChangeStepTitle" Content="Step :" Margin="10,39,69,12" />
             </Grid>
 
