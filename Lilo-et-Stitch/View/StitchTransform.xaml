@@ -35,7 +35,7 @@
         <StackPanel Grid.ColumnSpan="11">
             <Menu DockPanel.Dock="Top" Height="51">
   
-                <Image Source="Images/logo.png" />
+                <Image Source="Images/logo.png"/>
    
                 <MenuItem Header="_Fichier" Height="50" Width="77" FontSize="20" >
                     <MenuItem Header="_Menu principal" Click="MenuItem_Click" >
