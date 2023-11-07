@@ -1,4 +1,6 @@
-﻿using Lilo_et_Stitch.Model.Transform;
+﻿using Aspose.Pdf;
+using Lilo_et_Stitch.Model.Transform;
+using System;
 using System.Collections.Generic;
 
 namespace Lilo_et_Stitch.Model
@@ -14,6 +16,11 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <param name="imgT">ImgTransform to get the list of cases</param>
         /// <authors>Mattis Galoppin</authors>
+        /// 
+
+
+
+
         public ToPDF(ImgTransform imgT) 
         {
             //initialization
@@ -42,6 +49,18 @@ namespace Lilo_et_Stitch.Model
         
         public void WriteInPDF()
         {
+
+            // The path to the documents directory.
+            string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
+
+            // Initialize document object
+            Document document = new Document();
+            // Add page
+            Page page = document.Pages.Add();
+            // Add text to new page
+            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("Hello World!"));
+            // Save updated PDF
+            document.Save(dataDir + "HelloWorld_out.pdf");
 
             foreach (Case c in ImgTrans.Cases) //Scrolls through boxes in the image
             {
