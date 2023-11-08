@@ -130,14 +130,13 @@ namespace Lilo_et_Stitch.Model
             catalogString.Clear();
             foreach (var item in this.catalog.Keys)
             {
-                if ((!this.catalogString.ContainsValue(this.Symbols[i])&&(i < this.Symbols.Count - 1)))
+                //if the symbols is not already in the catalogString and i exist in the list
+                if ((!this.catalogString.ContainsValue(this.Symbols[i])&&(i < this.Symbols.Count - 1))) 
                 {
                     this.catalogString.Add(item, this.Symbols[i]);
-                        i++;
-                   
-                    
+                    i++; 
                 }
-                else
+                else //we put number
                 {
                     this.catalogString.Add(item,j.ToString());
                     j++;
