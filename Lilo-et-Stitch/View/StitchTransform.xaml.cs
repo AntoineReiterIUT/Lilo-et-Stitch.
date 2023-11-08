@@ -125,7 +125,7 @@ namespace Lilo_et_Stitch.View
                     bitmap.UriSource = new Uri(cheminFichierSource);
                     bitmap.EndInit();
                     // Display the image in the Image control in the UI
-                    imagePrev.Source = bitmap;
+                    imagePrev.Source = bitmap; 
                     int i;
                     int y;
                     //initialization step with img

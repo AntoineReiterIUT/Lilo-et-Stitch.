@@ -3,7 +3,13 @@ using Aspose.Pdf.Text;
 using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Reflection.Metadata;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
+using Color = Aspose.Pdf.Color;
 using Document = Aspose.Pdf.Document;
 
 namespace Lilo_et_Stitch.Model
@@ -70,8 +76,8 @@ namespace Lilo_et_Stitch.Model
             TextFragment text1;
             text1 = new TextFragment("symbol or integer -> color DMC ");
             text1.IsInLineParagraph = false;
+            text1.IsFirstParagraphInColumn = true;
             page.Paragraphs.Add(text1);
-        
 
 
 
@@ -92,41 +98,55 @@ namespace Lilo_et_Stitch.Model
 
                 if (catalogString.ContainsKey(a)){
                     text1 = new TextFragment(y + " -> " + x);
-                    page.Paragraphs.Add(text1);
-                    i++;
+                    
+                   
                     
                 }
                 else if (catalog.ContainsKey(a))
                 {
-                    text1 = new TextFragment(z + " -> " + x );
-                    page.Paragraphs.Add(text1);
-                    i++;
-                    
-                }
-                else
-                {
-                    text1 = new TextFragment("ERROR -> " + x );
-                    page.Paragraphs.Add(text1);
-                    i++;
+                    text1 = new TextFragment(z + " -> " + x);
+
                     
 
                 }
-                if ((i >= 1) && (i < 2))
+                else
                 {
-                    text1.HorizontalAlignment = HorizontalAlignment.Left;
+                    text1 = new TextFragment("ERROR -> " + x);
+
+        
+
+
+                }
+
+                if (i==1)
+                {
+                    i=0;
+                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
+                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
+                }
+
+                else if (i == 2)
+                {
+                    i = 1;
+                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Right;
+                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
                     text1.IsInLineParagraph = true;
                 }
-                else if ((i >= 2) && (i <= 3))
+
+                else if (i==0)
                 {
-                    text1.HorizontalAlignment = HorizontalAlignment.Center;
-                    text1.IsInLineParagraph = true;
-                }
-                else if (i > 3)
-                {
-                    text1.HorizontalAlignment = HorizontalAlignment.Right;
+                    i=2;
+                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
+                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Right;
                     text1.IsInLineParagraph = true;
                     i = 1;
                 }
+                
+                
+                
+                text1.IsInLineParagraph = false;
+                text1.IsKeptWithNext = true;
+                page.Paragraphs.Add(text1);
 
             }
         }
@@ -148,8 +168,8 @@ namespace Lilo_et_Stitch.Model
             // Adding the page
             Page page = document.Pages.Add();
 
-            //adding title
-            GeneratePage1(document);
+            //adding page 1
+            GeneratePage1(document,dataDir);
 
             //Creating the table
             Aspose.Pdf.Table table = new Aspose.Pdf.Table()
@@ -230,16 +250,34 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <param name="document">the document</param>
         /// <author>Mattis Galoppin</author>
-        public void GeneratePage1(Document document)
+        public void GeneratePage1(Document document,string dataDir)
         {
             // Create a title
             TextFragment title = new TextFragment("Patron de point de croix");
-            title.Position = new Position(250, 500);
+            title.Position = new Position(250, 540);
             title.TextState.FontSize = 32;
 
             //adding title to the page
             document.Pages.Add();
             document.Pages[1].Paragraphs.Add(title);
+
+            // Load image into stream
+           System.Drawing.Image img = this.ImgTrans.Img;
+
+            
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                img.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); //save the image
+                Stream imgStream = memoryStream; 
+                document.Pages[1].AddImage(imgStream, new Aspose.Pdf.Rectangle(250, 1, 600, 600)); //add image to page at the center
+
+            }
+
+         
+
+           
+            
+     
         }
 
         #endregion
