@@ -13,6 +13,7 @@ namespace Lilo_et_Stitch.Model
         private ImgTransform ImgTrans;
         private List<string> Symbols;
         private Dictionary<RGB, string> catalogString;
+        private Dictionary<RGB, string> catalogLegend;
 
         /// <summary>
         /// constructor PDF
@@ -27,6 +28,7 @@ namespace Lilo_et_Stitch.Model
             this.catalog = new Dictionary<RGB, int>();
             this.Symbols = new List<string> {"*","+","-","/","|","&","~","#","_","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
             this.catalogString = new Dictionary<RGB, string>();
+            this.catalogLegend = new Dictionary<RGB, string>();
             GenerateCatalog();
             GenerateSymbols();
             WriteInPDF();
@@ -48,13 +50,38 @@ namespace Lilo_et_Stitch.Model
         /// <summary>
         /// Adds the legend to the PDF
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
-        private List<Page> AddLegend()
+        /// <author>antoine Reiter</author>
+        private void AddLegend(Document document)
         {
             List<Page> Pages = new List<Page>();
+            Page page = document.Pages.Add();
+            int i = 0;
+            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("symbol or integer -> color DMC "));
 
-
-            return Pages;
+            foreach (var item in ImgTrans.UsedColors)
+            {
+                this.catalogLegend[item.Value] = item.Key;
+            }
+            foreach (RGB a in catalogLegend.Keys)
+            {
+                i++;
+                if (i == 40)
+                page = document.Pages.Add();
+                string x = catalogLegend[a];
+                string y = catalogString[a];
+                int z = catalog[a];
+                if (catalogString.ContainsKey(a)){
+                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(y + " -> " + x));
+                }
+                else if (catalog.ContainsKey(a))
+                {
+                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(z + " -> " + x)); 
+                }
+                else
+                {
+                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("ERROR -> " + x ));
+                }
+            }
         }
 
         /// <summary>
@@ -106,16 +133,13 @@ namespace Lilo_et_Stitch.Model
             }
 
             document.Pages[1].Paragraphs.Add(table);
-            // Save updated PDF
-            document.Save(dataDir);
+           
+            
 
             //Adding the legend
-            List<Page> LegendPages = AddLegend();
-            foreach (Page pageL  in LegendPages)
-            {
-                document.Pages.Add(pageL);
-            }
-            
+            AddLegend(document);
+            // Save updated PDF
+            document.Save(dataDir);
 
             //https://reference.aspose.com/tutorials/pdf/net/programming-with-tables/add-image-in-a-table-cell/
         }
