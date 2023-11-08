@@ -91,20 +91,23 @@ namespace Lilo_et_Stitch.Model
 
                 if (catalogString.ContainsKey(a)){
                     text1 = new TextFragment(y + " -> " + x);
-                    i++;
                     page.Paragraphs.Add(text1);
+                    i++;
+                    
                 }
                 else if (catalog.ContainsKey(a))
                 {
                     text1 = new TextFragment(z + " -> " + x );
+                    page.Paragraphs.Add(text1);
                     i++;
-                    page.Paragraphs.Add(text1); 
+                    
                 }
                 else
                 {
                     text1 = new TextFragment("ERROR -> " + x );
-                    i++;
                     page.Paragraphs.Add(text1);
+                    i++;
+                    
 
                 }
                 if ((i >= 1) && (i < 2))
