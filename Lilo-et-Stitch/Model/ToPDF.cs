@@ -8,24 +8,33 @@ using Document = Aspose.Pdf.Document;
 
 namespace Lilo_et_Stitch.Model
 {
+    /// <summary>
+    /// This class will handle the creation of the PDF
+    /// </summary>
     public class ToPDF
     {
-        //attributies
+        #region attributes
+        private string path;
         private Dictionary<RGB, int> catalog;
         private ImgTransform ImgTrans;
         private List<string> Symbols;
         private Dictionary<RGB, string> catalogString;
         private Dictionary<RGB, string> catalogLegend;
+        #endregion
 
+
+        #region operations
         /// <summary>
         /// constructor PDF
         /// </summary>
         /// <param name="imgT">ImgTransform to get the list of cases</param>
+        /// <param name="path">Path to save the file</param>
         /// <authors>Mattis Galoppin</authors>
 
-        public ToPDF(ImgTransform imgT) 
+        public ToPDF(ImgTransform imgT,string path) 
         {
             //initialization
+            this.path = path;
             this.ImgTrans = imgT;
             this.catalog = new Dictionary<RGB, int>();
             this.Symbols = new List<string> { "☺", "♥", "♦", "♣", "♠","•","◘","○","☻","*","+","-","/","|","&","~","#","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", };
@@ -57,8 +66,14 @@ namespace Lilo_et_Stitch.Model
         {
             List<Page> Pages = new List<Page>();
             Page page = document.Pages.Add();
-            int i = 0;
-            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("symbol or integer -> color DMC "));
+            int i = 1;
+            TextFragment text1;
+            text1 = new TextFragment("symbol or integer -> color DMC ");
+            text1.IsInLineParagraph = false;
+            page.Paragraphs.Add(text1);
+        
+
+
 
             foreach (var item in ImgTrans.UsedColors)
             {
@@ -66,23 +81,50 @@ namespace Lilo_et_Stitch.Model
             }
             foreach (RGB a in catalogLegend.Keys)
             {
-                i++;
-                if (i == 40)
-                page = document.Pages.Add();
+               
+               
                 string x = catalogLegend[a];
                 string y = catalogString[a];
                 int z = catalog[a];
+
+          
+
+
                 if (catalogString.ContainsKey(a)){
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(y + " -> " + x));
+                    text1 = new TextFragment(y + " -> " + x);
+                    i++;
+                    page.Paragraphs.Add(text1);
                 }
                 else if (catalog.ContainsKey(a))
                 {
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(z + " -> " + x)); 
+                    text1 = new TextFragment(z + " -> " + x );
+                    i++;
+                    page.Paragraphs.Add(text1); 
                 }
                 else
                 {
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("ERROR -> " + x ));
+                    text1 = new TextFragment("ERROR -> " + x );
+                    i++;
+                    page.Paragraphs.Add(text1);
+
                 }
+                if ((i >= 1) && (i < 2))
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Left;
+                    text1.IsInLineParagraph = true;
+                }
+                else if ((i >= 2) && (i <= 3))
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Center;
+                    text1.IsInLineParagraph = true;
+                }
+                else if (i > 3)
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Right;
+                    text1.IsInLineParagraph = true;
+                    i = 1;
+                }
+
             }
         }
 
@@ -94,7 +136,8 @@ namespace Lilo_et_Stitch.Model
         {
 
             // The path to the documents directory.
-            string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
+            //string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
+            string dataDir = this.path;
             // Initialize document object
             Document document = new Aspose.Pdf.Document();
             document.PageInfo.Margin.Left = 5;
@@ -188,5 +231,7 @@ namespace Lilo_et_Stitch.Model
             document.Pages.Add();
             document.Pages[1].Paragraphs.Add(title);
         }
+
+        #endregion
     }
 }

@@ -25,6 +25,11 @@ namespace Lilo_et_Stitch.Model
             return this._imageStitch.TransformImage(step,colorMax, gridColor);
         }
 
+        public void SavePDF(string path)
+        {
+            this._imageStitch.SavePDF(path);
+        }
+
         public MainStitch(Image img)
         {
             this.img = img;

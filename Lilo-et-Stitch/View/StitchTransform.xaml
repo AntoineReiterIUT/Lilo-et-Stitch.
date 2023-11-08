@@ -72,7 +72,7 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="7" Grid.Row="4" >
             <Grid Width="100" Height="50">
-                <Button Name="SaveBtn" Content="Sauvegarder" Margin="15,20,0,0" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Name="SaveBtn" Content="Sauvegarder" Margin="15,20,0,0" Style="{StaticResource TrsfrmAppButton}" Click="SaveBtn_Click"/>
             </Grid>
         </Viewbox>
 
