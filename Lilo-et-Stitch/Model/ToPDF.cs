@@ -1,32 +1,43 @@
 ﻿using Aspose.Pdf;
+using Aspose.Pdf.Text;
 using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
-
+using System.Reflection.Metadata;
+using Document = Aspose.Pdf.Document;
 
 namespace Lilo_et_Stitch.Model
 {
+    /// <summary>
+    /// This class will handle the creation of the PDF
+    /// </summary>
     public class ToPDF
     {
-        //attributies
+        #region attributes
+        private string path;
         private Dictionary<RGB, int> catalog;
         private ImgTransform ImgTrans;
         private List<string> Symbols;
         private Dictionary<RGB, string> catalogString;
         private Dictionary<RGB, string> catalogLegend;
+        #endregion
 
+
+        #region operations
         /// <summary>
         /// constructor PDF
         /// </summary>
         /// <param name="imgT">ImgTransform to get the list of cases</param>
+        /// <param name="path">Path to save the file</param>
         /// <authors>Mattis Galoppin</authors>
 
-        public ToPDF(ImgTransform imgT) 
+        public ToPDF(ImgTransform imgT,string path) 
         {
             //initialization
+            this.path = path;
             this.ImgTrans = imgT;
             this.catalog = new Dictionary<RGB, int>();
-            this.Symbols = new List<string> { "☺", "♥", "♦", "♣", "♠","•","◘","○","☻","*","+","-","/","|","&","~","#","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", };
+            this.Symbols = new List<string> { "☺", "♥", "♦", "♣", "♠","•","◘","○","☻","*","+","-","/","|","&","~","#","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", };
             this.catalogString = new Dictionary<RGB, string>();
             this.catalogLegend = new Dictionary<RGB, string>();
             GenerateCatalog();
@@ -55,8 +66,14 @@ namespace Lilo_et_Stitch.Model
         {
             List<Page> Pages = new List<Page>();
             Page page = document.Pages.Add();
-            int i = 0;
-            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("symbol or integer -> color DMC "));
+            int i = 1;
+            TextFragment text1;
+            text1 = new TextFragment("symbol or integer -> color DMC ");
+            text1.IsInLineParagraph = false;
+            page.Paragraphs.Add(text1);
+        
+
+
 
             foreach (var item in ImgTrans.UsedColors)
             {
@@ -64,23 +81,53 @@ namespace Lilo_et_Stitch.Model
             }
             foreach (RGB a in catalogLegend.Keys)
             {
-                i++;
-                if (i == 40)
-                page = document.Pages.Add();
+               
+               
                 string x = catalogLegend[a];
                 string y = catalogString[a];
                 int z = catalog[a];
+
+          
+
+
                 if (catalogString.ContainsKey(a)){
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(y + " -> " + x));
+                    text1 = new TextFragment(y + " -> " + x);
+                    page.Paragraphs.Add(text1);
+                    i++;
+                    
                 }
                 else if (catalog.ContainsKey(a))
                 {
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(z + " -> " + x)); 
+                    text1 = new TextFragment(z + " -> " + x );
+                    page.Paragraphs.Add(text1);
+                    i++;
+                    
                 }
                 else
                 {
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("ERROR -> " + x ));
+                    text1 = new TextFragment("ERROR -> " + x );
+                    page.Paragraphs.Add(text1);
+                    i++;
+                    
+
                 }
+                if ((i >= 1) && (i < 2))
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Left;
+                    text1.IsInLineParagraph = true;
+                }
+                else if ((i >= 2) && (i <= 3))
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Center;
+                    text1.IsInLineParagraph = true;
+                }
+                else if (i > 3)
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Right;
+                    text1.IsInLineParagraph = true;
+                    i = 1;
+                }
+
             }
         }
 
@@ -92,7 +139,8 @@ namespace Lilo_et_Stitch.Model
         {
 
             // The path to the documents directory.
-            string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
+            //string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
+            string dataDir = this.path;
             // Initialize document object
             Document document = new Aspose.Pdf.Document();
             document.PageInfo.Margin.Left = 5;
@@ -100,6 +148,8 @@ namespace Lilo_et_Stitch.Model
             // Adding the page
             Page page = document.Pages.Add();
 
+            //adding title
+            GeneratePage1(document);
 
             //Creating the table
             Aspose.Pdf.Table table = new Aspose.Pdf.Table()
@@ -131,8 +181,8 @@ namespace Lilo_et_Stitch.Model
                     row.Cells.Add(carac.ToString());
                 }
             }
-
-            document.Pages[1].Paragraphs.Add(table);
+            
+            document.Pages[2].Paragraphs.Add(table);
            
             
 
@@ -157,15 +207,34 @@ namespace Lilo_et_Stitch.Model
                 //if the symbols is not already in the catalogString and i exist in the list
                 if ((!this.catalogString.ContainsValue(this.Symbols[i])&&(i < this.Symbols.Count - 1))) 
                 {
+                    //we put a char
                     this.catalogString.Add(item, this.Symbols[i]);
                     i++; 
                 }
-                else //we put number
+                else //we put a number
                 {
                     this.catalogString.Add(item,j.ToString());
                     j++;
                 }
             }
         }
+        /// <summary>
+        /// create the first page of the PDF
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <author>Mattis Galoppin</author>
+        public void GeneratePage1(Document document)
+        {
+            // Create a title
+            TextFragment title = new TextFragment("Patron de point de croix");
+            title.Position = new Position(250, 500);
+            title.TextState.FontSize = 32;
+
+            //adding title to the page
+            document.Pages.Add();
+            document.Pages[1].Paragraphs.Add(title);
+        }
+
+        #endregion
     }
 }
