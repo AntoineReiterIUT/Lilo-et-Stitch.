@@ -177,8 +177,15 @@ namespace Lilo_et_Stitch.Model
                     CountCase++;
                     //Adding cells + symbols 
                     Case c = ImgTrans.Cases[CountCase];
-                    string carac = catalogString[c.ColorDMC];
-                    row.Cells.Add(carac.ToString());
+                    if (c.Opacity > 0) //if the case is not transparent
+                    {
+                        string carac = catalogString[c.ColorDMC];
+                        row.Cells.Add(carac.ToString());
+                    }
+                    else //if the case is transparent
+                    {
+                        row.Cells.Add(" ");
+                    }
                 }
             }
             
