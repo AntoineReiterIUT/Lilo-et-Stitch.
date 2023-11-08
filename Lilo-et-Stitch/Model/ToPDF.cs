@@ -70,8 +70,8 @@ namespace Lilo_et_Stitch.Model
             TextFragment text1;
             text1 = new TextFragment("symbol or integer -> color DMC ");
             text1.IsInLineParagraph = false;
+            text1.IsFirstParagraphInColumn = true;
             page.Paragraphs.Add(text1);
-        
 
 
 
@@ -92,41 +92,49 @@ namespace Lilo_et_Stitch.Model
 
                 if (catalogString.ContainsKey(a)){
                     text1 = new TextFragment(y + " -> " + x);
-                    page.Paragraphs.Add(text1);
-                    i++;
+                    
+                   
                     
                 }
                 else if (catalog.ContainsKey(a))
                 {
-                    text1 = new TextFragment(z + " -> " + x );
-                    page.Paragraphs.Add(text1);
-                    i++;
-                    
-                }
-                else
-                {
-                    text1 = new TextFragment("ERROR -> " + x );
-                    page.Paragraphs.Add(text1);
-                    i++;
+                    text1 = new TextFragment(z + " -> " + x);
+
                     
 
                 }
-                if ((i >= 1) && (i < 2))
+                else
                 {
+                    text1 = new TextFragment("ERROR -> " + x);
+
+        
+
+
+                }
+
+                if (i==1)
+                {
+                    i=0;
                     text1.HorizontalAlignment = HorizontalAlignment.Left;
-                    text1.IsInLineParagraph = true;
                 }
-                else if ((i >= 2) && (i <= 3))
+
+                else if (i == 2)
                 {
-                    text1.HorizontalAlignment = HorizontalAlignment.Center;
-                    text1.IsInLineParagraph = true;
-                }
-                else if (i > 3)
-                {
-                    text1.HorizontalAlignment = HorizontalAlignment.Right;
-                    text1.IsInLineParagraph = true;
                     i = 1;
+                    text1.HorizontalAlignment = HorizontalAlignment.Right;
                 }
+
+                else if (i==0)
+                {
+                    i=2;
+                    text1.HorizontalAlignment = HorizontalAlignment.Center;
+                }
+                
+                
+                
+                text1.IsInLineParagraph = false;
+                text1.IsKeptWithNext = true;
+                page.Paragraphs.Add(text1);
 
             }
         }
