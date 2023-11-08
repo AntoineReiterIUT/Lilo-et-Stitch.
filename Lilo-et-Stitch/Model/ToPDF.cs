@@ -20,15 +20,12 @@ namespace Lilo_et_Stitch.Model
         /// <param name="imgT">ImgTransform to get the list of cases</param>
         /// <authors>Mattis Galoppin</authors>
 
-
-
-
         public ToPDF(ImgTransform imgT) 
         {
             //initialization
             this.ImgTrans = imgT;
             this.catalog = new Dictionary<RGB, int>();
-            this.Symbols = new List<string> {"*","+","-","/","|","&","~","#","(","_","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+            this.Symbols = new List<string> {"*","+","-","/","|","&","~","#","_","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
             this.catalogString = new Dictionary<RGB, string>();
             GenerateCatalog();
             GenerateSymbols();
@@ -86,7 +83,7 @@ namespace Lilo_et_Stitch.Model
                 DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black)
             };
             
-            table.ColumnWidths = "10 10 10";
+            table.ColumnWidths = "15 15 15";
 
             //Calculating the amount of cells and rows
             int nbCol = Math.Max(this.ImgTrans.Img.Width / this.ImgTrans.Step,0);
@@ -122,22 +119,28 @@ namespace Lilo_et_Stitch.Model
 
             //https://reference.aspose.com/tutorials/pdf/net/programming-with-tables/add-image-in-a-table-cell/
         }
+        /// <summary>
+        /// genere les symbole dans un nouveau catalogue de caractères
+        /// </summary>
+        /// <authors>Mattis Galoppin</authors>
         public void GenerateSymbols()
         {
-            List <string> charTemp = new List<string>();
-            int i= -1;
-            int j= -1;
-            foreach (var item in this.catalog.Keys) 
+            int i= 0; //index for char
+            int j= 0;//index for number
+            catalogString.Clear();
+            foreach (var item in this.catalog.Keys)
             {
-                if (!this.catalog.ContainsValue(i)) 
+                if ((!this.catalogString.ContainsValue(this.Symbols[i])&&(i < this.Symbols.Count - 1)))
                 {
-                    i++;
                     this.catalogString.Add(item, this.Symbols[i]);
+                        i++;
+                   
+                    
                 }
                 else
                 {
-                    j++;
                     this.catalogString.Add(item,j.ToString());
+                    j++;
                 }
             }
         }
