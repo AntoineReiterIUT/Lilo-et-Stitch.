@@ -26,7 +26,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="27*"/>
-            <RowDefinition Height="254*"/>
+            <RowDefinition Height="400*"/>
             <RowDefinition Height="17*"/>
             <RowDefinition Height="68*"/>
             <RowDefinition Height="48*"/>
@@ -58,7 +58,11 @@
             </Menu>
         </StackPanel>
 
-        <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="4">
+        <Viewbox Stretch="UniformToFill" Grid.Row="3" Grid.ColumnSpan="11" Grid.RowSpan="5">
+            <Rectangle Stroke="LightGray" StrokeThickness="1"/>
+        </Viewbox>
+        
+        <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="4" VerticalAlignment="Bottom">
             <Grid Width="150" Height="25">
                 <Button Content="Insérer une image"  Click="SelectionnerIMG_Click"  Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
@@ -70,23 +74,23 @@
             </Grid>
         </Viewbox>
 
-        <Viewbox Stretch="Uniform" Grid.Column="7" Grid.Row="4" >
+        <Viewbox Stretch="Uniform" Grid.Column="7" Grid.Row="4" HorizontalAlignment="Right">
             <Grid Width="100" Height="50">
-                <Button Name="SaveBtn" Content="Sauvegarder" Margin="15,20,0,0" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Name="SaveBtn" Content="Sauvegarder" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 
-        <Viewbox Stretch="Uniform" Grid.Column="8" Grid.Row="4" HorizontalAlignment="Right">
+        <Viewbox Stretch="Uniform" Grid.Column="8" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <Grid Width="100" Height="50">
-                <Button Name="PublishBtn" Content="Publier" Margin="25,20,0,0" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Name="PublishBtn" Content="Publier" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="3">
             <Grid>
-                <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="30"  RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUp" />
+                <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="30" RenderTransformOrigin="-0.297,0.271" Margin="74,34,4,0" KeyUp="OnTextBoxKeyUp" />
                 <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
-                <Label Name="ChangeStepTitle" Content="Step :" Margin="10,28,50,12" />
+                <Label Name="ChangeStepTitle" Content="Taille cases :" Margin="11,28,44,12" />
             </Grid>
         </Viewbox>
 
@@ -94,27 +98,27 @@
             <Grid>
                 <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUpColor"/>
                 <Slider Name="NbColorsSlider" TickFrequency="1" Minimum="2" ValueChanged="slider1_value_changed" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}" />
-                <Label Name="NbColorsTitle" Content="Couleurs :" Margin="10,28,50,12" />
+                <Label Name="NbColorsTitle" Content="Couleurs :" Margin="15,28,40,12" />
             </Grid>
         </Viewbox>
 
-        <Canvas Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" Background="Gray" ></Canvas>
-        <ScrollViewer Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" VerticalScrollBarVisibility="Auto" Background="White">
+        <Canvas Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,10,0,0" Background="Gray" ></Canvas>
+        <ScrollViewer Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" VerticalScrollBarVisibility="Auto" Margin="1,11,1,1" Background="White">
             <StackPanel x:Name="usedColorList" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </ScrollViewer>
 
-        <Viewbox Grid.Row="2" Grid.ColumnSpan="11">
-            <Line Grid.Column="2" Grid.RowSpan="10" Grid.ColumnSpan="3" Grid.Row="5" HorizontalAlignment="Center" X1="1000" Y1="0" X2="0" Y2="0" Stroke="LightGray" StrokeThickness="1"/>
+        <Viewbox Grid.Row="2" Grid.ColumnSpan="11" VerticalAlignment="Bottom">
+            <Line HorizontalAlignment="Center" X1="1000" Y1="0" X2="0" Y2="0" Stroke="Black" StrokeThickness="1"/>
         </Viewbox>
-
 
         <Image Grid.Column="7" Grid.ColumnSpan="2" Grid.Row="1" Name="NewImg"/>
         <Image Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Name="imagePrev"/>
 
         <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="4">
-            <Grid Width="142" Height="66">
-                <Canvas Name="gridColorCanva" Background="Black" Margin="10,37,14,10"/>
-                <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,10,14,34" Style="{StaticResource TrsfrmAppButton}"/>
+            <Grid Width="142" VerticalAlignment="Bottom" Height="66">
+                <Rectangle Fill="Black" Margin="9,49,13,0"/>
+                <Canvas Name="gridColorCanva" Background="Black"  Margin="10,50,14,1"/>
+                <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,15,14,22" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
 
         </Viewbox>
