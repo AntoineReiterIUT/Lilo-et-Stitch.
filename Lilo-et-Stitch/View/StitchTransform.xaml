@@ -61,16 +61,15 @@
         <Viewbox Stretch="UniformToFill" Grid.Row="3" Grid.ColumnSpan="11" Grid.RowSpan="5">
             <Rectangle Stroke="LightGray" StrokeThickness="1"/>
         </Viewbox>
-        
         <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="4" VerticalAlignment="Bottom">
-            <Grid Width="150" Height="25">
+            <Grid Width="140" Height="30">
                 <Button Content="Insérer une image"  Click="SelectionnerIMG_Click"  Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="4" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="15,0,15,0">
             <Grid Width="100" Height="50">
-                <Button Margin="6" Name="TransformBtn" Background="Red" Content="Transformer"  Click="TransformBtn_Click_1" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Margin="6" Name="TransformBtn" Background="#9b572a" Content="Transformer"  Click="TransformBtn_Click_1" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 
@@ -96,8 +95,8 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="3">
             <Grid>
-                <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUpColor"/>
-                <Slider Name="NbColorsSlider" TickFrequency="1" Minimum="2" ValueChanged="slider1_value_changed" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}" />
+                <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="NumberOfColors" RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUpColor"/>
+                <Slider Name="NbColorsSlider" TickFrequency="1" Minimum="2" ValueChanged="MaxColorNumberChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}" />
                 <Label Name="NbColorsTitle" Content="Couleurs :" Margin="15,28,40,12" />
             </Grid>
         </Viewbox>

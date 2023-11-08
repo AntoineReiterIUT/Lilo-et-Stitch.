@@ -22,9 +22,6 @@ namespace TestLilo_et_Stitch
         public void TestMakeGrid()
         {
             //the size of the image to test is 800 by 800
-
-            transImg.Step = 5; //the step is initialized to 5
-            transImg.MakeGrid();
             
             Assert.Equal(25600,transImg.Cases.Count());
 
@@ -37,15 +34,15 @@ namespace TestLilo_et_Stitch
         {
             // Create a case with pixels of different colors
             Case testCase = new Case(new Coordinate(0, 0), new Coordinate(10, 10));
-            testCase.Pixels.Add(new Pixel(new RGB(255, 0, 0), new Coordinate(0, 0)));
-            testCase.Pixels.Add(new Pixel(new RGB(0, 255, 0), new Coordinate(5, 5)));
-            testCase.Pixels.Add(new Pixel(new RGB(0, 0, 255), new Coordinate(10, 10)));
+            testCase.Pixels.Add(new Pixel(new RGB(255, 0, 0), new Coordinate(0, 0),1));
+            testCase.Pixels.Add(new Pixel(new RGB(0, 255, 0), new Coordinate(5, 5),1));
+            testCase.Pixels.Add(new Pixel(new RGB(0, 0, 255), new Coordinate(10, 10),1));
 
             // Add the case to the list of cases in ImgTransform
             transImg.Cases.Add(testCase);
 
             // Call the CaseAverage method
-            transImg.CaseAverage();
+            transImg.CaseAverage(testCase);
 
             // Check if the average color is correct
             RGB expectedAverageColor = new RGB(85, 85, 85);
@@ -61,19 +58,33 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void TestToDMC()
         {
+            //Clearing so we can test on fake cases
+            transImg.Cases.Clear();
+
+            
             transImg.Cases.Add(new Case(new Coordinate(1,2), new Coordinate(1, 2)));
             transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
             transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
+            
 
             transImg.Cases[0].ColorRGB = new RGB(12, 34, 238);
             transImg.Cases[2].ColorRGB = new RGB(12, 34, 238);
             transImg.Cases[1].ColorRGB = new RGB(255, 0, 0);
 
-            transImg.ToDMC();
+            transImg.ToDMC(transImg.Cases[0]);
+            transImg.ToDMC(transImg.Cases[2]);
+            transImg.ToDMC(transImg.Cases[1]);
+            
+
             Assert.Equal(transImg.Cases[0].ColorDMC.B, new RGB(19, 71, 125).B);
             Assert.Equal(transImg.Cases[2].ColorDMC.B, new RGB(19, 71, 125).B);
             Assert.Equal(transImg.Cases[1].ColorDMC, new RGB(250, 50, 3));
         }
+
+        /// <summary>
+        /// Constructor of the test
+        /// </summary>
+        /// <author>AntoineSakkalis - MaximeLAFFAYE</author>
         public TestImgTransform()
         {
             var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -82,8 +93,11 @@ namespace TestLilo_et_Stitch
 
             //we record an image
             img = Image.FromFile(cheminDestination);
-            transImg = new ImgTransform(img);
-        }/// <summary>
+            transImg = ImgTransform.Instance;
+            transImg.TransformingIMG(img,5,454,System.Windows.Media.Color.FromRgb(255, 0, 0));
+        }
+        
+        /// <summary>
          /// test function FillPixel, the coordonates of the pixels in the case number 3
          /// </summary>
          /// <authors>Mattis galoppin</authors>
@@ -125,7 +139,9 @@ namespace TestLilo_et_Stitch
             step = nbFois * step;
             return step;
 
-        }/// <summary>
+        }
+        
+        /// <summary>
          /// Test choiceStep with a img 800*800
          /// </summary>
          /// <authors>Mattis galoppin</authors>
@@ -133,7 +149,7 @@ namespace TestLilo_et_Stitch
         public void TestChoiceStep()
         {
             transImg.ChoiceStep();
-            Assert.Equal(10, transImg.Step); 
+            Assert.Equal(15, transImg.Step); 
         }
     }
 }

@@ -82,6 +82,7 @@ namespace Lilo_et_Stitch.View
             }
         }
 
+
         /// <summary>
         /// This function will be called when the "PublishBtn" is clicked.
         /// </summary>
@@ -91,6 +92,7 @@ namespace Lilo_et_Stitch.View
         {
             
         }
+
 
         /// <summary>
         /// open the file browser and make the user select a file at the correct format
@@ -123,7 +125,7 @@ namespace Lilo_et_Stitch.View
                     bitmap.UriSource = new Uri(cheminFichierSource);
                     bitmap.EndInit();
                     // Display the image in the Image control in the UI
-                    imagePrev.Source = bitmap;
+                    imagePrev.Source = bitmap; 
                     int i;
                     int y;
                     //initialization step with img
@@ -135,6 +137,7 @@ namespace Lilo_et_Stitch.View
                     i = (i + y) / 2;
                     ChangeStepSlider.Minimum = i;
                     ChangeStepSlider.Maximum = i*3;
+                    ChangeStepSlider.Value = i*2;
                 }
             }
             catch (Exception ex)
@@ -161,16 +164,18 @@ namespace Lilo_et_Stitch.View
             }
         }
 
+
         /// <summary>
         /// uptdate the value of the slider in the Textbox
         /// </summary>
         /// <param name="sender">object</param>
         /// <param name="e"></param>Object reference not set to an instance of an object.'
-        /// <authors>Mattis galoppin</authors>
-        private void slider1_value_changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        /// <authors>Antoine Sakkalis</authors>
+        private void MaxColorNumberChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            txtSlider1.Text = NbColorsSlider.Value.ToString();
+            NumberOfColors.Text = NbColorsSlider.Value.ToString();
         }
+
 
         /// <summary>
         /// change la valeur de la textbox par celle du slider
@@ -181,8 +186,8 @@ namespace Lilo_et_Stitch.View
         private void changeStepValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ChangeStepText.Text = ChangeStepSlider.Value.ToString(); 
-           
         }
+
 
         /// <summary>
         /// This function will be called when the TransformBtn is clicked.
@@ -192,7 +197,6 @@ namespace Lilo_et_Stitch.View
         /// <author>MaximeLAFFAYE</author>
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {
-
             //Creating the bitmap
             WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
@@ -241,6 +245,7 @@ namespace Lilo_et_Stitch.View
             }
         }
 
+
         /// <summary>
         /// give a manual value to the slider 
         /// </summary>
@@ -270,7 +275,7 @@ namespace Lilo_et_Stitch.View
             {
                 try   // try to give a new value to the slider
                 {
-                    NbColorsSlider.Value = int.Parse(txtSlider1.Text);
+                    NbColorsSlider.Value = int.Parse(NumberOfColors.Text);
                 }
                 catch { }
 

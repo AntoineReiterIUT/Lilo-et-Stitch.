@@ -67,7 +67,7 @@ namespace Lilo_et_Stitch.Model
         public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
             ImgTransform transform = ImgTransform.Instance;
-            List<Case> cases = transform.TransformingIMG(prevImage,step,colorMax);
+            List<Case> cases = transform.TransformingIMG(prevImage,step,colorMax,gridColor);
 
             usedColors = transform.UsedColors;
             Bitmap bitNewImage = new Bitmap(prevImage);
@@ -79,8 +79,8 @@ namespace Lilo_et_Stitch.Model
 
                     for (int j= c.Coord1.Y; j < c.Coord2.Y; j++)
                     {
-                        //Setting the color of each pixel on the new image
-                        bitNewImage.SetPixel(i, j, Color.FromArgb(c.Opacity,c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
+                        if (c.Opacity > 0 ) //Setting the color of each pixel on the new image if he is not transparent
+                            bitNewImage.SetPixel(i, j, Color.FromArgb(c.Opacity,c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
                     }
                 }
 

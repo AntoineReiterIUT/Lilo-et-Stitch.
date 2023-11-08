@@ -24,6 +24,7 @@ namespace Lilo_et_Stitch.Model.Transform
         private Image ?img;
         private Dictionary<RGB, RGB> colorMatches;
         private ColorPalette ?colorPalette;
+        private System.Windows.Media.Color gridColor;
         private static ImgTransform ?instance;
         #endregion
 
@@ -32,7 +33,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Instance of our transformer
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public static ImgTransform Instance
         {
             get
@@ -41,6 +42,7 @@ namespace Lilo_et_Stitch.Model.Transform
                 return instance;
             }
         }
+
 
         /// <summary>
         /// Property : read or edit the step value.
@@ -52,7 +54,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Property : Read or edit the colorstep value
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public int ColorStep
         {
             get => colorsStep;
@@ -64,6 +66,8 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
                 this.colorsStep = colorPalette.DMCColors.Count / value; }
         }
+
+
         /// <summary>
         /// Property : read or edit the list of cases value.
         /// </summary>
@@ -85,15 +89,21 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Stores the converting occurences to reduce calculations
         /// </summary>
-        /// <author>AntoineSakkalis</author>
+        /// <author>Antoine Sakkalis</author>
         public Dictionary<RGB, RGB> ColorMatches { get { return colorMatches; } set { colorMatches = value; } }
 
 
         /// <summary>
         /// Property : read or edit the Dictionary of usedColors
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
+
+        /// <summary>
+        /// Property : read or edit the color of the grid
+        /// </summary>
+        /// <author>MaximeLAFFAYE</author>
+        public System.Windows.Media.Color GridColor { get => gridColor; set => gridColor = value; }
         #endregion
 
 
@@ -102,7 +112,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// Will create the PDF using the given path
         /// </summary>
         /// <param name="path">Path to save the file</param>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public void PDF(string path)
         {
             new ToPDF(this, path);
@@ -112,6 +122,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Init the dictionaries/lists
         /// </summary>
+        ///<author>Maxime LAFFAYE</author>
         private void InitValues()
         {
             this.colorMatches = new();
@@ -125,16 +136,18 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <param name="img">Image of origin</param>
         /// <returns>return a list of new cases</returns>
-        /// <author>MaximeLAFFAYE</author>
-        public List<Case> TransformingIMG(Image image, int step, int maxColors)
+        /// <author>Maxime LAFFAYE</author>
+        public List<Case> TransformingIMG(Image image, int step, int maxColors, System.Windows.Media.Color gridColor)
         {
             //Loading the palette
             colorPalette = new ColorPalette();
             colorPalette.LoadColors();
 
+            //Changing the class parameters
             this.img = image;
             this.step = step;
             this.colorsStep = colorPalette.DMCColors.Count / maxColors;
+            this.GridColor = gridColor;
             this.InitValues();
             
 
@@ -151,7 +164,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// generates a box grid
         /// </summary>
-        /// <author>MattisGALOPPIN - MaximeLAFFAYE</author>
+        /// <author>Mattis GALOPPIN - Maxime LAFFAYE</author>
         public void MakeGrid()
         {
             for (int y = 0; y < this.img.Height; y += this.Step)
@@ -174,7 +187,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Will create and add the pixels to each case after coloring each of them
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public void FillPixels()
         {
             Bitmap bitNewImage = new Bitmap(img);
@@ -191,7 +204,8 @@ namespace Lilo_et_Stitch.Model.Transform
                     }
                 }
                 CaseAverage(c);
-                ToDMC(c);
+                if (c.Opacity > 0)
+                    ToDMC(c);
             }
         }
 
@@ -199,8 +213,8 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Will find the avg color of the case given (using each pixel's color)
         /// </summary>
-        /// <param name="caseToCheck"></param>
-        /// <author>MaximeLAFFAYE</author>
+        /// <param name="caseToCheck">The case to calculate the average from</param>
+        /// <author>Maxime LAFFAYE</author>
         public void CaseAverage(Case caseToCheck)
         {
             int sumR = 0;
@@ -232,18 +246,19 @@ namespace Lilo_et_Stitch.Model.Transform
 
 
         /// <summary>
-        /// change a RGB color in an existing DMC color
+        /// change a RGB color in an existing DMC color from the color of a case
         /// </summary>
+        /// <param name="box">Case to calculate the DMC color</param>
         /// <author>Antoine Sakkalis</author>
         public void ToDMC(Case box)
         {
             int bestDistance = 766; // Initialize bestDistance here
-            RGB closestDMCColorRGB = null; // Initialize closestDMCColorRGB
-            int steps = 0;
+            RGB closestDMCColorRGB = new(0,0,0); // Initialize closestDMCColorRGB
+            int steps = 1;
 
             if (colorMatches.ContainsKey(box.ColorRGB))
             {
-                // If the color is already in the dictionary, use the mapped DMC color RGB value
+                //If the color is already in the dictionary, use the mapped DMC color RGB value
                 closestDMCColorRGB = colorMatches[box.ColorRGB];
             }
             else
@@ -253,7 +268,7 @@ namespace Lilo_et_Stitch.Model.Transform
                     //Verify if steps is divisible by colorsStep
                     if (steps % colorsStep == 0)
                     {
-                        // Calculate the color distance
+                        //Calculate the color distance
                         RGB colorDMC = colorPalette.DMCColors[code];
                         int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
                             + Math.Abs(colorDMC.G - box.ColorRGB.G)
@@ -268,7 +283,7 @@ namespace Lilo_et_Stitch.Model.Transform
                     steps++;
                 }
 
-                // Store the closest DMC color RGB value in the colorMatches dictionary
+                //Store the closest DMC color RGB value in the colorMatches dictionary
                 colorMatches[box.ColorRGB] = closestDMCColorRGB;
             }
 
