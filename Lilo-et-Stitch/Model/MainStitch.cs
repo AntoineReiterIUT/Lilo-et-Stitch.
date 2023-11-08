@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Media.Imaging;
 
 namespace Lilo_et_Stitch.Model
 {
@@ -25,9 +25,9 @@ namespace Lilo_et_Stitch.Model
             return this._imageStitch.TransformImage(step,colorMax, gridColor);
         }
 
-        public void SavePDF(string path)
+        public void SavePDF(string path, System.Drawing.Image editedImage)
         {
-            this._imageStitch.SavePDF(path);
+            this._imageStitch.SavePDF(path, editedImage);
         }
 
         public MainStitch(Image img)

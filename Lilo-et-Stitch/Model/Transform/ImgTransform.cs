@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Documents;
 using Lilo_et_Stitch.Model;
-
+using System.Windows.Media.Imaging;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -26,6 +26,7 @@ namespace Lilo_et_Stitch.Model.Transform
         private ColorPalette ?colorPalette;
         private System.Windows.Media.Color gridColor;
         private static ImgTransform ?instance;
+        private System.Drawing.Image newImage;
         #endregion
 
 
@@ -104,6 +105,12 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <author>MaximeLAFFAYE</author>
         public System.Windows.Media.Color GridColor { get => gridColor; set => gridColor = value; }
+
+        /// <summary>
+        /// The new Image
+        /// </summary>
+        /// <author>MaximeLAFFAYE</author>
+        public System.Drawing.Image NewImage { get => newImage; set => newImage = value; }
         #endregion
 
 
@@ -112,9 +119,11 @@ namespace Lilo_et_Stitch.Model.Transform
         /// Will create the PDF using the given path
         /// </summary>
         /// <param name="path">Path to save the file</param>
+        /// <param name="editedImage">New image</param>
         /// <author>Maxime LAFFAYE</author>
-        public void PDF(string path)
+        public void PDF(string path, System.Drawing.Image editedImage)
         {
+            this.NewImage = editedImage;
             new ToPDF(this, path);
         }
 

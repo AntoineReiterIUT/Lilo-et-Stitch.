@@ -242,7 +242,7 @@ namespace Lilo_et_Stitch.Model
             document.Pages[1].Paragraphs.Add(title);
 
             // Load image into stream
-           System.Drawing.Image img = this.ImgTrans.Img;
+            System.Drawing.Image img = this.ImgTrans.NewImage;
 
             
             using (MemoryStream memoryStream = new MemoryStream())

@@ -26,6 +26,7 @@ namespace Lilo_et_Stitch.View
         #region attributes
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(0,0,0);
         private MainStitch mainstitch;
+        private System.Drawing.Image editedImage;
         #endregion
 
         #region operations
@@ -69,7 +70,7 @@ namespace Lilo_et_Stitch.View
                     }
                     else
                     {
-                        mainstitch.SavePDF(path);
+                        mainstitch.SavePDF(path, this.editedImage);
                         System.Windows.MessageBox.Show("Exporté avec sucès!");
                     }
 
@@ -214,6 +215,8 @@ namespace Lilo_et_Stitch.View
                 //Starting the transformation of the image
                 var (editedImage, colorFromImage) = mainstitch.TransformImage((int)(ChangeStepSlider.Value),(int)(NbColorsSlider.Value),gridColor);
 
+                this.editedImage = editedImage;
+
                 //clearing the list so we don't stack all colors
                 usedColorList.Children.Clear(); 
 
@@ -232,7 +235,7 @@ namespace Lilo_et_Stitch.View
                 BitmapImage bitmapImage = new BitmapImage();
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    editedImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); // Vous pouvez ajuster le format si nécessaire
+                    editedImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); 
                     memoryStream.Seek(0, SeekOrigin.Begin);
 
                     bitmapImage.BeginInit();
