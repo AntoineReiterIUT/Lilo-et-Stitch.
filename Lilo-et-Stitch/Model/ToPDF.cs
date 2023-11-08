@@ -72,6 +72,8 @@ namespace Lilo_et_Stitch.Model
             text1.IsInLineParagraph = false;
             text1.IsFirstParagraphInColumn = true;
             page.Paragraphs.Add(text1);
+            text1 = new TextFragment("");
+            page.Paragraphs.Add(text1);
 
 
 
@@ -87,7 +89,16 @@ namespace Lilo_et_Stitch.Model
                 string y = catalogString[a];
                 int z = catalog[a];
 
-          
+                Table table = new Table()
+                {
+                    Border = new BorderInfo(BorderSide.All, .5f, Color.Black),
+
+                    DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.Black)
+                };
+                table.ColumnWidths = "10 10 10";
+                Row row = table.Rows.Add();
+                row.Cells.Add("");
+
 
 
                 if (catalogString.ContainsKey(a)){
@@ -105,7 +116,7 @@ namespace Lilo_et_Stitch.Model
                 }
                 else
                 {
-                    text1 = new TextFragment("ERROR -> " + x);
+                    text1 = new TextFragment(" ERROR -> " + x);
 
         
 
@@ -122,6 +133,7 @@ namespace Lilo_et_Stitch.Model
                 {
                     i = 1;
                     text1.HorizontalAlignment = HorizontalAlignment.Right;
+                    page.Paragraphs.Add(new TextFragment(""));
                 }
 
                 else if (i==0)
@@ -129,12 +141,17 @@ namespace Lilo_et_Stitch.Model
                     i=2;
                     text1.HorizontalAlignment = HorizontalAlignment.Center;
                 }
+
+
                 
+                text1.IsInLineParagraph = true;
+               table.IsInLineParagraph = true;
                 
-                
-                text1.IsInLineParagraph = false;
-                text1.IsKeptWithNext = true;
+                table.BackgroundColor = Color.FromArgb(a.R, a.G, a.B);
                 page.Paragraphs.Add(text1);
+                
+                page.Paragraphs.Add(table);
+                
 
             }
         }
@@ -160,16 +177,17 @@ namespace Lilo_et_Stitch.Model
             GeneratePage1(document);
 
             //Creating the table
-            Aspose.Pdf.Table table = new Aspose.Pdf.Table()
+            Table table = new Aspose.Pdf.Table()
             {
                 // Set the table border color as LightGray
                 Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black),
                 // Set the border for table cells
                 DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black)
             };
+           
             
             table.ColumnWidths = "15 15 15";
-
+            
             //Calculating the amount of cells and rows
             int nbCol = Math.Max(this.ImgTrans.Img.Width / this.ImgTrans.Step,0);
             int nbRows = Math.Max(this.ImgTrans.Img.Height / this.ImgTrans.Step,0);
