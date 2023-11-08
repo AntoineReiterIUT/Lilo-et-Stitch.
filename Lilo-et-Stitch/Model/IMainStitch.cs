@@ -22,5 +22,7 @@ namespace Lilo_et_Stitch.Model
         /// <param name="gridColor">Color of the grid</param>
         /// <returns></returns>
         public (Image, Dictionary<string, RGB>) TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor);
+
+
     }
 }

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
 namespace Lilo_et_Stitch.Model
@@ -56,9 +57,9 @@ namespace Lilo_et_Stitch.Model
         /// <author>MaximeLAFFAYE</author>
         public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
-            ImgTransform transform = new ImgTransform(prevImage,step,colorMax);
-            List<Case> cases = new List<Case>();
-            cases = transform.TransformingIMG(prevImage);
+            ImgTransform transform = ImgTransform.Instance;
+            List<Case> cases = transform.TransformingIMG(prevImage,step,colorMax);
+
             usedColors = transform.UsedColors;
             Bitmap bitNewImage = new Bitmap(prevImage);
 

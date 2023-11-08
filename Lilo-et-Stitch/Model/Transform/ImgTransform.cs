@@ -11,26 +11,67 @@ using Lilo_et_Stitch.Model;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
+    /// <summary>
+    /// This class will handle all the transformation process for the image
+    /// </summary>
     public class ImgTransform
     {
         #region attributes
-        private Dictionary<string, RGB> usedColors = new Dictionary<string, RGB>();
+        private Dictionary<string, RGB> usedColors;
         private int step = 0;
         private int colorsStep;
         private List<Case> cases;
-        private Image img;
+        private Image ?img;
         private Dictionary<RGB, RGB> colorMatches;
-        private ColorPalette colorPalette;
+        private ColorPalette ?colorPalette;
+        private static ImgTransform ?instance;
         #endregion
 
+
         #region properties
+        /// <summary>
+        /// Instance of our transformer
+        /// </summary>
+        /// <author>MaximeLAFFAYE</author>
+        public static ImgTransform Instance
+        {
+            get
+            {
+                if (instance == null) instance = new ImgTransform();
+                return instance;
+            }
+        }
+
         /// <summary>
         /// Property : read or edit the step value.
         /// </summary>
         /// <authors>Mattis galoppin</authors>
         public int Step { get { return step; } set {  step = value; } }
 
+        /// <summary>
+        /// Property : read only the pdf value
+        /// </summary>
+        /// <author>MaximeLAFFAYE</author>
+        public ToPDF PDF
+        {
+            get { return new ToPDF(this); } 
+        }
 
+        /// <summary>
+        /// Property : Read or edit the colorstep value
+        /// </summary>
+        /// <author>MaximeLAFFAYE</author>
+        public int ColorStep
+        {
+            get => colorsStep;
+            set { 
+                if(colorPalette == null)
+                {
+                    colorPalette = new ColorPalette();
+                    colorPalette.LoadColors();
+                }
+                this.colorsStep = colorPalette.DMCColors.Count / value; }
+        }
         /// <summary>
         /// Property : read or edit the list of cases value.
         /// </summary>
@@ -42,19 +83,38 @@ namespace Lilo_et_Stitch.Model.Transform
         /// Property : read only the image value.
         /// </summary>
         /// <authors>Mattis galoppin</authors>
-        public Image Img { get { return img; } }
-        #endregion
+        public Image ?Img 
+        { 
+            get { return img; }
+            set { img = value; }
+        }
+        
+       
         /// <summary>
         /// Stores the converting occurences to reduce calculations
         /// </summary>
+        /// <author>AntoineSakkalis</author>
         public Dictionary<RGB, RGB> ColorMatches { get { return colorMatches; } set { colorMatches = value; } }
 
 
         /// <summary>
         /// Property : read or edit the Dictionary of usedColors
         /// </summary>
+        /// <author>MaximeLAFFAYE</author>
         public Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
+        #endregion
+
+
         #region operations
+        /// <summary>
+        /// Init the dictionaries/lists
+        /// </summary>
+        private void InitValues()
+        {
+            this.colorMatches = new();
+            this.cases = new List<Case>();
+            this.usedColors = new Dictionary<string, RGB>();
+        }
 
 
         /// <summary>
@@ -63,14 +123,24 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <param name="img">Image of origin</param>
         /// <returns>return a list of new cases</returns>
         /// <author>MaximeLAFFAYE</author>
-        public List<Case> TransformingIMG(Image img)
+        public List<Case> TransformingIMG(Image image, int step, int maxColors)
         {
-            //appel de la methode choice step si le step n'a pas de valeur positive
+            //Loading the palette
+            colorPalette = new ColorPalette();
+            colorPalette.LoadColors();
+
+            this.img = image;
+            this.step = step;
+            this.colorsStep = colorPalette.DMCColors.Count / maxColors;
+            this.InitValues();
+            
+
+            //choose a step if not found
             if (this.step <= 0)
                 { ChoiceStep(); }
                 MakeGrid();
                 FillPixels();
-            ToPDF pdf = new ToPDF(this);
+            
                 return this.Cases;
         }
 
@@ -222,55 +292,7 @@ namespace Lilo_et_Stitch.Model.Transform
             int largeur = this.img.Width;
             int longeur = this.img.Height;
             int res = 0;
-            this.step = 15; //initialization to 15
-
-            
-        }
-
-            /*
-            List<int> diviseurs = new List<int>(); //list of common divisors
-
-            for (int i = 5; i < 21; i++) // we try to find a common divisor between 5 and 20
-            {
-                res = largeur % i;
-
-                if (res == 0) // if width is divisible
-                {
-                    res = longeur % i;
-
-                    if (res == 0) //if length is also divible
-                    {
-                        diviseurs.Add(i); //put in the commun list
-                    }
-                }
-            }
-
-
-            if (diviseurs.Count() != 0) //if  if the list is not empty
-            {
-                int mediane = diviseurs.Count() / 2;
-                this.step = diviseurs[mediane];
-            }
-
-        }
-            */
-
-        /// <summary>
-        /// contructor of Transform
-        /// </summary>
-        public ImgTransform(Image image,int step,int maxColors)
-        {
-            //Loading the palette
-            colorPalette = new ColorPalette();
-            colorPalette.LoadColors();
-
-            //initialization
-            this.cases = new List<Case>();
-            this.img = image;
-            this.step = step;
-            this.colorsStep = colorPalette.DMCColors.Count / maxColors;
-            colorMatches = new();
-
+            this.step = 15; //initialization to 15  
         }
         #endregion
     }
