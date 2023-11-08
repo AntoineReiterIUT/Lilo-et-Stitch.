@@ -137,7 +137,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <param name="img">Image of origin</param>
         /// <returns>return a list of new cases</returns>
         /// <author>Maxime LAFFAYE</author>
-        public List<Case> TransformingIMG(Image image, int step, int maxColors)
+        public List<Case> TransformingIMG(Image image, int step, int maxColors, System.Windows.Media.Color gridColor)
         {
             //Loading the palette
             colorPalette = new ColorPalette();
@@ -147,7 +147,7 @@ namespace Lilo_et_Stitch.Model.Transform
             this.img = image;
             this.step = step;
             this.colorsStep = colorPalette.DMCColors.Count / maxColors;
-            this.GridColor = gridcolor;
+            this.GridColor = gridColor;
             this.InitValues();
             
 
