@@ -124,7 +124,7 @@ namespace Lilo_et_Stitch.Model
                 if (i==1)
                 {
                     i=0;
-                    text1.HorizontalAlignment = HorizontalAlignment.Left;
+                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
                 }
                 else if (i == 2)
                 {
