@@ -1,4 +1,5 @@
 ﻿using Aspose.Pdf;
+using Aspose.Pdf.Text;
 using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
@@ -55,8 +56,14 @@ namespace Lilo_et_Stitch.Model
         {
             List<Page> Pages = new List<Page>();
             Page page = document.Pages.Add();
-            int i = 0;
-            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("symbol or integer -> color DMC "));
+            int i = 1;
+            TextFragment text1;
+            text1 = new TextFragment("symbol or integer -> color DMC ");
+            text1.IsInLineParagraph = false;
+            page.Paragraphs.Add(text1);
+        
+
+
 
             foreach (var item in ImgTrans.UsedColors)
             {
@@ -64,23 +71,50 @@ namespace Lilo_et_Stitch.Model
             }
             foreach (RGB a in catalogLegend.Keys)
             {
-                i++;
-                if (i == 40)
-                page = document.Pages.Add();
+               
+               
                 string x = catalogLegend[a];
                 string y = catalogString[a];
                 int z = catalog[a];
+
+          
+
+
                 if (catalogString.ContainsKey(a)){
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(y + " -> " + x));
+                    text1 = new TextFragment(y + " -> " + x);
+                    i++;
+                    page.Paragraphs.Add(text1);
                 }
                 else if (catalog.ContainsKey(a))
                 {
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(z + " -> " + x)); 
+                    text1 = new TextFragment(z + " -> " + x );
+                    i++;
+                    page.Paragraphs.Add(text1); 
                 }
                 else
                 {
-                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("ERROR -> " + x ));
+                    text1 = new TextFragment("ERROR -> " + x );
+                    i++;
+                    page.Paragraphs.Add(text1);
+
                 }
+                if ((i >= 1) && (i < 2))
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Left;
+                    text1.IsInLineParagraph = true;
+                }
+                else if ((i >= 2) && (i <= 3))
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Center;
+                    text1.IsInLineParagraph = true;
+                }
+                else if (i > 3)
+                {
+                    text1.HorizontalAlignment = HorizontalAlignment.Right;
+                    text1.IsInLineParagraph = true;
+                    i = 1;
+                }
+
             }
         }
 
