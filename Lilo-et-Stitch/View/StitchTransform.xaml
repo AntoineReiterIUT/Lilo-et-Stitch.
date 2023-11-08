@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         WindowState="Maximized"
         mc:Ignorable="d"
-        Title="StitchTransform" Height="900" Width="1600">
-    
+        Title="StitchTransform" MinHeight="500" MinWidth="800">
+
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -36,7 +36,7 @@
         <StackPanel Grid.ColumnSpan="11">
             <Menu DockPanel.Dock="Top" Height="51">
 
-                <Image Source="Images/logo.png"/>
+                <Image Source="Images/logo.png" Mouse.MouseDown="MenuItem_Click"/>
 
                 <MenuItem Header="_Fichier" Height="50" Width="77" FontSize="20" >
                     <MenuItem Header="_Menu principal" Click="MenuItem_Click" >
@@ -65,9 +65,8 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="4" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="15,0,15,0">
             <Grid Width="100" Height="50">
-                <Button Margin="10" Name="TransformBtn" Background="Red" Content="Transformer"  Click="TransformBtn_Click_1" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Margin="6" Name="TransformBtn" Background="Red" Content="Transformer"  Click="TransformBtn_Click_1" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
-
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="7" Grid.Row="4" >
@@ -83,13 +82,11 @@
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="3">
-
             <Grid>
                 <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="30"  RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUp" />
                 <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
                 <Label Name="ChangeStepTitle" Content="Step :" Margin="10,28,50,12" />
             </Grid>
-
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="3">
@@ -97,18 +94,17 @@
                 <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUpColor"/>
                 <Slider Name="NbColorsSlider" TickFrequency="1" Minimum="2" ValueChanged="slider1_value_changed" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}" />
                 <Label Name="NbColorsTitle" Content="Couleurs :" Margin="10,28,50,12" />
-
             </Grid>
         </Viewbox>
 
-        <Canvas Grid.Column="6" Grid.ColumnSpan="5" Grid.Row="3" Grid.RowSpan="2" Background="Gray" Margin="40,2,20,97"></Canvas>
-        <ScrollViewer Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" VerticalScrollBarVisibility="Auto" Margin="0,10,0,5" Background="White" HorizontalAlignment="Center" Width="640">
-            <StackPanel x:Name="usedColorList" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                <!-- <local:UsedColorTemplate Width="250" Height="80" Loaded="UsedColorTemplate_Loaded"></local:UsedColorTemplate>-->
-            </StackPanel>
+        <Canvas Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" Background="Gray" ></Canvas>
+        <ScrollViewer Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" VerticalScrollBarVisibility="Auto" Background="White">
+            <StackPanel x:Name="usedColorList" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </ScrollViewer>
 
-
+        <Viewbox Grid.Row="2" Grid.ColumnSpan="11">
+            <Line Grid.Column="2" Grid.RowSpan="10" Grid.ColumnSpan="3" Grid.Row="5" HorizontalAlignment="Center" X1="1000" Y1="0" X2="0" Y2="0" Stroke="LightGray" StrokeThickness="1"/>
+        </Viewbox>
 
 
         <Image Grid.Column="7" Grid.ColumnSpan="2" Grid.Row="1" Name="NewImg"/>
@@ -116,9 +112,8 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="4">
             <Grid Width="142" Height="66">
-
                 <Canvas Name="gridColorCanva" Background="Black" Margin="10,37,14,10"/>
-                <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,10,14,34"/>
+                <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,10,14,34" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
 
         </Viewbox>
