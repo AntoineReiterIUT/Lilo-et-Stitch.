@@ -19,7 +19,7 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void newPixel()
         {
-            Pixel pixel1 = new Pixel(new RGB(255, 254, 253), new Coordinate(10, 15));
+            Pixel pixel1 = new Pixel(new RGB(255, 254, 253), new Coordinate(10, 15),1);
 
             Assert.Equal(10, pixel1.Coord.X) ;
             Assert.Equal(15, pixel1.Coord.Y) ;
