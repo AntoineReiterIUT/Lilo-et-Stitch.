@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         WindowState="Maximized"
         mc:Ignorable="d"
+        Icon="Images/logo.png"
         Title="StitchTransform" MinHeight="500" MinWidth="800">
 
     <Grid>
