@@ -103,13 +103,9 @@ namespace Lilo_et_Stitch.Model
                 Row row = table.Rows.Add();
                 row.Cells.Add("");
 
-
-
                 if (catalogString.ContainsKey(a)){
                     text1 = new TextFragment(y + " -> " + x);
-                    
-                   
-                    
+                                        
                 }
                 else if (catalog.ContainsKey(a))
                 {
@@ -125,28 +121,18 @@ namespace Lilo_et_Stitch.Model
                 {
                     i=0;
                     text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
+                    table.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
                 }
-                else if (i == 2)
+                else if (i == 0)
                 {
                     i = 1;
-                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Right;
                     text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
-                    text1.IsInLineParagraph = true;
+                    table.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
                 }
-
-                else if (i==0)
-                {
-                    i=2;
-                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
-                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Right;
-                    text1.IsInLineParagraph = true;
-                    i = 1;
-                }
-
-
                 
+  
                 text1.IsInLineParagraph = true;
-               table.IsInLineParagraph = true;
+                table.IsInLineParagraph = false;
                 
                 table.BackgroundColor = Color.FromArgb(a.R, a.G, a.B);
                 page.Paragraphs.Add(text1);
