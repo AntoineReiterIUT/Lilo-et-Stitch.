@@ -45,7 +45,16 @@ namespace Lilo_et_Stitch.Model
             prevImage = img;
         }
 
-
+        /// <summary>
+        /// Will create the PDF using the given path
+        /// </summary>
+        /// <param name="path">Path to save the file</param>
+        /// <author>MaximeLAFFAYE</author>
+        public void SavePDF(string path)
+        {
+            ImgTransform transform = ImgTransform.Instance;
+            transform.PDF(path);
+        }
 
         /// <summary>
         /// Transforms the image

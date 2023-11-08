@@ -48,14 +48,6 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <authors>Mattis galoppin</authors>
         public int Step { get { return step; } set {  step = value; } }
 
-        /// <summary>
-        /// Property : read only the pdf value
-        /// </summary>
-        /// <author>MaximeLAFFAYE</author>
-        public ToPDF PDF
-        {
-            get { return new ToPDF(this); } 
-        }
 
         /// <summary>
         /// Property : Read or edit the colorstep value
@@ -107,6 +99,17 @@ namespace Lilo_et_Stitch.Model.Transform
 
         #region operations
         /// <summary>
+        /// Will create the PDF using the given path
+        /// </summary>
+        /// <param name="path">Path to save the file</param>
+        /// <author>MaximeLAFFAYE</author>
+        public void PDF(string path)
+        {
+            new ToPDF(this, path);
+        }
+
+
+        /// <summary>
         /// Init the dictionaries/lists
         /// </summary>
         private void InitValues()
@@ -140,8 +143,8 @@ namespace Lilo_et_Stitch.Model.Transform
                 { ChoiceStep(); }
                 MakeGrid();
                 FillPixels();
-            
-                return this.Cases;
+
+            return this.Cases;
         }
 
 

@@ -25,6 +25,7 @@ namespace Lilo_et_Stitch.View
 
         #region attributes
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(0,0,0);
+        private MainStitch mainstitch;
         #endregion
 
         #region operations
@@ -44,9 +45,41 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>MaximeLAFFAYE</author>
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            //checking if the image has been transformed
+            if (mainstitch != null)
+            {
+                //Creating the dialog object
+                System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 
+                saveFileDialog.Filter = "Fichier PDF (*.pdf) |*.pdf";
+
+                try
+                {
+                    // Show the dialog and wait for the user to select a file
+                    DialogResult result = saveFileDialog.ShowDialog();
+
+                    string path = saveFileDialog.FileName;
+
+                    if(path == "")
+                    {
+                        System.Windows.MessageBox.Show("Vous n'avez pas sélectioné d'emplacement!");
+                    }
+                    else
+                    {
+                        mainstitch.SavePDF(path);
+                        System.Windows.MessageBox.Show("Exporté avec sucès!");
+                    }
+
+                }
+                catch
+                {
+                    System.Windows.MessageBox.Show("Erreur lors de l'exportation en PDF.");
+                }
+                    
+            }
         }
 
         /// <summary>
@@ -56,7 +89,7 @@ namespace Lilo_et_Stitch.View
         /// <param name="e"></param>
         private void PublishBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         /// <summary>
@@ -168,7 +201,7 @@ namespace Lilo_et_Stitch.View
                     encoder.Save(stream);
                     bitmap = new Bitmap(stream);
                 }
-                MainStitch mainstitch = new MainStitch(bitmap);
+                this.mainstitch = new MainStitch(bitmap);
 
                 //Starting the transformation of the image
                 var (editedImage, colorFromImage) = mainstitch.TransformImage((int)(ChangeStepSlider.Value),(int)(NbColorsSlider.Value),gridColor);
