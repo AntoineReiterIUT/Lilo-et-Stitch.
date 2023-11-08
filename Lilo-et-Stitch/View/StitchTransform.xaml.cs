@@ -93,11 +93,11 @@ namespace Lilo_et_Stitch.View
                     imagePrev.Source = bitmap;
                     int i;
                     int y;
-                    i = (int)bitmap.Height / 20;
-                    y = (int)bitmap.Width / 20;
+                    i = (int)bitmap.Height / 25;
+                    y = (int)bitmap.Width / 25;
                     i = (i + y) / 2;
                     ChangeStepSlider.Minimum = i;
-                    ChangeStepSlider.Maximum = i*2;
+                    ChangeStepSlider.Maximum = i*3;
                 }
             }
             catch (Exception ex)
