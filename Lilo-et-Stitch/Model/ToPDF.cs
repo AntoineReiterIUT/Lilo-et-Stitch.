@@ -133,7 +133,6 @@ namespace Lilo_et_Stitch.Model
                 
                 
                 text1.IsInLineParagraph = false;
-                text1.IsKeptWithNext = true;
                 page.Paragraphs.Add(text1);
 
             }
@@ -161,14 +160,7 @@ namespace Lilo_et_Stitch.Model
             GeneratePage1(document);
 
             //Creating the table
-            Aspose.Pdf.Table table = new Aspose.Pdf.Table()
-            /*
-            {
-                // Set the table border color as LightGray
-                Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black),
-                // Set the border for table cells
-                DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black)
-            }*/;
+            Aspose.Pdf.Table table = new Aspose.Pdf.Table();
             
             table.ColumnWidths = "15 15 15";
 
