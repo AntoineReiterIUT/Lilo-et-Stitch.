@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         WindowStartupLocation="CenterScreen"
+        Icon="Images/logo.png"
         mc:Ignorable="d"
-        Title="StitchMenu" Height="600" Width="1000">
+        Title="StitchMenu" Height="600" Width="1000" MinHeight="200" MinWidth="350">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -21,9 +22,11 @@
             <RowDefinition Height="*" />
 
         </Grid.RowDefinitions>
-
+        <Viewbox Grid.ColumnSpan="5" Grid.RowSpan="3">
+            <Image Margin="-389,0,268,-365" Source="Images/logo.png" Opacity="0.197" Height="836" Width="817"/>
+        </Viewbox>
         <Viewbox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Stretch="Uniform">
-            <Label Content="Accueil Stitch" FontSize="20" Margin="5"/>
+            <Label Content="Accueil Stitch" FontSize="40" FontFamily="Sylfaen"/>
         </Viewbox>
 
         <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
@@ -34,11 +37,5 @@
         <Viewbox Grid.Row="1" Grid.Column="3" Stretch="Uniform">
             <Button Content="   Liste des modèles   " Click="ModelServ_Click" Height="41" Style="{StaticResource MenuButton}"/>
         </Viewbox>
-
-        <Image Margin="10,0,0,0" Source="Images/logo.png"/>
-
-
-
-
     </Grid>
 </Window>

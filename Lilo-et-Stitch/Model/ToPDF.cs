@@ -35,7 +35,7 @@ namespace Lilo_et_Stitch.Model
             this.path = path;
             this.ImgTrans = imgT;
             this.catalog = new Dictionary<RGB, int>();
-            this.Symbols = new List<string> {"*","+","-","/","|","&","~","#","_","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+            this.Symbols = new List<string> { "☺", "♥", "♦", "♣", "♠","•","◘","○","☻","*","+","-","/","|","&","~","#","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", };
             this.catalogString = new Dictionary<RGB, string>();
             this.catalogLegend = new Dictionary<RGB, string>();
             GenerateCatalog();
