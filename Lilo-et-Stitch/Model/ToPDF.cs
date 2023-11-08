@@ -7,27 +7,36 @@ using System.Collections.Generic;
 
 namespace Lilo_et_Stitch.Model
 {
+    /// <summary>
+    /// This class will handle the creation of the PDF
+    /// </summary>
     public class ToPDF
     {
-        //attributies
+        #region attributes
+        private string path;
         private Dictionary<RGB, int> catalog;
         private ImgTransform ImgTrans;
         private List<string> Symbols;
         private Dictionary<RGB, string> catalogString;
         private Dictionary<RGB, string> catalogLegend;
+        #endregion
 
+
+        #region operations
         /// <summary>
         /// constructor PDF
         /// </summary>
         /// <param name="imgT">ImgTransform to get the list of cases</param>
+        /// <param name="path">Path to save the file</param>
         /// <authors>Mattis Galoppin</authors>
 
-        public ToPDF(ImgTransform imgT) 
+        public ToPDF(ImgTransform imgT,string path) 
         {
             //initialization
+            this.path = path;
             this.ImgTrans = imgT;
             this.catalog = new Dictionary<RGB, int>();
-            this.Symbols = new List<string> {"*","+","-","/","|","&","~","#","_","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+            this.Symbols = new List<string> { "☺", "♥", "♦", "♣", "♠","•","◘","○","☻","*","+","-","/","|","&","~","#","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", };
             this.catalogString = new Dictionary<RGB, string>();
             this.catalogLegend = new Dictionary<RGB, string>();
             GenerateCatalog();
@@ -126,7 +135,8 @@ namespace Lilo_et_Stitch.Model
         {
 
             // The path to the documents directory.
-            string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
+            //string dataDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HelloWorld_out.pdf");
+            string dataDir = this.path;
             // Initialize document object
             Document document = new Aspose.Pdf.Document();
             document.PageInfo.Margin.Left = 5;
@@ -201,5 +211,7 @@ namespace Lilo_et_Stitch.Model
                 }
             }
         }
+
+        #endregion
     }
 }
