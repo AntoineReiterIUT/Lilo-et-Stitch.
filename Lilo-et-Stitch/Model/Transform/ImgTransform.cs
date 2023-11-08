@@ -24,6 +24,7 @@ namespace Lilo_et_Stitch.Model.Transform
         private Image ?img;
         private Dictionary<RGB, RGB> colorMatches;
         private ColorPalette ?colorPalette;
+        private System.Windows.Media.Color gridColor;
         private static ImgTransform ?instance;
         #endregion
 
@@ -94,6 +95,12 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <author>MaximeLAFFAYE</author>
         public Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
+
+        /// <summary>
+        /// Property : read or edit the color of the grid
+        /// </summary>
+        /// <author>MaximeLAFFAYE</author>
+        public System.Windows.Media.Color GridColor { get => gridColor; set => gridColor = value; }
         #endregion
 
 
@@ -126,15 +133,17 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <param name="img">Image of origin</param>
         /// <returns>return a list of new cases</returns>
         /// <author>MaximeLAFFAYE</author>
-        public List<Case> TransformingIMG(Image image, int step, int maxColors)
+        public List<Case> TransformingIMG(Image image, int step, int maxColors, System.Windows.Media.Color gridcolor)
         {
             //Loading the palette
             colorPalette = new ColorPalette();
             colorPalette.LoadColors();
 
+
             this.img = image;
             this.step = step;
             this.colorsStep = colorPalette.DMCColors.Count / maxColors;
+            this.GridColor = gridcolor;
             this.InitValues();
             
 
@@ -239,7 +248,7 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             int bestDistance = 766; // Initialize bestDistance here
             RGB closestDMCColorRGB = null; // Initialize closestDMCColorRGB
-            int steps = 0;
+            int steps = 1;
 
             if (colorMatches.ContainsKey(box.ColorRGB))
             {

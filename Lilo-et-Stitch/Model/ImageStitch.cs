@@ -67,7 +67,7 @@ namespace Lilo_et_Stitch.Model
         public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
             ImgTransform transform = ImgTransform.Instance;
-            List<Case> cases = transform.TransformingIMG(prevImage,step,colorMax);
+            List<Case> cases = transform.TransformingIMG(prevImage,step,colorMax,gridColor);
 
             usedColors = transform.UsedColors;
             Bitmap bitNewImage = new Bitmap(prevImage);

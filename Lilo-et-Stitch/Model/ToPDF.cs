@@ -25,7 +25,7 @@ namespace Lilo_et_Stitch.Model
 
         #region operations
         /// <summary>
-        /// constructor PDF
+        /// constructor of the PDF
         /// </summary>
         /// <param name="imgT">ImgTransform to get the list of cases</param>
         /// <param name="path">Path to save the file</param>
@@ -144,6 +144,7 @@ namespace Lilo_et_Stitch.Model
             // Initialize document object
             Document document = new Aspose.Pdf.Document();
             document.PageInfo.Margin.Left = 5;
+            document.PageInfo.Margin.Right = 0;
             document.PageInfo.IsLandscape = true;
             // Adding the page
             Page page = document.Pages.Add();
@@ -153,14 +154,19 @@ namespace Lilo_et_Stitch.Model
 
             //Creating the table
             Aspose.Pdf.Table table = new Aspose.Pdf.Table()
+            /*
             {
                 // Set the table border color as LightGray
                 Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black),
                 // Set the border for table cells
                 DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black)
-            };
+            }*/;
             
             table.ColumnWidths = "15 15 15";
+
+            //Changing the color of the borders
+            table.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(this.ImgTrans.GridColor.A, this.ImgTrans.GridColor.R, this.ImgTrans.GridColor.G, this.ImgTrans.GridColor.B)));
+
 
             //Calculating the amount of cells and rows
             int nbCol = Math.Max(this.ImgTrans.Img.Width / this.ImgTrans.Step,0);
@@ -178,8 +184,10 @@ namespace Lilo_et_Stitch.Model
                     //Adding cells + symbols 
                     Case c = ImgTrans.Cases[CountCase];
                     string carac = catalogString[c.ColorDMC];
+                    
                     row.Cells.Add(carac.ToString());
-                }
+                    //row.Cells[CountCase].BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray);
+        }
             }
             
             document.Pages[2].Paragraphs.Add(table);
