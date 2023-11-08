@@ -93,8 +93,12 @@ namespace Lilo_et_Stitch.View
                     imagePrev.Source = bitmap;
                     int i;
                     int y;
-                    i = (int)bitmap.Height / 25;
-                    y = (int)bitmap.Width / 25;
+                    //initialization step with img
+
+                    int stepIni = 35;
+
+                    i = (int)bitmap.Height / stepIni; 
+                    y = (int)bitmap.Width / stepIni;
                     i = (i + y) / 2;
                     ChangeStepSlider.Minimum = i;
                     ChangeStepSlider.Maximum = i*3;
