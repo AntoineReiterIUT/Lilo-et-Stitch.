@@ -13,6 +13,7 @@ namespace Lilo_et_Stitch.Model
         private ImgTransform ImgTrans;
         private List<string> Symbols;
         private Dictionary<RGB, string> catalogString;
+        private Dictionary<RGB, string> catalogLegend;
 
         /// <summary>
         /// constructor PDF
@@ -20,16 +21,14 @@ namespace Lilo_et_Stitch.Model
         /// <param name="imgT">ImgTransform to get the list of cases</param>
         /// <authors>Mattis Galoppin</authors>
 
-
-
-
         public ToPDF(ImgTransform imgT) 
         {
             //initialization
             this.ImgTrans = imgT;
             this.catalog = new Dictionary<RGB, int>();
-            this.Symbols = new List<string> {"*","+","-","/","|","&","~","#","(","_","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+            this.Symbols = new List<string> {"*","+","-","/","|","&","~","#","_","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}",".","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
             this.catalogString = new Dictionary<RGB, string>();
+            this.catalogLegend = new Dictionary<RGB, string>();
             GenerateCatalog();
             GenerateSymbols();
             WriteInPDF();
@@ -51,13 +50,38 @@ namespace Lilo_et_Stitch.Model
         /// <summary>
         /// Adds the legend to the PDF
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
-        private List<Page> AddLegend()
+        /// <author>antoine Reiter</author>
+        private void AddLegend(Document document)
         {
             List<Page> Pages = new List<Page>();
+            Page page = document.Pages.Add();
+            int i = 0;
+            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("symbol or integer -> color DMC "));
 
-
-            return Pages;
+            foreach (var item in ImgTrans.UsedColors)
+            {
+                this.catalogLegend[item.Value] = item.Key;
+            }
+            foreach (RGB a in catalogLegend.Keys)
+            {
+                i++;
+                if (i == 40)
+                page = document.Pages.Add();
+                string x = catalogLegend[a];
+                string y = catalogString[a];
+                int z = catalog[a];
+                if (catalogString.ContainsKey(a)){
+                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(y + " -> " + x));
+                }
+                else if (catalog.ContainsKey(a))
+                {
+                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(z + " -> " + x)); 
+                }
+                else
+                {
+                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("ERROR -> " + x ));
+                }
+            }
         }
 
         /// <summary>
@@ -86,7 +110,7 @@ namespace Lilo_et_Stitch.Model
                 DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Color.Black)
             };
             
-            table.ColumnWidths = "10 10 10";
+            table.ColumnWidths = "15 15 15";
 
             //Calculating the amount of cells and rows
             int nbCol = Math.Max(this.ImgTrans.Img.Width / this.ImgTrans.Step,0);
@@ -109,35 +133,37 @@ namespace Lilo_et_Stitch.Model
             }
 
             document.Pages[1].Paragraphs.Add(table);
+           
+            
+
+            //Adding the legend
+            AddLegend(document);
             // Save updated PDF
             document.Save(dataDir);
 
-            //Adding the legend
-            List<Page> LegendPages = AddLegend();
-            foreach (Page pageL  in LegendPages)
-            {
-                document.Pages.Add(pageL);
-            }
-            
-
             //https://reference.aspose.com/tutorials/pdf/net/programming-with-tables/add-image-in-a-table-cell/
         }
+        /// <summary>
+        /// genere les symbole dans un nouveau catalogue de caractères
+        /// </summary>
+        /// <authors>Mattis Galoppin</authors>
         public void GenerateSymbols()
         {
-            List <string> charTemp = new List<string>();
-            int i= -1;
-            int j= -1;
-            foreach (var item in this.catalog.Keys) 
+            int i= 0; //index for char
+            int j= 0;//index for number
+            catalogString.Clear();
+            foreach (var item in this.catalog.Keys)
             {
-                if (!this.catalog.ContainsValue(i)) 
+                //if the symbols is not already in the catalogString and i exist in the list
+                if ((!this.catalogString.ContainsValue(this.Symbols[i])&&(i < this.Symbols.Count - 1))) 
                 {
-                    i++;
                     this.catalogString.Add(item, this.Symbols[i]);
+                    i++; 
                 }
-                else
+                else //we put number
                 {
-                    j++;
                     this.catalogString.Add(item,j.ToString());
+                    j++;
                 }
             }
         }
