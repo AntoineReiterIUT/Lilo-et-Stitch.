@@ -78,6 +78,11 @@ namespace Lilo_et_Stitch.Model
             text1.IsInLineParagraph = false;
             text1.IsFirstParagraphInColumn = true;
             page.Paragraphs.Add(text1);
+            text1 = new TextFragment("");
+            page.Paragraphs.Add(text1);
+
+
+
             foreach (var item in ImgTrans.UsedColors)
             {
                 this.catalogLegend[item.Value] = item.Key;
@@ -87,6 +92,19 @@ namespace Lilo_et_Stitch.Model
                 string x = catalogLegend[a];
                 string y = catalogString[a];
                 int z = catalog[a];
+
+                Table table = new Table()
+                {
+                    Border = new BorderInfo(BorderSide.All, .5f, Color.Black),
+
+                    DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.Black)
+                };
+                table.ColumnWidths = "10 10 10";
+                Row row = table.Rows.Add();
+                row.Cells.Add("");
+
+
+
                 if (catalogString.ContainsKey(a)){
                     text1 = new TextFragment(y + " -> " + x);
                     
@@ -99,15 +117,14 @@ namespace Lilo_et_Stitch.Model
                 }
                 else
                 {
-                    text1 = new TextFragment("ERROR -> " + x);
+                    text1 = new TextFragment(" ERROR -> " + x);
 
                 }
 
                 if (i==1)
                 {
                     i=0;
-                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
-                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
+                    text1.HorizontalAlignment = HorizontalAlignment.Left;
                 }
                 else if (i == 2)
                 {
@@ -126,8 +143,16 @@ namespace Lilo_et_Stitch.Model
                     i = 1;
                 }
 
-                text1.IsInLineParagraph = false;
+
+                
+                text1.IsInLineParagraph = true;
+               table.IsInLineParagraph = true;
+                
+                table.BackgroundColor = Color.FromArgb(a.R, a.G, a.B);
                 page.Paragraphs.Add(text1);
+                
+                page.Paragraphs.Add(table);
+                
 
             }
         }
