@@ -81,66 +81,58 @@ namespace Lilo_et_Stitch.Model
             text1 = new TextFragment("");
             page.Paragraphs.Add(text1);
 
-
-
             foreach (var item in ImgTrans.UsedColors)
             {
                 this.catalogLegend[item.Value] = item.Key;
             }
+
+            Table table = new Table()
+            {
+                Border = new BorderInfo(BorderSide.All, .5f, Color.Black),
+
+                DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.Black)
+            };
+            table.ColumnWidths = "10 10 10";
+
+            //Creating the first row manually 
+            table.Rows.Add();
+
+            int CellCounter = -1;
+
             foreach (RGB a in catalogLegend.Keys)
-            {   
+            {
                 string x = catalogLegend[a];
                 string y = catalogString[a];
                 int z = catalog[a];
 
-                Table table = new Table()
-                {
-                    Border = new BorderInfo(BorderSide.All, .5f, Color.Black),
 
-                    DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.Black)
-                };
-                table.ColumnWidths = "10 10 10";
-                Row row = table.Rows.Add();
-                row.Cells.Add("");
-
-                if (catalogString.ContainsKey(a)){
-                    text1 = new TextFragment(y + " -> " + x);
-                                        
-                }
+                string information = "";
+                if (catalogString.ContainsKey(a))
+                    information = y + " -> " + x;
                 else if (catalog.ContainsKey(a))
-                {
-                    text1 = new TextFragment(z + " -> " + x);
-                }
+                    information = z + " -> " + x;
                 else
-                {
-                    text1 = new TextFragment(" ERROR -> " + x);
+                    information = " ERROR -> " + x;
 
+                //checking if the row isn't full
+                if (CellCounter >= 19)
+                {
+                    table.Rows.Add();
+                    CellCounter = -1;
                 }
 
-                if (i==1)
-                {
-                    i=0;
-                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
-                    table.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
-                }
-                else if (i == 0)
-                {
-                    i = 1;
-                    text1.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
-                    table.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
-                }
-                
-  
-                text1.IsInLineParagraph = true;
-                table.IsInLineParagraph = false;
-                
-                table.BackgroundColor = Color.FromArgb(a.R, a.G, a.B);
-                page.Paragraphs.Add(text1);
-                
-                page.Paragraphs.Add(table);
-                
+                Row currentRow = table.Rows[table.Rows.Count - 1];
+                //symbol
+                var cell = currentRow.Cells.Add(information);
+                cell.ColSpan = 6;
 
+                //color
+                currentRow.Cells.Add("");
+                currentRow.Cells[CellCounter + 2].BackgroundColor = Color.FromArgb(a.R, a.G, a.B);
+
+                CellCounter += 2;
             }
+            page.Paragraphs.Add(table);
         }
 
         /// <summary>
