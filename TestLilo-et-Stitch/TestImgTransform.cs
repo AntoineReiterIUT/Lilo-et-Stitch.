@@ -32,7 +32,6 @@ namespace TestLilo_et_Stitch
             //the size of the image to test is 800 by 800
             
             Assert.Equal(25600,transImg.Cases.Count());
-
         }
 
 

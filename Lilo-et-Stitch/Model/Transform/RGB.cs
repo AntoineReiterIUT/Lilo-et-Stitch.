@@ -21,7 +21,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
         #region properties
         /// <summary>
-        /// Property : read or edit the Red value.
+        /// Property : read or edit the Red value
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public int R
@@ -44,7 +44,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
 
         /// <summary>
-        /// Property : read or edit the Green value.
+        /// Property : read or edit the Green value
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public int G
@@ -95,11 +95,11 @@ namespace Lilo_et_Stitch.Model.Transform
 
         #region operations
         /// <summary>
-        /// Constructor of the RGB.
+        /// Constructor of the RGB
         /// </summary>
         /// <param name="r">Red</param>
-        /// <param name="g">Blue</param>
-        /// <param name="b">Green</param>
+        /// <param name="g">Green</param>
+        /// <param name="b">Blue</param>
         /// <author>Maxime LAFFAYE</author>
         public RGB(int r,int g,int b) 
         { 
@@ -110,10 +110,10 @@ namespace Lilo_et_Stitch.Model.Transform
 
 
         /// <summary>
-        /// Checks if two RGB color objects have the same values.
+        /// Checks if two RGB color objects have the same values
         /// </summary>
-        /// <param name="obj">The object to compare with the current RGB object.</param>
-        /// <returns> if the specified object is equal to the current RGB object </returns>
+        /// <param name="obj">The object to compare with the current RGB object</param>
+        /// <returns> If the specified object is equal to the current RGB object</returns>
         /// <author>Maxime LAFFAYE</author>
         public override bool Equals(object? obj)
         {
@@ -129,10 +129,10 @@ namespace Lilo_et_Stitch.Model.Transform
 
 
         /// <summary>
-        /// Serves as the default hash function.
+        /// Generate a hash code for the current object.
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
-        /// <returns>A hash code for the current object.</returns>
+        /// <returns>A hash code for the current object</returns>
         public override int GetHashCode()
         {
             return HashCode.Combine(R, G, B);

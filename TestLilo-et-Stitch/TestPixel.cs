@@ -8,20 +8,22 @@ using System.Threading.Tasks;
 namespace TestLilo_et_Stitch
 {
     /// <summary>
-    /// Multiple tests will be ran to check if the class named "Pixel" works correctly.
+    /// Multiple tests will be ran to check if the class named "Pixel" works correctly
     /// </summary>
     public class TestPixel
     {
         #region operations
         /// <summary>
-        /// Will test if the Pixel is created properly.
+        /// Will test if the Pixel is created properly
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         [Fact]
         public void newPixel()
         {
+            //Creation of the pixel
             Pixel pixel1 = new Pixel(new RGB(255, 254, 253), new Coordinate(10, 15),1);
 
+            //Checking if it's been properly created
             Assert.Equal(10, pixel1.Coord.X) ;
             Assert.Equal(15, pixel1.Coord.Y) ;
 

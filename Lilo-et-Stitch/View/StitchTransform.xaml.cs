@@ -134,6 +134,7 @@ namespace Lilo_et_Stitch.View
                     //Initialization step with img
                     int stepIni = 35;
 
+                    //Calculate the step
                     i = (int)bitmap.Height / stepIni; 
                     y = (int)bitmap.Width / stepIni;
                     i = (i + y) / 2;
@@ -199,7 +200,7 @@ namespace Lilo_et_Stitch.View
         /// <author>Maxime LAFFAYE</author>
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            //Creating the bitmap
+            //Create the bitmap
             WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
             {
@@ -213,15 +214,15 @@ namespace Lilo_et_Stitch.View
                 }
                 this.mainstitch = new MainStitch(bitmap);
 
-                //Starting the transformation of the image
+                //Start the transformation of the image
                 var (editedImage, colorFromImage) = mainstitch.TransformImage((int)(ChangeStepSlider.Value),(int)(NbColorsSlider.Value),gridColor);
 
                 this.editedImage = editedImage;
 
-                //Clearing the list so we don't stack all colors
+                //Clear the list so we don't stack all colors
                 usedColorList.Children.Clear(); 
 
-                //Adding the code - rgb color to the scrollViewer
+                //Add the code - rgb color to the scrollViewer
                 foreach (string code in colorFromImage.Keys)
                 {
                     RGB rgb = colorFromImage[code];
@@ -232,7 +233,7 @@ namespace Lilo_et_Stitch.View
                     usedColorList.Children.Add(current);
                 }
 
-                //Rebuilding the image
+                //Rebuild the image
                 BitmapImage bitmapImage = new BitmapImage();
                 using (MemoryStream memoryStream = new MemoryStream())
                 {

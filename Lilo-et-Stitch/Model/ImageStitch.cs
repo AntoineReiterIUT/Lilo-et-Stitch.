@@ -11,8 +11,8 @@ using System.Windows.Media.Imaging;
 namespace Lilo_et_Stitch.Model
 {
     /// <summary>
-    /// This class will be used as a link with the mainStitch and the imgTransform.
-    /// It will color the pixels.
+    /// This class will be used as a link with the mainStitch and the imgTransform
+    /// It will color the pixels
     /// </summary>
     public class ImageStitch
     {
@@ -65,7 +65,7 @@ namespace Lilo_et_Stitch.Model
 
 
         /// <summary>
-        /// Transforms the image
+        /// Transforms the image and rebuild the new image
         /// </summary>
         /// <param name="step">Step for each "case/pixel"</param>
         /// <param name="colorMax">Max amount of color to be used</param>
@@ -74,18 +74,20 @@ namespace Lilo_et_Stitch.Model
         /// <author>Maxime LAFFAYE</author>
         public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
+            //Transform the image
             ImgTransform transform = ImgTransform.Instance;
             List<Case> cases = transform.TransformingIMG(prevImage,step,colorMax,gridColor);
+            //Create the new image
+            Bitmap bitNewImage = new Bitmap(prevImage);
 
             usedColors = transform.UsedColors;
-            Bitmap bitNewImage = new Bitmap(prevImage);
 
             foreach (Case c in cases)
             {
-                for (int i = c.Coord1.X; i < c.Coord2.X; i++)
+                for (int i = c.Coord1.X; i < c.Coord2.X; i++) //Foreach pixel of the case's line
                 {
 
-                    for (int j= c.Coord1.Y; j < c.Coord2.Y; j++)
+                    for (int j= c.Coord1.Y; j < c.Coord2.Y; j++) //Foreach pixel of the case's column
                     {
                         if (c.Opacity > 0 ) //Setting the color of each pixel on the new image if he is not transparent
                             bitNewImage.SetPixel(i, j, Color.FromArgb(c.Opacity,c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
@@ -95,12 +97,14 @@ namespace Lilo_et_Stitch.Model
                 //Creation of the grid (using the color from the parameters)
                 for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, bitNewImage.Width); i++) //Foreach pixel of the case's line
                 {
-                    bitNewImage.SetPixel(i, c.Coord1.Y, Color.FromArgb(gridColor.A,gridColor.R,gridColor.G,gridColor.B)); //Draw the top line
+                    //Draw the top line
+                    bitNewImage.SetPixel(i, c.Coord1.Y, Color.FromArgb(gridColor.A,gridColor.R,gridColor.G,gridColor.B)); 
                 }
 
                 for (int j = Math.Max(c.Coord1.Y, 0); j < Math.Min(c.Coord2.Y, bitNewImage.Height); j++) //Foreach pixel of the case's column
                 {
-                    bitNewImage.SetPixel(c.Coord1.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B)); //Draw the left line
+                    //Draw the left line
+                    bitNewImage.SetPixel(c.Coord1.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B)); 
                 }
             }
             return ((Image)bitNewImage, usedColors);

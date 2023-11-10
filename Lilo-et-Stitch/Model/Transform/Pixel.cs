@@ -46,8 +46,8 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <summary>
         /// Constructor of the pixel
         /// </summary>
-        /// <param name="colorRGB">R,G,B</param>
-        /// <param name="coord">X,Y</param>
+        /// <param name="colorRGB">The color of the pixel in RGB</param>
+        /// <param name="coord">The coordinate of the pixel (X,Y)</param>
         /// <author>Maxime LAFFAYE</author>
         public Pixel(RGB colorRGB, Coordinate coord, int opacity)
         {
