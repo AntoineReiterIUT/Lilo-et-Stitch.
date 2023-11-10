@@ -72,27 +72,29 @@ namespace Lilo_et_Stitch.Model
         /// <author>antoine Reiter</author>
         private void AddLegend(Document document)
         {
+            //Adds a page to the document
             List<Page> Pages = new List<Page>();
             Page page = document.Pages.Add();
-            int i = 1;
+
+
             TextFragment text1;
-            text1 = new TextFragment("symbol or integer -> color DMC ");
+            text1 = new TextFragment("symbol or integer -> color DMC "); //writes "symbol or integer -> color DMC" in the PDF
             text1.IsInLineParagraph = false;
             text1.IsFirstParagraphInColumn = true;
             page.Paragraphs.Add(text1);
             text1 = new TextFragment("");
             page.Paragraphs.Add(text1);
 
-            foreach (var item in ImgTrans.UsedColors)
+            foreach (var item in ImgTrans.UsedColors) // for all items in usedcolor
             {
                 this.catalogLegend[item.Value] = item.Key;
             }
 
-            Table table = new Table()
+            Table table = new Table() // Creates a table that will be used to store the culeur and legend
             {
-                Border = new BorderInfo(BorderSide.All, .5f, Color.Black),
+                Border = new BorderInfo(BorderSide.All, .5f, Color.Black), // Sets the border of the table
 
-                DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.Black)
+                DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.Black) // Sets the default border for cells
             };
             table.ColumnWidths = "10 10 10";
 
@@ -101,39 +103,43 @@ namespace Lilo_et_Stitch.Model
 
             int CellCounter = -1;
 
-            foreach (RGB a in catalogLegend.Keys)
+            foreach (RGB a in catalogLegend.Keys)  // for every rgb in the keys in catalogueLenged
             {
+                // the string and the int  take the value of the differant catalog
                 string x = catalogLegend[a];
                 string y = catalogString[a];
                 int z = catalog[a];
 
 
                 string information = "";
-                if (catalogString.ContainsKey(a))
+                if (catalogString.ContainsKey(a)) // see if the RGB a is in the catalogtring where we have all the symbol
                     information = y + " -> " + x;
-                else if (catalog.ContainsKey(a))
+                else if (catalog.ContainsKey(a)) // see if the rgb is in the catalog where we have the int
                     information = z + " -> " + x;
-                else
+                else // if there is nothing found for a RGB it will print error
                     information = " ERROR -> " + x;
 
-                //checking if the row isn't full
+                //checking if the row isn't full if it is it will create a new row
                 if (CellCounter >= 19)
                 {
                     table.Rows.Add();
                     CellCounter = -1;
                 }
 
+                // used to know wich row we are working on
                 Row currentRow = table.Rows[table.Rows.Count - 1];
-                //symbol
+                // this add the symbol or the number in the cell
                 var cell = currentRow.Cells.Add(information);
                 cell.ColSpan = 6;
 
-                //color
+                //this add a view of the color next to the symbol or the number and there DMC color
                 currentRow.Cells.Add("");
                 currentRow.Cells[CellCounter + 2].BackgroundColor = Color.FromArgb(a.R, a.G, a.B);
 
+                // we add 2 cell in the process so we make the cellcounter go up by 2
                 CellCounter += 2;
             }
+            // and finally we add the table in the document
             page.Paragraphs.Add(table);
         }
 
