@@ -9,8 +9,10 @@ using System.Reflection.Metadata;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
+
 using Color = Aspose.Pdf.Color;
 using Document = Aspose.Pdf.Document;
+
 
 namespace Lilo_et_Stitch.Model
 {
@@ -166,16 +168,17 @@ namespace Lilo_et_Stitch.Model
 
 
             //Calculating the amount of cells and rows
-            int nbCol = Math.Max(this.ImgTrans.Img.Width / this.ImgTrans.Step,0);
-            int nbRows = Math.Max(this.ImgTrans.Img.Height / this.ImgTrans.Step,0);
-            
+            int nbCol = Math.Max((int)Math.Ceiling((double)this.ImgTrans.Img.Width / this.ImgTrans.Step), 0);
+            int nbRows = Math.Max((int)Math.Ceiling((double)this.ImgTrans.Img.Height / this.ImgTrans.Step), 0);
 
             //adding rows + cells
             int CountCase = -1;
-            for (int i = 0; i < nbRows; i++)
+            int rows = 0;
+            int columns = 0;
+            for (rows = 0; rows < nbRows; rows++)
             {
                 Aspose.Pdf.Row row = table.Rows.Add();
-                for(int j = 0; j < nbCol; j++)
+                for(columns = 0; columns < nbCol; columns++)
                 {
                     CountCase++;
                     //Adding cells + symbols 
@@ -191,11 +194,15 @@ namespace Lilo_et_Stitch.Model
                     }
                 }
             }
-            
+
+            //Setting the size of the page according to the table, if the table is too small the page will stay at 60 60.
+            document.Pages[2].SetPageSize(
+                Math.Max(columns * 16 + (document.Pages[2].PageInfo.Margin.Left + document.Pages[2].PageInfo.Margin.Right), 60), //842
+                Math.Max(rows * 11 + (document.Pages[2].PageInfo.Margin.Top + document.Pages[2].PageInfo.Margin.Bottom), 60)); //595
+
+            //Adding the table to the page
             document.Pages[2].Paragraphs.Add(table);
            
-            
-
             //Adding the legend
             AddLegend(document);
             // Save updated PDF
