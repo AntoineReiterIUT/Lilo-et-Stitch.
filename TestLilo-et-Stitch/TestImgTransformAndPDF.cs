@@ -13,11 +13,15 @@ namespace TestLilo_et_Stitch
     /// <summary>
     /// This class will run tests to check if the "ImgTransform" class is working as intented
     /// </summary>
-    public class TestImgTransform
+    public class TestImgTransformAndPDF
     {
         #region attributes
         private Image img;
         private ImgTransform transImg;
+
+        private int maxColorForTests = 20;
+        private ToPDF pDFforTesting;
+        private string pathToTest = @"../Data/testPDF.pdf";
         #endregion
 
 
@@ -85,9 +89,9 @@ namespace TestLilo_et_Stitch
             transImg.ToDMC(transImg.Cases[1]);
             
 
-            Assert.Equal(transImg.Cases[0].ColorDMC.B, new RGB(19, 71, 125).B);
-            Assert.Equal(transImg.Cases[2].ColorDMC.B, new RGB(19, 71, 125).B);
-            Assert.Equal(transImg.Cases[1].ColorDMC, new RGB(250, 50, 3));
+            Assert.Equal(transImg.Cases[0].ColorDMC.B, new RGB(19, 71, 165).B);
+            Assert.Equal(transImg.Cases[2].ColorDMC.B, new RGB(19, 71, 165).B);
+            Assert.Equal(transImg.Cases[1].ColorDMC, new RGB(161, 75, 81));
         }
 
 
@@ -95,7 +99,7 @@ namespace TestLilo_et_Stitch
         /// Constructor of the test
         /// </summary>
         /// <author>Antoine SAKKALIS - Maxime LAFFAYE</author>
-        public TestImgTransform()
+        public TestImgTransformAndPDF()
         {
             var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             var file = Path.Combine(projectFolder, @"../TestImages/pierre-d-argent800.jpg");
@@ -104,7 +108,13 @@ namespace TestLilo_et_Stitch
             //we record an image
             img = Image.FromFile(cheminDestination);
             transImg = ImgTransform.Instance;
-            transImg.TransformingIMG(img,5,454,System.Windows.Media.Color.FromRgb(255, 0, 0));
+            transImg.TransformingIMG(img,5,this.maxColorForTests,System.Windows.Media.Color.FromRgb(255, 0, 0));
+
+
+            //Preparing for the PDF tests
+            var filePDF = Path.Combine(projectFolder, this.pathToTest);
+            transImg.NewImage = img;
+            this.pDFforTesting = new ToPDF(transImg, filePDF);
         }
 
 
@@ -166,6 +176,27 @@ namespace TestLilo_et_Stitch
             Assert.Equal(15, transImg.Step); 
         }
 
+
+        /// <summary>
+        /// Testing if the Symbols of the PDF are generated properly.
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        [Fact]
+        public void testSymbols()
+        {
+            bool equalResult = true;
+
+            int countSymbols = 0;
+            foreach (string catalogSymbol in pDFforTesting.CatalogString.Values)
+            {
+                if (catalogSymbol != pDFforTesting.Symbols[countSymbols]) equalResult = false;
+                countSymbols++;
+            }
+
+            //Checking if the symbols are assigned correctly
+            Assert.True(equalResult);
+
+        }
         #endregion
     }
 }
