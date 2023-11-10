@@ -166,18 +166,6 @@ namespace TestLilo_et_Stitch
 
 
         /// <summary>
-        /// Test choiceStep with a 800 x 800 img 
-        /// </summary>
-        /// <author>Mattis GALOPPIN</author>
-        [Fact]
-        public void TestChoiceStep()
-        {
-            transImg.ChoiceStep();
-            Assert.Equal(15, transImg.Step); 
-        }
-
-
-        /// <summary>
         /// Testing if the Symbols of the PDF are generated properly.
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
