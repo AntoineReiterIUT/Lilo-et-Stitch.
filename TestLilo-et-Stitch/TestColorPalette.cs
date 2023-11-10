@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 
 namespace TestLilo_et_Stitch
 {
+    /// <summary>
+    /// This class will run tests on the "ColorPalette" class
+    /// </summary>
     public class TestColorPalette
     {
+        #region operations
         /// <summary>
         /// Tests the color palette loading method
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         [Fact]
         public void TestLoadColors()
         {
@@ -24,5 +29,6 @@ namespace TestLilo_et_Stitch
             Assert.Equal(testPalette.DMCColors["White"], new RGB(252, 251, 248));
 
         }
+        #endregion
     }
 }

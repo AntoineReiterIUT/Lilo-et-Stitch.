@@ -12,11 +12,11 @@ namespace TestLilo_et_Stitch
     /// </summary>
     public class TestRGB
     {
-
+        #region operations
         /// <summary>
         /// Will test if the RGB color is created properly.
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         [Fact]
         public void newRGB()
         {
@@ -32,5 +32,6 @@ namespace TestLilo_et_Stitch
             Assert.Equal(255, rgb2.G);
             Assert.Equal(255, rgb2.B);
         }
+        #endregion
     }
 }

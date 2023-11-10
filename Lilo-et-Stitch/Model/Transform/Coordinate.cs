@@ -11,13 +11,11 @@ namespace Lilo_et_Stitch.Model.Transform
     /// </summary>
     public class Coordinate
     {
-        #region attributes
-
-        
+        #region attributes 
         private int x;
         private int y;
-
         #endregion
+
 
         #region properties
         /// <summary>
@@ -25,11 +23,13 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         public int X { get { return x; } set {  x = value; } }
 
+
         /// <summary>
         /// Property : read or edit the Y value.
         /// </summary>
         public int Y { get { return y; } set { y = value; } }
         #endregion
+
 
         #region operations
         /// <summary>

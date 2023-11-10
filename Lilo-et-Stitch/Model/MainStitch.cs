@@ -19,16 +19,19 @@ namespace Lilo_et_Stitch.Model
         private Image img;
         #endregion
 
+
         #region operations
         public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
             return this._imageStitch.TransformImage(step,colorMax, gridColor);
         }
 
+
         public void SavePDF(string path, System.Drawing.Image editedImage)
         {
             this._imageStitch.SavePDF(path, editedImage);
         }
+
 
         public MainStitch(Image img)
         {

@@ -18,18 +18,22 @@ namespace Lilo_et_Stitch.Model
         private Dictionary<string, RGB> dmcColors;
         #endregion
 
+
         #region properties
         /// <summary>
         /// Stores the DMCs colors in a Dictionnary with their RGB values and DMC value code
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public Dictionary<string, RGB> DMCColors { get { return dmcColors; } }
         #endregion
+
 
         #region operations
         /// <summary>
         /// Loads the DMC colors in the list
         /// </summary>
         /// <exception cref="FormatException">Thrown when there is a formatting error in the CSV file or during conversion.</exception>
+        /// <author>Antoine SAKKALIS</author>
         public void LoadColors()
         {
             var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -72,15 +76,15 @@ namespace Lilo_et_Stitch.Model
             }
         }
 
+
         /// <summary>
-        /// Constructeur de la classe
+        /// Constructor of the class
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public ColorPalette()
         {
             dmcColors = new Dictionary<string, RGB>();
         }
-
-
         #endregion
     }
 }

@@ -18,11 +18,12 @@ namespace Lilo_et_Stitch.Model.Transform
         private int b;
         #endregion
 
-        #region properties
 
+        #region properties
         /// <summary>
         /// Property : read or edit the Red value.
         /// </summary>
+        /// <author>Maxime LAFFAYE</author>
         public int R
         {
             get { return r; }
@@ -40,9 +41,12 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
             }
         }
+
+
         /// <summary>
         /// Property : read or edit the Green value.
         /// </summary>
+        /// <author>Maxime LAFFAYE</author>
         public int G
         {
             get { return g; }
@@ -62,9 +66,12 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
             }
         }
+
+
         /// <summary>
         /// Property : read or edit the Blue value.
         /// </summary>
+        /// <author>Maxime LAFFAYE</author>
         public int B
         {
             get { return b;}
@@ -85,14 +92,15 @@ namespace Lilo_et_Stitch.Model.Transform
         }
         #endregion
 
-        #region methods
+
+        #region operations
         /// <summary>
         /// Constructor of the RGB.
         /// </summary>
         /// <param name="r">Red</param>
         /// <param name="g">Blue</param>
         /// <param name="b">Green</param>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public RGB(int r,int g,int b) 
         { 
             R = r;
@@ -100,11 +108,13 @@ namespace Lilo_et_Stitch.Model.Transform
             B = b;
         }
 
+
         /// <summary>
         /// Checks if two RGB color objects have the same values.
         /// </summary>
         /// <param name="obj">The object to compare with the current RGB object.</param>
         /// <returns> if the specified object is equal to the current RGB object </returns>
+        /// <author>Maxime LAFFAYE</author>
         public override bool Equals(object? obj)
         {
             bool areEqual = false;
@@ -117,14 +127,16 @@ namespace Lilo_et_Stitch.Model.Transform
             return areEqual;
         }
 
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <author>Antoine SAKKALIS</author>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             return HashCode.Combine(R, G, B);
         }
-
-
-
         #endregion
-
     }
 }

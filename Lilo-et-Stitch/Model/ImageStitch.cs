@@ -14,7 +14,6 @@ namespace Lilo_et_Stitch.Model
     /// This class will be used as a link with the mainStitch and the imgTransform.
     /// It will color the pixels.
     /// </summary>
-    /// <author>MaximeLAFFAYE</author>
     public class ImageStitch
     {
         #region attributes
@@ -23,39 +22,47 @@ namespace Lilo_et_Stitch.Model
         private Dictionary<string,RGB> usedColors = new Dictionary<string,RGB>();
         #endregion
 
+
         #region properties
         /// <summary>
         /// Image picked by the user
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public Image PrevImage { get => prevImage; set => prevImage = value; }
+
 
         /// <summary>
         /// Image transformed to show
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public Image NewImage { get => newImage; set => newImage = value; }
         #endregion
+
 
         #region operations
         /// <summary>
         /// Constructor of the class
         /// </summary>
         /// <param name="img">Image inserted by the user</param>
+        /// <author>Antoine SAKKALIS</author>
         public ImageStitch(Image img)
         {
             prevImage = img;
         }
+
 
         /// <summary>
         /// Will create the PDF using the given path
         /// </summary>
         /// <param name="path">Path to save the file</param>
         /// <param name="editedImage">New image</param>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public void SavePDF(string path, System.Drawing.Image editedImage)
         {
             ImgTransform transform = ImgTransform.Instance;
             transform.PDF(path,editedImage);
         }
+
 
         /// <summary>
         /// Transforms the image
@@ -63,7 +70,7 @@ namespace Lilo_et_Stitch.Model
         /// <param name="step">Step for each "case/pixel"</param>
         /// <param name="colorMax">Max amount of color to be used</param>
         /// <param name="gridColor">Color of the grid</param>
-        /// <returns></returns>
+        /// <returns>New image | List of used colors</returns>
         /// <author>MaximeLAFFAYE</author>
         public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
@@ -109,10 +116,7 @@ namespace Lilo_et_Stitch.Model
                         bitNewImage.SetPixel(c.Coord2.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B));
                     }
                 }
-
-
             }
-
             return ((Image)bitNewImage, usedColors);
         }
         #endregion

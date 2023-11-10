@@ -12,10 +12,11 @@ namespace TestLilo_et_Stitch
     /// </summary>
     public class TestPixel
     {
+        #region operations
         /// <summary>
         /// Will test if the Pixel is created properly.
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         [Fact]
         public void newPixel()
         {
@@ -29,5 +30,7 @@ namespace TestLilo_et_Stitch
             Assert.Equal(253, pixel1.ColorRGB.B);
 
         }
+
+        #endregion
     }
 }
