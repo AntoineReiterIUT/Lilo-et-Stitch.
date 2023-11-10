@@ -162,7 +162,7 @@ namespace Lilo_et_Stitch.Model
             Page page = document.Pages.Add();
 
             //adding page 1
-            GeneratePage1(document,dataDir);
+            GeneratePage1(document);
 
             //Creating the table
             Aspose.Pdf.Table table = new Aspose.Pdf.Table();
@@ -246,7 +246,7 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <param name="document">the document</param>
         /// <author>Mattis Galoppin</author>
-        public void GeneratePage1(Document document,string dataDir)
+        public void GeneratePage1(Document document)
         {
             // Create a title
             TextFragment title = new TextFragment("Patron de point de croix");
