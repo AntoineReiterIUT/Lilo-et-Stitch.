@@ -21,6 +21,11 @@ namespace Lilo_et_Stitch.View
     /// </summary>
     public partial class StitchMenu : Window
     {
+        #region attributes
+        StitchTransform stitchTransform = new StitchTransform();
+        StitchModels stitchModels = new StitchModels();
+        #endregion
+
         #region operations
         /// <summary>
         /// Constructor of the main menu
@@ -40,10 +45,8 @@ namespace Lilo_et_Stitch.View
         /// <author>Mattis GALOPPIN</author>
         private void NewModel_Click(object sender, RoutedEventArgs e)
         {
-            StitchTransform stitchTransform = new StitchTransform();
-
             stitchTransform.Show();  //Display the new page
-            this.Close();  //Close the the firt one
+            this.Close();  //Close the the first one
         }
 
 
@@ -55,9 +58,8 @@ namespace Lilo_et_Stitch.View
         /// <author>Mattis GALOPPIN</author>
         private void ModelServ_Click(object sender, RoutedEventArgs e)
         {
-            StitchModels stitchModels = new StitchModels();
             stitchModels.Show(); //Display the new page 
-            this.Close(); //Close the firt one
+            this.Close(); //Close the first one
         }
         #endregion
     }
