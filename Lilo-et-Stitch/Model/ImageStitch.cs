@@ -71,7 +71,7 @@ namespace Lilo_et_Stitch.Model
         /// <param name="colorMax">Max amount of color to be used</param>
         /// <param name="gridColor">Color of the grid</param>
         /// <returns>New image | List of used colors</returns>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
             ImgTransform transform = ImgTransform.Instance;
@@ -93,19 +93,14 @@ namespace Lilo_et_Stitch.Model
                 }
 
                 //Creation of the grid (using the color from the parameters)
-                for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, bitNewImage.Width); i++) //Foreach row of the case
+                for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, bitNewImage.Width); i++) //Foreach pixel of the case's line
                 {
-
                     bitNewImage.SetPixel(i, c.Coord1.Y, Color.FromArgb(gridColor.A,gridColor.R,gridColor.G,gridColor.B)); //Draw the top line
-                    bitNewImage.SetPixel(i, c.Coord2.Y-1, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B)); //Draw the bottom line
-                    
                 }
 
-                for (int j = Math.Max(c.Coord1.Y, 0); j < Math.Min(c.Coord2.Y, bitNewImage.Height); j++) //Foreach column of the case
+                for (int j = Math.Max(c.Coord1.Y, 0); j < Math.Min(c.Coord2.Y, bitNewImage.Height); j++) //Foreach pixel of the case's column
                 {
-                    
                     bitNewImage.SetPixel(c.Coord1.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B)); //Draw the left line
-                    bitNewImage.SetPixel(c.Coord2.X-1, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B)); //Draw the right line
                 }
             }
             return ((Image)bitNewImage, usedColors);
