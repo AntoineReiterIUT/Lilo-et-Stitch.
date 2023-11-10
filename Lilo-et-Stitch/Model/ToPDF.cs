@@ -145,9 +145,9 @@ namespace Lilo_et_Stitch.Model
 
                 string information = "";
                 if (CatalogString.ContainsKey(a)) //See if the rgb is in the catalog where we have the symbol
-                    information = y + " -> " + x;
+                    information = " " + y + " -> " + x;
                 else if (Catalog.ContainsKey(a)) //See if the rgb is in the catalog where we have the number
-                    information = z + " -> " + x;
+                    information = " " + z + " -> " + x;
 
                 else //If there's nothing found for a RGB it will print an error
                     information = " ERROR -> " + x;
@@ -225,8 +225,9 @@ namespace Lilo_et_Stitch.Model
                     if (c.Opacity > 0) //if the case is not transparent
                     {
                         string carac = CatalogString[c.ColorDMC];
-                        var newCell = row.Cells.Add(carac.ToString());
+                        var newCell = row.Cells.Add(" " + carac.ToString());
                         //newCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(250,c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
+                        //For future use, ^
                     }
                     else //if the case is transparent
                     {

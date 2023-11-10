@@ -37,7 +37,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <param name="x">X of the coordinate.</param>
         /// <param name="y">Y of the coordinate.</param>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public Coordinate(int x, int y) 
         { 
             this.x = x;

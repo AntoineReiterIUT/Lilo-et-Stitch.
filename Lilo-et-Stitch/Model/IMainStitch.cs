@@ -22,7 +22,7 @@ namespace Lilo_et_Stitch.Model
         /// <param name="colorMax">Max amount of color to be used </param>
         /// <param name="gridColor">Color of the grid</param>
         /// <returns>The transformed image | list of used colors</returns>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public (Image, Dictionary<string, RGB>) TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor);
 
 
@@ -31,7 +31,7 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <param name="path">Path to save the file</param>
         /// <param name="editedImage">New image</param>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public void SavePDF(string path, System.Drawing.Image editedImage);
     }
 }
