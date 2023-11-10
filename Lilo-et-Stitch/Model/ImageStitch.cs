@@ -85,28 +85,19 @@ namespace Lilo_et_Stitch.Model
                 }
 
                 //Creation of the grid (using the color from the parameters)
-                for (int i = Math.Max(c.Coord1.X, 0); i <= Math.Min(c.Coord2.X, bitNewImage.Width - 1); i++)
+                for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, bitNewImage.Width); i++) //Foreach row of the case
                 {
-                    if (c.Coord1.Y >= 0 && c.Coord1.Y < bitNewImage.Height)
-                    {
-                        bitNewImage.SetPixel(i, c.Coord1.Y, Color.FromArgb(gridColor.A,gridColor.R,gridColor.G,gridColor.B));
-                    }
-                    if (c.Coord2.Y >= 0 && c.Coord2.Y < bitNewImage.Height)
-                    {
-                        bitNewImage.SetPixel(i, c.Coord2.Y, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B));
-                    }
+
+                    bitNewImage.SetPixel(i, c.Coord1.Y, Color.FromArgb(gridColor.A,gridColor.R,gridColor.G,gridColor.B)); //Draw the top line
+                    bitNewImage.SetPixel(i, c.Coord2.Y-1, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B)); //Draw the bottom line
+                    
                 }
 
-                for (int j = Math.Max(c.Coord1.Y, 0); j <= Math.Min(c.Coord2.Y, bitNewImage.Height - 1); j++)
+                for (int j = Math.Max(c.Coord1.Y, 0); j < Math.Min(c.Coord2.Y, bitNewImage.Height); j++) //Foreach column of the case
                 {
-                    if (c.Coord1.X >= 0 && c.Coord1.X < bitNewImage.Width)
-                    {
-                        bitNewImage.SetPixel(c.Coord1.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B));
-                    }
-                    if (c.Coord2.X >= 0 && c.Coord2.X < bitNewImage.Width)
-                    {
-                        bitNewImage.SetPixel(c.Coord2.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B));
-                    }
+                    
+                    bitNewImage.SetPixel(c.Coord1.X, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B)); //Draw the left line
+                    bitNewImage.SetPixel(c.Coord2.X-1, j, Color.FromArgb(gridColor.A, gridColor.R, gridColor.G, gridColor.B)); //Draw the right line
                 }
 
 
