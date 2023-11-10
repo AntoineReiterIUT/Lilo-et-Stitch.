@@ -25,10 +25,32 @@ namespace Lilo_et_Stitch.Model
         #region attributes
         private string path;
         private Dictionary<RGB, int> catalog;
-        private ImgTransform ImgTrans;
-        private List<string> Symbols;
+        private ImgTransform imgTrans;
+        private List<string> symbols;
         private Dictionary<RGB, string> catalogString;
         private Dictionary<RGB, string> catalogLegend;
+
+        #endregion
+
+        #region properties
+        /// <summary>
+        /// Property : read or edit the catalog
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        public Dictionary<RGB, int> Catalog { get => catalog; set => catalog = value; }
+
+        /// <summary>
+        /// Property : read or edit the list of symbols
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        public List<string> Symbols { get => symbols; set => symbols = value; }
+
+        /// <summary>
+        /// Property : read or edit the stringcatalog
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        public Dictionary<RGB, string> CatalogString { get => catalogString; set => catalogString = value; }
+
         #endregion
 
 
@@ -43,10 +65,10 @@ namespace Lilo_et_Stitch.Model
         {
             //initialization
             this.path = path;
-            this.ImgTrans = imgT;
-            this.catalog = new Dictionary<RGB, int>();
-            this.Symbols = new List<string> { "☺", "♥", "♦", "♣", "♠","•","◘","○","☻","*","+","-","/","|","&","~","#","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", };
-            this.catalogString = new Dictionary<RGB, string>();
+            this.imgTrans = imgT;
+            this.Catalog = new Dictionary<RGB, int>();
+            this.symbols = new List<string> { "☺", "♥", "♦", "♣", "♠","•","◘","○","☻","*","+","-","/","|","&","~","#","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", };
+            this.CatalogString = new Dictionary<RGB, string>();
             this.catalogLegend = new Dictionary<RGB, string>();
 
             GenerateCatalog();
@@ -62,10 +84,10 @@ namespace Lilo_et_Stitch.Model
         public void GenerateCatalog()
         {
             int i = 0;
-            foreach(var item in ImgTrans.UsedColors) //Loop through the list of used color
+            foreach(var item in imgTrans.UsedColors) //Loop through the list of used color
             {
                 i++;
-                this.catalog.Add(item.Value, i); //Add a symbol and the color to the catalog
+                this.Catalog.Add(item.Value, i); //Add a symbol and the color to the catalog
             }
         }
 
@@ -94,7 +116,7 @@ namespace Lilo_et_Stitch.Model
             text1 = new TextFragment("");
             page.Paragraphs.Add(text1);
 
-            foreach (var item in ImgTrans.UsedColors) //For all items in usedcolor
+            foreach (var item in imgTrans.UsedColors) //For all items in usedcolor
             {
                 this.catalogLegend[item.Value] = item.Key;
             }
@@ -118,13 +140,13 @@ namespace Lilo_et_Stitch.Model
             {
                 //We get the symbol, the color and the number
                 string x = catalogLegend[a];
-                string y = catalogString[a];
-                int z = catalog[a];
+                string y = CatalogString[a];
+                int z = Catalog[a];
 
                 string information = "";
-                if (catalogString.ContainsKey(a)) //See if the rgb is in the catalog where we have the symbol
+                if (CatalogString.ContainsKey(a)) //See if the rgb is in the catalog where we have the symbol
                     information = y + " -> " + x;
-                else if (catalog.ContainsKey(a)) //See if the rgb is in the catalog where we have the number
+                else if (Catalog.ContainsKey(a)) //See if the rgb is in the catalog where we have the number
                     information = z + " -> " + x;
 
                 else //If there's nothing found for a RGB it will print an error
@@ -182,11 +204,11 @@ namespace Lilo_et_Stitch.Model
             table.ColumnWidths = "15 15 15";
 
             //Changing the color of the borders
-            table.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(this.ImgTrans.GridColor.A, this.ImgTrans.GridColor.R, this.ImgTrans.GridColor.G, this.ImgTrans.GridColor.B)));
+            table.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(this.imgTrans.GridColor.A, this.imgTrans.GridColor.R, this.imgTrans.GridColor.G, this.imgTrans.GridColor.B)));
 
             //Calculating the amount of cells and rows
-            int nbCol = Math.Max((int)Math.Ceiling((double)this.ImgTrans.Img.Width / this.ImgTrans.Step), 0);
-            int nbRows = Math.Max((int)Math.Ceiling((double)this.ImgTrans.Img.Height / this.ImgTrans.Step), 0);
+            int nbCol = Math.Max((int)Math.Ceiling((double)this.imgTrans.Img.Width / this.imgTrans.Step), 0);   
+            int nbRows = Math.Max((int)Math.Ceiling((double)this.imgTrans.Img.Height / this.imgTrans.Step), 0);
 
             //Adding rows and cells
             int CountCase = -1;
@@ -199,11 +221,12 @@ namespace Lilo_et_Stitch.Model
                 {
                     CountCase++;
                     //Adding cells + symbols 
-                    Case c = ImgTrans.Cases[CountCase];
+                    Case c = imgTrans.Cases[CountCase];
                     if (c.Opacity > 0) //if the case is not transparent
                     {
-                        string carac = catalogString[c.ColorDMC];
-                        row.Cells.Add(carac.ToString());
+                        string carac = CatalogString[c.ColorDMC];
+                        var newCell = row.Cells.Add(carac.ToString());
+                        //newCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(250,c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
                     }
                     else //if the case is transparent
                     {
@@ -234,19 +257,19 @@ namespace Lilo_et_Stitch.Model
         {
             int i= 0; //Index for char
             int j= 0;//Index for number
-            catalogString.Clear();
-            foreach (var item in this.catalog.Keys)
+            CatalogString.Clear();
+            foreach (var item in this.Catalog.Keys)
             {
                 //If the symbols is not already in the catalogString and i exist in the list
-                if ((!this.catalogString.ContainsValue(this.Symbols[i])&&(i < this.Symbols.Count - 1))) 
+                if ((!this.CatalogString.ContainsValue(this.symbols[i])&&(i < this.symbols.Count - 1))) 
                 {
                     //We put a char
-                    this.catalogString.Add(item, this.Symbols[i]);
+                    this.CatalogString.Add(item, this.symbols[i]);
                     i++; 
                 }
                 else //We put a number
                 {
-                    this.catalogString.Add(item,j.ToString());
+                    this.CatalogString.Add(item,j.ToString());
                     j++;
                 }
             }
@@ -270,17 +293,15 @@ namespace Lilo_et_Stitch.Model
             document.Pages[1].Paragraphs.Add(title);
 
             //Create the image
-            System.Drawing.Image img = this.ImgTrans.NewImage;
+            System.Drawing.Image img = this.imgTrans.NewImage;
                         
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 img.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); //Save the image
                 Stream imgStream = memoryStream;  //Load the image into stream
                 document.Pages[1].AddImage(imgStream, new Aspose.Pdf.Rectangle(250, 1, 600, 600)); //Add image to page at the center
-
             }   
         }
-
         #endregion
     }
 }
