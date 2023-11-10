@@ -17,10 +17,15 @@ using System.Windows.Shapes;
 namespace Lilo_et_Stitch.View
 {
     /// <summary>
-    /// Logique d'interaction pour UsedColorTemplate.xaml
+    /// This class represents a template for each color used
     /// </summary>
     public partial class UsedColorTemplate : UserControl
     {
+        #region operations 
+        /// <summary>
+        /// Constructor of the template
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
         public UsedColorTemplate()
         {       
             InitializeComponent();
@@ -31,7 +36,7 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="code">DMC Code</param>
         /// <param name="rgb">code RGB</param>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public void setValues(string code, RGB rgb)
         {  
             colorDisplay.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)rgb.R, (byte)rgb.G, (byte)rgb.B));
@@ -39,6 +44,6 @@ namespace Lilo_et_Stitch.View
             colorDisplay.Height = 80;
             colorDmc.Content = code;
         }
-
+        #endregion
     }
 }

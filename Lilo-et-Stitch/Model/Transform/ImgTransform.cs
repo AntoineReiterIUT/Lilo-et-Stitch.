@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Documents;
 using Lilo_et_Stitch.Model;
-
+using System.Windows.Media.Imaging;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -26,6 +26,7 @@ namespace Lilo_et_Stitch.Model.Transform
         private ColorPalette ?colorPalette;
         private System.Windows.Media.Color gridColor;
         private static ImgTransform ?instance;
+        private System.Drawing.Image newImage;
         #endregion
 
 
@@ -99,11 +100,19 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <author>Maxime LAFFAYE</author>
         public Dictionary<string, RGB> UsedColors { get => usedColors; set => usedColors = value; }
 
+
         /// <summary>
         /// Property : read or edit the color of the grid
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public System.Windows.Media.Color GridColor { get => gridColor; set => gridColor = value; }
+
+
+        /// <summary>
+        /// The new Image
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        public System.Drawing.Image NewImage { get => newImage; set => newImage = value; }
         #endregion
 
 
@@ -112,9 +121,11 @@ namespace Lilo_et_Stitch.Model.Transform
         /// Will create the PDF using the given path
         /// </summary>
         /// <param name="path">Path to save the file</param>
+        /// <param name="editedImage">New image</param>
         /// <author>Maxime LAFFAYE</author>
-        public void PDF(string path)
+        public void PDF(string path, System.Drawing.Image editedImage)
         {
+            this.NewImage = editedImage;
             new ToPDF(this, path);
         }
 
@@ -132,7 +143,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
 
         /// <summary>
-        /// transforms the base image into a cross stitch
+        /// Transforms the base image into a cross stitch
         /// </summary>
         /// <param name="img">Image of origin</param>
         /// <returns>return a list of new cases</returns>
@@ -292,16 +303,14 @@ namespace Lilo_et_Stitch.Model.Transform
             if (closestDMCColorCode == null)
             {
                 closestDMCColorCode = "";
-            }
-                
-
+            }               
             box.ColorDMC = closestDMCColorRGB; // Set the ColorDMC of the case
             usedColors[closestDMCColorCode] = closestDMCColorRGB; // Register the used DMC color RGB value
         }
 
 
         /// <summary>
-        /// choose the step according to the length and width of the image
+        /// Choose the step according to the length and width of the image
         /// </summary>
         /// <authors>Mattis galoppin</authors>
         public void ChoiceStep()
@@ -314,5 +323,4 @@ namespace Lilo_et_Stitch.Model.Transform
         }
         #endregion
     }
-
 }

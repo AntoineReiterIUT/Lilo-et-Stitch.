@@ -20,20 +20,24 @@ namespace Lilo_et_Stitch.Model.Transform
 
 
         #region properties
-
         /// <summary>
         /// Property : read or edit the colorRGB
         /// </summary>
+        /// <author>Maxime LAFFAYE</author>
         public RGB ColorRGB { set { colorRGB = value; } get { return this.colorRGB; } }
+
 
         /// <summary>
         /// Property : read or edit the opacity
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public int Opacity { get => opacity; set => opacity = value; }
+
 
         /// <summary>
         /// Property : read or edit the coordinate
         /// </summary>
+        /// <author>Maxime LAFFAYE</author>
         public Coordinate Coord { set { coord = value; } get { return this.coord; } }
         #endregion
 
@@ -44,7 +48,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <param name="colorRGB">R,G,B</param>
         /// <param name="coord">X,Y</param>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         public Pixel(RGB colorRGB, Coordinate coord, int opacity)
         {
             this.colorRGB = colorRGB;

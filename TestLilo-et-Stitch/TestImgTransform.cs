@@ -10,14 +10,22 @@ using System.Windows.Media.Imaging;
 
 namespace TestLilo_et_Stitch
 {
+    /// <summary>
+    /// This class will run tests to check if the "ImgTransform" class is working as intented
+    /// </summary>
     public class TestImgTransform
     {
+        #region attributes
         private Image img;
         private ImgTransform transImg;
+        #endregion
+
+
+        #region operations
         /// <summary>
-        /// test the Grid Creation with an image 800*800
+        /// Test the Grid Creation with a 800 x 800 image 
         /// </summary>
-        /// <authors>Mattis galoppin</authors>
+        /// <authors>Mattis GALOPPIN</authors>
         [Fact]
         public void TestMakeGrid()
         {
@@ -26,35 +34,37 @@ namespace TestLilo_et_Stitch
             Assert.Equal(25600,transImg.Cases.Count());
 
         }
+
+
         /// <summary>
         /// Test caseAverage with color pixels
         /// </summary>
+        /// <author>Maxime LAFFAYE</author>
         [Fact]
         public void TestCaseAverage()
         {
-            // Create a case with pixels of different colors
+            //Create a case with pixels of different colors
             Case testCase = new Case(new Coordinate(0, 0), new Coordinate(10, 10));
             testCase.Pixels.Add(new Pixel(new RGB(255, 0, 0), new Coordinate(0, 0),1));
             testCase.Pixels.Add(new Pixel(new RGB(0, 255, 0), new Coordinate(5, 5),1));
             testCase.Pixels.Add(new Pixel(new RGB(0, 0, 255), new Coordinate(10, 10),1));
 
-            // Add the case to the list of cases in ImgTransform
+            //Add the case to the list of cases in ImgTransform
             transImg.Cases.Add(testCase);
 
-            // Call the CaseAverage method
+            //Call the CaseAverage method
             transImg.CaseAverage(testCase);
 
-            // Check if the average color is correct
+            //Check if the average color is correct
             RGB expectedAverageColor = new RGB(85, 85, 85);
             Assert.Equal(expectedAverageColor, testCase.ColorRGB);
         }
 
 
-
         /// <summary>
         /// Tests the method to convert RGB colors to the nearest DMC value
         /// </summary>
-        /// <author>Antoine Sakkalis</author>
+        /// <author>Antoine SAKKALIS</author>
         [Fact]
         public void TestToDMC()
         {
@@ -81,10 +91,11 @@ namespace TestLilo_et_Stitch
             Assert.Equal(transImg.Cases[1].ColorDMC, new RGB(250, 50, 3));
         }
 
+
         /// <summary>
         /// Constructor of the test
         /// </summary>
-        /// <author>AntoineSakkalis - MaximeLAFFAYE</author>
+        /// <author>Antoine SAKKALIS - Maxime LAFFAYE</author>
         public TestImgTransform()
         {
             var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -96,11 +107,12 @@ namespace TestLilo_et_Stitch
             transImg = ImgTransform.Instance;
             transImg.TransformingIMG(img,5,454,System.Windows.Media.Color.FromRgb(255, 0, 0));
         }
-        
+
+
         /// <summary>
-         /// test function FillPixel, the coordonates of the pixels in the case number 3
-         /// </summary>
-         /// <authors>Mattis galoppin</authors>
+        /// Test function FillPixel, the coordonates of the pixels in the case number 3
+        /// </summary>
+        /// <author>Mattis GALOPPIN</author>
         [Fact]
         public void TestFillPixel()
         {
@@ -127,29 +139,34 @@ namespace TestLilo_et_Stitch
                 Assert.True(test);
             }
         }
+
+
         /// <summary>
-        /// give the result of the number of step
+        /// Give the result of the number of step
         /// </summary>
         /// <param name="nbFois">number of step</param>
         /// <param name="step">the step of the Grid</param>
         /// <returns>the step * nbFois</returns>
-        /// <authors>Mattis galoppin</authors>
+        /// <authors>Mattis GALOPPIN</authors>
         public int Nbstep(int nbFois,int step)
         {
             step = nbFois * step;
             return step;
 
         }
-        
+
+
         /// <summary>
-         /// Test choiceStep with a img 800*800
-         /// </summary>
-         /// <authors>Mattis galoppin</authors>
+        /// Test choiceStep with a 800 x 800 img 
+        /// </summary>
+        /// <author>Mattis GALOPPIN</author>
         [Fact]
         public void TestChoiceStep()
         {
             transImg.ChoiceStep();
             Assert.Equal(15, transImg.Step); 
         }
+
+        #endregion
     }
 }

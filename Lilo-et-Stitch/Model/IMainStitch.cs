@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Media.Imaging;
 
 namespace Lilo_et_Stitch.Model
 {
@@ -29,7 +30,8 @@ namespace Lilo_et_Stitch.Model
         /// Will create the PDF using the given path
         /// </summary>
         /// <param name="path">Path to save the file</param>
+        /// <param name="editedImage">New image</param>
         /// <author>MaximeLAFFAYE</author>
-        public void SavePDF(string path);
+        public void SavePDF(string path, System.Drawing.Image editedImage);
     }
 }

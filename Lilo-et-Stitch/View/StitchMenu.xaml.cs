@@ -17,37 +17,48 @@ using System.Windows.Shapes;
 namespace Lilo_et_Stitch.View
 {
     /// <summary>
-    /// Logique d'interaction pour StitchMenu.xaml
+    /// Main menu of the app
     /// </summary>
     public partial class StitchMenu : Window
     {
+        #region operations
+        /// <summary>
+        /// Constructor of the main menu
+        /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public StitchMenu()
         {
             InitializeComponent();
         }
 
+
         /// <summary>
-        /// button which can change the page to go to StitchTransform.
+        /// Button which can change the page to go to StitchTransform.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Mattis GALOPPIN</author>
         private void NewModel_Click(object sender, RoutedEventArgs e)
         {
             StitchTransform stitchTransform = new StitchTransform();
 
-            stitchTransform.Show();  // display new page
-            this.Close();  // close the firt one
+            stitchTransform.Show();  //Display the new page
+            this.Close();  //Close the the firt one
         }
+
+
         /// <summary>
-        /// button which can change the page to go to StitchModels.
+        /// Button which can change the page to go to StitchModels.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Mattis GALOPPIN</author>
         private void ModelServ_Click(object sender, RoutedEventArgs e)
         {
             StitchModels stitchModels = new StitchModels();
-            stitchModels.Show(); // display new page 
-            this.Close(); // close the firt one
+            stitchModels.Show(); //Display the new page 
+            this.Close(); //Close the firt one
         }
+        #endregion
     }
 }

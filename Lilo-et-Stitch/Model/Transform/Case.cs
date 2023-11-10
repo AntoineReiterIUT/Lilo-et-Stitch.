@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 namespace Lilo_et_Stitch.Model.Transform
 {
     /// <summary>
-    /// Represent a case in the 
+    /// Represent a case in the image
     /// </summary>
     public class Case
     {
-        //attributes
+
+        #region attributes
         private Coordinate coord1;
         private Coordinate coord2;
 
@@ -22,7 +23,10 @@ namespace Lilo_et_Stitch.Model.Transform
         private RGB colorDMC;
         private int opacity;
         private List<Pixel> pixels;
+        #endregion
 
+
+        #region properties
         /// <summary>
         /// Property : read or edit the Coord1 value.
         /// </summary>
@@ -60,7 +64,10 @@ namespace Lilo_et_Stitch.Model.Transform
             get => pixels;
             set => pixels = value;
         }
+        #endregion
 
+
+        #region operations
         /// <summary>
         /// Constructor of the case
         /// </summary>
@@ -75,9 +82,8 @@ namespace Lilo_et_Stitch.Model.Transform
             RGB colorDMC = new RGB(0,0,0);
 
             this.coord1 = c1;
-            this.coord2 = c2;
-            
+            this.coord2 = c2;     
         }
-
+        #endregion
     }
 }
