@@ -12,7 +12,7 @@ namespace Lilo_et_Stitch.Model
     /// <summary>
     /// Class handling the main part of the model.
     /// </summary>
-    public class MainStitch : IMainStitch
+    public class MainStitch : IManager
     {
         #region attributes
         private ImageStitch _imageStitch;
