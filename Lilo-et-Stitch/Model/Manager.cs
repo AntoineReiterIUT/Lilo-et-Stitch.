@@ -19,7 +19,7 @@ namespace Lilo_et_Stitch.Model
         private ImageStitch imageStitch = new ImageStitch();
         private GeneratedImage ?generatedImage;
         private IDAOColorPalette daoColorPalette;
-        private IDAO_Image dao_image = new DAOImage();
+        private IDAO_Image daoImage = new DAOImage();
         #endregion
 
 
@@ -50,13 +50,9 @@ namespace Lilo_et_Stitch.Model
 
         public void Import(Image img)
         {
-            dao_image.Save(img);
+            daoImage.Save(img);
         }
 
-        public void ResetPalette()
-        {
-            dao_colorPalette.ResetPalette();
-        }
 
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
