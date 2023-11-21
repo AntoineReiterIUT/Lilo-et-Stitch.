@@ -17,52 +17,50 @@ using System.Windows.Shapes;
 namespace Lilo_et_Stitch.View
 {
     /// <summary>
-    /// Logique d'interaction pour StitchMenu.xaml
+    /// Main menu of the app
     /// </summary>
     public partial class StitchMenu : Window
     {
+        #region attributes
+        StitchTransform stitchTransform = new StitchTransform();
+        StitchModels stitchModels = new StitchModels();
+        #endregion
+
+        #region operations
+        /// <summary>
+        /// Constructor of the main menu
+        /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public StitchMenu()
         {
             InitializeComponent();
-            CenterWindow();
         }
 
-        /// <summary>
-        /// Will center the window
-        /// </summary>
-        /// <author>Maxime LAFFAYE</author>
-        private void CenterWindow()
-        {
-            double screenWidth = SystemParameters.PrimaryScreenWidth;
-            double screenHeight = SystemParameters.PrimaryScreenHeight;
-            double windowWidth = Width;
-            double windowHeight = Height;
-            Left = (screenWidth - windowWidth) / 2;
-            Top = (screenHeight - windowHeight) / 2;
-        }
 
         /// <summary>
-        /// button which can change the page to go to StitchTransform.
+        /// Button which can change the page to go to StitchTransform.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Mattis GALOPPIN</author>
         private void NewModel_Click(object sender, RoutedEventArgs e)
         {
-            StitchTransform stitchTransform = new StitchTransform();
-
-            stitchTransform.Show();  // display new page
-            this.Close();  // close the firt one
+            stitchTransform.Show();  //Display the new page
+            this.Close();  //Close the the first one
         }
+
+
         /// <summary>
-        /// button which can change the page to go to StitchModels.
+        /// Button which can change the page to go to StitchModels.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Mattis GALOPPIN</author>
         private void ModelServ_Click(object sender, RoutedEventArgs e)
         {
-            StitchModels stitchModels = new StitchModels();
-            stitchModels.Show(); // display new page 
-            this.Close(); // close the firt one
+            stitchModels.Show(); //Display the new page 
+            this.Close(); //Close the first one
         }
+        #endregion
     }
 }

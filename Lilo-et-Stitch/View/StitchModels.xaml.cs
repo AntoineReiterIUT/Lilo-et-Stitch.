@@ -19,24 +19,30 @@ namespace Lilo_et_Stitch.View
     /// </summary>
     public partial class StitchModels : Window
     {
+        #region operations
         /// <summary>
         /// Window constructor
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public StitchModels()
         {
             InitializeComponent();
         }
+
 
         /// <summary>
         /// Returns to the menu when clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             StitchMenu stitchMenu = new StitchMenu();
-            stitchMenu.Show(); // display new page 
-            this.Close(); // close the first one
+            stitchMenu.Show(); //Display the new page 
+            this.Close(); //Close the first one
         }
+
+        #endregion
     }
 }

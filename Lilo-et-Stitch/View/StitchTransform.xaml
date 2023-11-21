@@ -4,10 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
+        WindowState="Maximized"
         mc:Ignorable="d"
-        Title="StitchTransform" Height="900" Width="1600">
+        Icon="Images/logo.png"
+        Title="StitchTransform" MinHeight="500" MinWidth="800">
 
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="47*"/>
@@ -23,7 +26,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="27*"/>
-            <RowDefinition Height="254*"/>
+            <RowDefinition Height="400*"/>
             <RowDefinition Height="17*"/>
             <RowDefinition Height="68*"/>
             <RowDefinition Height="48*"/>
@@ -31,56 +34,92 @@
         </Grid.RowDefinitions>
 
 
-        <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="4">
-            <Button  Content="Insérer une image"  Click="SelectionnerIMG_Click" Width="115" />
-        </Viewbox>
+        <StackPanel Grid.ColumnSpan="11">
+            <Menu DockPanel.Dock="Top" Height="51">
 
-        <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="4">
-            <Button Name="TransformBtn"  Content="Transformer"  Click="TransformBtn_Click_1" Margin="10"/>
-        </Viewbox>
+                <Image Source="Images/logo.png" Mouse.MouseDown="MenuItem_Click"/>
 
-        <Viewbox Stretch="Uniform" Grid.Column="7" Grid.Row="4" >
-            <Button Name="SaveBtn"  Content="Sauvegarder" Margin="10"/>
-        </Viewbox>
+                <MenuItem Header="_Fichier" Height="50" Width="77" FontSize="20" >
+                    <MenuItem Header="_Menu principal" Click="MenuItem_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="Images/homeIcon.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Changer la palette" Click="ChangePalette_Click"/>
+                    <MenuItem Header="_Réinitialiser la palette" Click="ResetPalette_Click" />
+                    <Separator />
+                    <MenuItem Header="_Quitter" Click="Exit_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="Images/exit.png"  />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
 
-        <Viewbox Stretch="Uniform" Grid.Column="8" Grid.Row="4">
-            <Button Name="PublishBtn"  Content="Publier" Margin="10" />
+        <Viewbox Stretch="UniformToFill" Grid.Row="3" Grid.ColumnSpan="11" Grid.RowSpan="5">
+            <Rectangle Stroke="LightGray" StrokeThickness="1"/>
         </Viewbox>
-
-        <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="3" >
-            <Button Name="UpdatePaletteBtn" Width="70" Click="UpdatePaletteBtn_Click" Margin="10">
-                <TextBlock TextWrapping="Wrap">Changer la palette</TextBlock>
-            </Button>
-        </Viewbox>
-
-        <Viewbox Stretch="Uniform" Grid.Column="1" Grid.Row="0" >
-            <Button Name="HomeBtn"  Content="HOME"  Click="HomeBtn_Click" Margin="10"/>
-        </Viewbox>
-
-        <Viewbox Stretch="Uniform" Grid.Column="4" Grid.ColumnSpan="3" Grid.Row="4">
-            <Grid>
-                <Slider Name="NbColorsSlider"  Width="100" TickFrequency="1" Minimum="0" Maximum="50" ValueChanged="slider1_value_changeds" IsSnapToTickEnabled="True" Margin="10"/>
-                <Label Name="NbColorsTitle" Content="Couleurs :" Margin="10,24,30,16" />
-                <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="txtSlider1" RenderTransformOrigin="-0.297,0.271" Margin="75,28,15,0"/>
+        <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="4" VerticalAlignment="Bottom">
+            <Grid Width="140" Height="30">
+                <Button Content="Insérer une image"  Click="SelectionnerIMG_Click"  Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 
-        <Viewbox Stretch="Uniform" Grid.Column="1" Grid.Row="3">
-        <Button  Content="Réint." Click="Button_ReintPalette" Width="42"/>
+        <Viewbox Stretch="Uniform" Grid.Column="4" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="15,0,15,0">
+            <Grid Width="100" Height="50">
+                <Button Margin="6" Name="TransformBtn" Background="#9b572a" Content="Transformer"  Click="TransformBtn_Click_1" Style="{StaticResource TrsfrmAppButton}"/>
+            </Grid>
         </Viewbox>
 
-        <Canvas Grid.Column="3" Grid.ColumnSpan="7" Grid.Row="3" Grid.RowSpan="1" Background="Gray"></Canvas>
-        <ScrollViewer Grid.Column="3" Grid.ColumnSpan="7" Grid.Row="3" Grid.RowSpan="1" VerticalScrollBarVisibility="Auto" Margin="2" Background="White">
-            <StackPanel x:Name="usedColorList" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                <!-- <local:UsedColorTemplate Width="250" Height="80" Loaded="UsedColorTemplate_Loaded"></local:UsedColorTemplate>-->              
-            </StackPanel>
+        <Viewbox Stretch="Uniform" Grid.Column="7" Grid.Row="4" HorizontalAlignment="Right">
+            <Grid Width="100" Height="50">
+                <Button Name="SaveBtn" Content="Sauvegarder" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}" Click="SaveBtn_Click"/>
+            </Grid>
+        </Viewbox>
+
+        <Viewbox Stretch="Uniform" Grid.Column="8" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <Grid Width="100" Height="50">
+                <Button Name="PublishBtn" Content="Publier" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
+            </Grid>
+        </Viewbox>
+
+        <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="3">
+            <Grid>
+                <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="30" RenderTransformOrigin="-0.297,0.271" Margin="74,34,4,0" KeyUp="OnTextBoxKeyUp" />
+                <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
+                <Label Name="ChangeStepTitle" Content="Taille cases :" Margin="11,28,44,12" />
+            </Grid>
+        </Viewbox>
+
+        <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="3">
+            <Grid>
+                <TextBox TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="30" Name="NumberOfColors" RenderTransformOrigin="-0.297,0.271" Margin="77,34,15,0" KeyUp="OnTextBoxKeyUpColor"/>
+                <Slider Name="NbColorsSlider" TickFrequency="1" Minimum="2" ValueChanged="MaxColorNumberChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}" />
+                <Label Name="NbColorsTitle" Content="Couleurs :" Margin="15,28,40,12" />
+            </Grid>
+        </Viewbox>
+
+        <Canvas Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,10,0,0" Background="Gray" ></Canvas>
+        <ScrollViewer Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" VerticalScrollBarVisibility="Auto" Margin="1,11,1,1" Background="White">
+            <StackPanel x:Name="usedColorList" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </ScrollViewer>
-           
-        
 
+        <Viewbox Grid.Row="2" Grid.ColumnSpan="11" VerticalAlignment="Bottom">
+            <Line HorizontalAlignment="Center" X1="1000" Y1="0" X2="0" Y2="0" Stroke="Black" StrokeThickness="1"/>
+        </Viewbox>
 
-        <Image Grid.Column="7" Grid.ColumnSpan="2" Grid.Row="1" Name="NewImg" />
-        <Image Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Name="imagePrev" />
+        <Image Grid.Column="7" Grid.ColumnSpan="2" Grid.Row="1" Name="NewImg"/>
+        <Image Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Name="imagePrev"/>
 
+        <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="4">
+            <Grid Width="142" VerticalAlignment="Bottom" Height="66">
+                <Rectangle Fill="Black" Margin="9,49,13,0"/>
+                <Canvas Name="gridColorCanva" Background="Black"  Margin="10,50,14,1"/>
+                <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,15,14,22" Style="{StaticResource TrsfrmAppButton}"/>
+            </Grid>
+
+        </Viewbox>
     </Grid>
 </Window>

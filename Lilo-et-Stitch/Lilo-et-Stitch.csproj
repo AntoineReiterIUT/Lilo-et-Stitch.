@@ -17,15 +17,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="View\Images\exit.png" />
+    <None Remove="View\Images\homeIcon.png" />
     <None Remove="View\Images\logo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspose.PDF" Version="23.10.0" />
+    <PackageReference Include="PdfSharp" Version="6.0.0" />
+    <PackageReference Include="PdfSharpCore" Version="1.3.62" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
     <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="View\Images\homeIcon.png" />
     <Resource Include="View\Images\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Images\exit.png" />
   </ItemGroup>
 
 </Project>

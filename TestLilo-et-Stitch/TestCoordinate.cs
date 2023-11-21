@@ -13,19 +13,22 @@ namespace TestLilo_et_Stitch
     /// </summary>
     public class TestCoordinate
     {
-
+        #region operations
         /// <summary>
         /// Will test if the coordinate is created properly.
         /// </summary>
-        /// <author>MaximeLAFFAYE</author>
+        /// <author>Maxime LAFFAYE</author>
         [Fact]
         public void NewCoord()
         {
+            //Creation of the coordinate
             Coordinate coord1 = new Coordinate(15,16);
 
+            //Checking if it's been properly created
             Assert.Equal(15,coord1.X);
             Assert.Equal(16,coord1.Y);
 
         }
+        #endregion
     }
 }
