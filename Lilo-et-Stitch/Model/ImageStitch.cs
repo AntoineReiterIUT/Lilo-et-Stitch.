@@ -82,8 +82,10 @@ namespace Lilo_et_Stitch.Model
         /// <param name="gridColor">Color of the grid</param>
         /// <returns>New image | List of used colors</returns>
         /// <author>Maxime LAFFAYE</author>
-        public (Image, Dictionary<string,RGB>) TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
+        public void TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
+
+            /*
             //Transform the image
             ImgTransform transform = ImgTransform.Instance;
             List<Case> cases = transform.TransformingIMG(prevImage,step,colorMax,gridColor);
@@ -118,6 +120,7 @@ namespace Lilo_et_Stitch.Model
                 }
             }
             return ((Image)bitNewImage, usedColors);
+            */
         }
         #endregion
     }
