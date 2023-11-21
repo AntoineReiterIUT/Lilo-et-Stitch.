@@ -200,6 +200,8 @@ namespace Lilo_et_Stitch.View
         /// <author>Maxime LAFFAYE</author>
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {
+            throw new NotImplementedException();
+            /* 
             //Create the bitmap
             WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
@@ -248,6 +250,7 @@ namespace Lilo_et_Stitch.View
                 writeableBitmap = new WriteableBitmap(bitmapImage);
                 NewImg.Source = writeableBitmap;
             }
+            */
         }
 
 
