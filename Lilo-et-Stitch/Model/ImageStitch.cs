@@ -73,7 +73,7 @@ namespace Lilo_et_Stitch.Model
         /// <author>Maxime LAFFAYE</author>
         public GeneratedImage TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
         {
-            return new Transformer().TransformImage(step, colorMax, gridColor);
+            return new Transformer().TransformImage(step, colorMax, gridColor,this);
         }
         #endregion
     }

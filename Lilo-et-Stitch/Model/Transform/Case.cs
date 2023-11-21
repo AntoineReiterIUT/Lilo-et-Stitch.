@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -12,10 +13,8 @@ namespace Lilo_et_Stitch.Model.Transform
         private Coordinate coord1;
         private Coordinate coord2;
 
-        private RGB colorRGB;
-        private RGB colorDMC;
-        private int opacity;
-        private List<Pixel> pixels;
+        private Color baseColor;
+        private Color transformedColor;
         #endregion
 
 
@@ -36,29 +35,14 @@ namespace Lilo_et_Stitch.Model.Transform
         /// Property : read or edit the color value.
         /// </summary>
         /// <authors>Mattis GALOPPIN</authors>
-        public RGB ColorRGB { get => colorRGB; set => colorRGB = value; }
+        public Color BaseColor { get => baseColor; set => baseColor = value; }
 
         /// <summary>
         /// Property : read or edit the colorDMC value.
         /// </summary>
         /// <authors>Mattis GALOPPIN</authors>
-        public RGB ColorDMC { get => colorDMC; set => colorDMC = value; }
+        public Color TransformedColor { get => transformedColor; set => transformedColor = value; }
 
-        /// <summary>
-        /// Property : read or edit the opacity value.
-        /// </summary>
-        /// <author>Antoine SAKKALIS</author>
-        public int Opacity { get => opacity; set => opacity = value; }
-
-        /// <summary>
-        /// Property : read or edit the list of Pixels
-        /// </summary>
-        /// <author>Maxime LAFFAYE</author>
-        public List<Pixel> Pixels
-        {
-            get => pixels;
-            set => pixels = value;
-        }
         #endregion
 
 
@@ -72,9 +56,8 @@ namespace Lilo_et_Stitch.Model.Transform
         public Case(Coordinate c1, Coordinate c2)
         {
             //Initialization
-            pixels = new List<Pixel>();
-            RGB colorRGB = new RGB(0, 0, 0);
-            RGB colorDMC = new RGB(0, 0, 0);
+            baseColor = Color.FromRgb(0,0,0);
+            transformedColor = Color.FromRgb(0,0,0);
 
             this.coord1 = c1;
             this.coord2 = c2;
