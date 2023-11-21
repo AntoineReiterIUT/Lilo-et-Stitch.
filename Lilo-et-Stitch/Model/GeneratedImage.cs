@@ -38,5 +38,21 @@ namespace Lilo_et_Stitch.Model
         public List<Case> Cases { get => cases; set => cases = value; }
         #endregion
 
+
+        #region operations
+
+        /// <summary>
+        /// Constructor of the class. (Initialize the list + dictionnary
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        public GeneratedImage()
+        { 
+            this.cases = new List<Case>();  
+            this.usedColor = new Dictionary<string, Color>();
+        }
+
+
+        #endregion
+
     }
 }
