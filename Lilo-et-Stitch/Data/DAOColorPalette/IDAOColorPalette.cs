@@ -1,0 +1,32 @@
+﻿using Aspose.Pdf.Facades;
+using System;
+using System.Collections.Generic;
+using System.Windows.Media;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lilo_et_Stitch.Data.DAOColorPalette
+{
+    public interface IDAOColorPalette
+    {
+        /// <summary>
+        /// Change the palette used to transform the image
+        /// </summary>
+        /// <param name="csvPath">Path to the selected csv file</param>
+        void ChangePalette(string csvPath);
+
+        /// <summary>
+        /// Reset the palette to the default DMC colors
+        /// </summary>
+        void ResetPalette();
+
+        /// <summary>
+        /// Gives the list of all the colors in the palette
+        /// </summary>
+        /// <returns>List of all the colors in the palette with their names</returns>
+        Dictionary<string, Color> LoadPalette();
+
+    }
+}
