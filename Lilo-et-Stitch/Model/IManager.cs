@@ -28,6 +28,11 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         public void ResetPalette();
 
+        /// <summary>
+        /// Gives the list of all the colors in the palette
+        /// </summary>
+        /// <returns>The Dictionnary of all color names and their values</returns>
+        public Dictionary<string, System.Windows.Media.Color> GetPalette();
 
         /// <summary>
         /// Will update the palette with the given path
