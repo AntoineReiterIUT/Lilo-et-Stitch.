@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Lilo_et_Stitch.Data.DAOColorPalette
 {
+    /// <summary>
+    /// This class will handle all the data access for the color palette
+    /// </summary>
     public interface IDAOColorPalette
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// Gives the list of all the colors in the palette
         /// </summary>
         /// <returns>List of all the colors in the palette with their names</returns>
-        Dictionary<string, Color> LoadPalette();
+        Dictionary<string, Color> GetPalette();
 
     }
 }
