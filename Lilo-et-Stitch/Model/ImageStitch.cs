@@ -16,7 +16,7 @@ namespace Lilo_et_Stitch.Model
     public class ImageStitch
     {
         #region attributes
-        private Image image;
+        private Image ?image;
         #endregion
 
 
@@ -52,16 +52,6 @@ namespace Lilo_et_Stitch.Model
 
 
         #region operations
-        /// <summary>
-        /// Constructor of the class
-        /// </summary>
-        /// <param name="img">Image inserted by the user</param>
-        /// <author>Antoine SAKKALIS</author>
-        public ImageStitch(Image img)
-        {
-            image = img;
-        }
-
 
         /// <summary>
         /// Transforms the image and rebuild the new image

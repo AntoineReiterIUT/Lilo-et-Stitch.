@@ -16,9 +16,10 @@ namespace Lilo_et_Stitch.Model
     public class Manager : IManager
     {
         #region attributes
-        private ImageStitch imageStitch;
-        private GeneratedImage generatedImage;
+        private ImageStitch imageStitch = new ImageStitch();
+        private GeneratedImage ?generatedImage;
         private IDAOColorPalette daoColorPalette;
+        private IDAO_Image dao_image = new DAOImage();
         #endregion
 
 
@@ -35,7 +36,7 @@ namespace Lilo_et_Stitch.Model
         /// Property : read or edit the generated image
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public GeneratedImage GeneratedImage { get => generatedImage; set => generatedImage = value; }
+        public GeneratedImage ?GeneratedImage { get => generatedImage; set => generatedImage = value; }
 
         #endregion
 
@@ -49,9 +50,13 @@ namespace Lilo_et_Stitch.Model
 
         public void Import(Image img)
         {
-            throw new NotImplementedException();
+            dao_image.Save(img);
         }
 
+        public void ResetPalette()
+        {
+            dao_colorPalette.ResetPalette();
+        }
 
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
@@ -78,6 +83,7 @@ namespace Lilo_et_Stitch.Model
         {
             return daoColorPalette.GetPalette();
         }
+
         #endregion
     }
 }
