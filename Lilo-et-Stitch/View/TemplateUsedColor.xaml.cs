@@ -19,14 +19,14 @@ namespace Lilo_et_Stitch.View
     /// <summary>
     /// This class represents a template for each color used
     /// </summary>
-    public partial class UsedColorTemplate : UserControl
+    public partial class TemplateUsedColorColor : UserControl
     {
         #region operations 
         /// <summary>
         /// Constructor of the template
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public UsedColorTemplate()
+        public TemplateUsedColorColor()
         {       
             InitializeComponent();
         }

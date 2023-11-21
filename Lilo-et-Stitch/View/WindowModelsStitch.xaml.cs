@@ -17,14 +17,14 @@ namespace Lilo_et_Stitch.View
     /// <summary>
     /// Logique d'interaction pour StitchModels.xaml
     /// </summary>
-    public partial class StitchModels : Window
+    public partial class WindowModelsStitch : Window
     {
         #region operations
         /// <summary>
         /// Window constructor
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
-        public StitchModels()
+        public WindowModelsStitch()
         {
             InitializeComponent();
         }
@@ -38,7 +38,7 @@ namespace Lilo_et_Stitch.View
         /// <author>Antoine SAKKALIS</author>
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            StitchMenu stitchMenu = new StitchMenu();
+            WindowMenuStitch stitchMenu = new ();
             stitchMenu.Show(); //Display the new page 
             this.Close(); //Close the first one
         }

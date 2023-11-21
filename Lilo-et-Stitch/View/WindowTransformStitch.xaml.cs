@@ -20,11 +20,11 @@ namespace Lilo_et_Stitch.View
     /// <summary>
     /// Logique d'interaction pour StitchTransform.xaml
     /// </summary>
-    public partial class StitchTransform : Window
+    public partial class WindowTransformStitch : Window
     {
         #region attributes
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(0,0,0);
-        private MainStitch mainstitch;
+        private IManager mainstitch;
         private System.Drawing.Image editedImage;
         #endregion
 
@@ -35,7 +35,7 @@ namespace Lilo_et_Stitch.View
         /// Constructor of the window
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public StitchTransform()
+        public WindowTransformStitch()
         {     
             InitializeComponent();
             ResetPalette_Click(null,null);
@@ -71,14 +71,14 @@ namespace Lilo_et_Stitch.View
                     }
                     else
                     {
-                        mainstitch.SavePDF(path, this.editedImage);
+                        mainstitch.ExportPDF(path);
                         System.Windows.MessageBox.Show("Exporté avec sucès!");
                     }
 
                 }
-                catch
+                catch (Exception excepiton)
                 {
-                    System.Windows.MessageBox.Show("Erreur lors de l'exportation en PDF.");
+                    System.Windows.MessageBox.Show(excepiton.ToString());
                 }
                     
             }
@@ -302,7 +302,7 @@ namespace Lilo_et_Stitch.View
         /// <authors>Mattis GALOPPIN</authors>
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            StitchMenu stitchMenu = new StitchMenu();
+            WindowMenuStitch stitchMenu = new ();
             stitchMenu.Show(); //Display new page 
             this.Close(); //Close the firt one
         }
@@ -325,27 +325,8 @@ namespace Lilo_et_Stitch.View
             {
                 try
                 {
-                    string selectedFilePath = openFileDialog.FileName;
-
-                    string csvData = File.ReadAllText(selectedFilePath);
-
-
-                    //Write the CSV data to a new file in the specified directory
-                    var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    var file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
-
-                    FileInfo fileInfo = new FileInfo(file);
-                    if (fileInfo.Length == 0)
-                    {
-                        System.Windows.MessageBox.Show("La palette saisie est vide, elle ne sera pas utilisée");
-                    }
-                    else
-                    {
-                        string targetFilePath = file.ToString();
-                        File.WriteAllText(targetFilePath, csvData);
-                        NbColorsSlider.Maximum = File.ReadAllLines(targetFilePath).Length;
-                        NbColorsSlider.Value = File.ReadAllLines(targetFilePath).Length;
-                    }
+                    mainstitch.UpdatePalette(openFileDialog.FileName);
+                    NbColorsSlider.Maximum = NbColorsSlider.Value = mainstitch.GetPalette().Count();
                 }
 
                 catch (Exception ex)

@@ -19,11 +19,11 @@ namespace Lilo_et_Stitch.View
     /// <summary>
     /// Main menu of the app
     /// </summary>
-    public partial class StitchMenu : Window
+    public partial class WindowMenuStitch : Window
     {
         #region attributes
-        StitchTransform stitchTransform = new StitchTransform();
-        StitchModels stitchModels = new StitchModels();
+        WindowTransformStitch stitchTransform = new ();
+        WindowModelsStitch stitchModels = new ();
         #endregion
 
         #region operations
@@ -31,7 +31,7 @@ namespace Lilo_et_Stitch.View
         /// Constructor of the main menu
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
-        public StitchMenu()
+        public WindowMenuStitch()
         {
             InitializeComponent();
         }
