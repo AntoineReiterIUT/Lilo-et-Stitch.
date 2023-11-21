@@ -1,5 +1,6 @@
 
 using System.Drawing;
+using System.Windows.Media.Imaging;
 
 public class DAOImage : IDAO_Image
 {
