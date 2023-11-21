@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Windows.Documents;
-using Lilo_et_Stitch.Model;
-using System.Windows.Media.Imaging;
+using Lilo_et_Stitch.Data.PDF;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -128,7 +123,7 @@ namespace Lilo_et_Stitch.Model.Transform
         public void PDF(string path, System.Drawing.Image editedImage)
         {
             this.NewImage = editedImage;
-            new ToPDF(this, path);
+            new PDF_DAO(this, path);
         }
 
 

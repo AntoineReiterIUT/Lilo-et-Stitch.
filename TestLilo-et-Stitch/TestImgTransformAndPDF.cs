@@ -1,4 +1,4 @@
-﻿using Lilo_et_Stitch.Model;
+﻿using Lilo_et_Stitch.Data.PDF;
 using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace TestLilo_et_Stitch
         private ImgTransform transImg;
 
         private int maxColorForTests = 20;
-        private ToPDF pDFforTesting;
+        private PDF_DAO pDFforTesting;
         private string pathToTest = @"../Data/testPDF.pdf";
         #endregion
 
@@ -114,7 +114,7 @@ namespace TestLilo_et_Stitch
             //Preparing for the PDF tests
             var filePDF = Path.Combine(projectFolder, this.pathToTest);
             transImg.NewImage = img;
-            this.pDFforTesting = new ToPDF(transImg, filePDF);
+            this.pDFforTesting = new PDF_DAO(transImg, filePDF);
         }
 
 

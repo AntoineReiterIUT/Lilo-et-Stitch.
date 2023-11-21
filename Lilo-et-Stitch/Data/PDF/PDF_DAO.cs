@@ -14,13 +14,13 @@ using Color = Aspose.Pdf.Color;
 using Document = Aspose.Pdf.Document;
 
 
-namespace Lilo_et_Stitch.Model
+namespace Lilo_et_Stitch.Data.PDF
 {
     /// <summary>
     /// This class will handle the creation of the PDF
     /// </summary>
     /// <Author>Mattis GALOPPIN</Author>
-    public class ToPDF
+    public class PDF_DAO
     {
         #region attributes
         private string path;
@@ -61,15 +61,15 @@ namespace Lilo_et_Stitch.Model
         /// <param name="imgT">ImgTransform to get the list of cases</param>
         /// <param name="path">Path to save the file</param>
         /// <authors>Mattis GALOPPIN</authors>
-        public ToPDF(ImgTransform imgT,string path) 
+        public PDF_DAO(ImgTransform imgT, string path)
         {
             //initialization
             this.path = path;
-            this.imgTrans = imgT;
-            this.Catalog = new Dictionary<RGB, int>();
-            this.symbols = new List<string> { "☺", "♥", "♦", "♣", "♠","•","◘","○","☻","*","+","-","/","|","&","~","#","`","^","@","°","[","]","=","£","¤","µ","$","%","§","<",">","?","!",":","(",")","{","}","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", };
-            this.CatalogString = new Dictionary<RGB, string>();
-            this.catalogLegend = new Dictionary<RGB, string>();
+            imgTrans = imgT;
+            Catalog = new Dictionary<RGB, int>();
+            symbols = new List<string> { "☺", "♥", "♦", "♣", "♠", "•", "◘", "○", "☻", "*", "+", "-", "/", "|", "&", "~", "#", "`", "^", "@", "°", "[", "]", "=", "£", "¤", "µ", "$", "%", "§", "<", ">", "?", "!", ":", "(", ")", "{", "}", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", };
+            CatalogString = new Dictionary<RGB, string>();
+            catalogLegend = new Dictionary<RGB, string>();
 
             GenerateCatalog();
             GenerateSymbols();
@@ -77,17 +77,17 @@ namespace Lilo_et_Stitch.Model
         }
 
 
-       /// <summary>
-       /// Add a symbol for each colors
-       /// </summary>
-       /// <authors>Antoine REITER - Mattis GALOPPIN</authors>
+        /// <summary>
+        /// Add a symbol for each colors
+        /// </summary>
+        /// <authors>Antoine REITER - Mattis GALOPPIN</authors>
         public void GenerateCatalog()
         {
             int i = 0;
-            foreach(var item in imgTrans.UsedColors) //Loop through the list of used color
+            foreach (var item in imgTrans.UsedColors) //Loop through the list of used color
             {
                 i++;
-                this.Catalog.Add(item.Value, i); //Add a symbol and the color to the catalog
+                Catalog.Add(item.Value, i); //Add a symbol and the color to the catalog
             }
         }
 
@@ -118,7 +118,7 @@ namespace Lilo_et_Stitch.Model
 
             foreach (var item in imgTrans.UsedColors) //For all items in usedcolor
             {
-                this.catalogLegend[item.Value] = item.Key;
+                catalogLegend[item.Value] = item.Key;
             }
 
             Table table = new Table() //Creates a table that will be used to store the couleur and legend
@@ -183,10 +183,10 @@ namespace Lilo_et_Stitch.Model
         /// <authors>Antoine REITER - Mattis GALOPPIN - Maxime LAFFAYE - Antoine SAKKALIS</authors>
         public void WriteInPDF()
         {
-            string dataDir = this.path;
+            string dataDir = path;
 
             //Initialize document object and properties
-            Document document = new Aspose.Pdf.Document();
+            Document document = new Document();
             document.PageInfo.Margin.Left = 5;
             document.PageInfo.Margin.Right = 0;
             document.PageInfo.IsLandscape = true;
@@ -198,17 +198,17 @@ namespace Lilo_et_Stitch.Model
             GeneratePage1(document);
 
             //Creating the table
-            Aspose.Pdf.Table table = new Aspose.Pdf.Table();
-            
+            Table table = new Table();
+
             //Setting the margin of the table
             table.ColumnWidths = "15 15 15";
 
             //Changing the color of the borders
-            table.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(this.imgTrans.GridColor.A, this.imgTrans.GridColor.R, this.imgTrans.GridColor.G, this.imgTrans.GridColor.B)));
+            table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.FromRgb(System.Drawing.Color.FromArgb(imgTrans.GridColor.A, imgTrans.GridColor.R, imgTrans.GridColor.G, imgTrans.GridColor.B)));
 
             //Calculating the amount of cells and rows
-            int nbCol = Math.Max((int)Math.Ceiling((double)this.imgTrans.Img.Width / this.imgTrans.Step), 0);   
-            int nbRows = Math.Max((int)Math.Ceiling((double)this.imgTrans.Img.Height / this.imgTrans.Step), 0);
+            int nbCol = Math.Max((int)Math.Ceiling((double)imgTrans.Img.Width / imgTrans.Step), 0);
+            int nbRows = Math.Max((int)Math.Ceiling((double)imgTrans.Img.Height / imgTrans.Step), 0);
 
             //Adding rows and cells
             int CountCase = -1;
@@ -216,8 +216,8 @@ namespace Lilo_et_Stitch.Model
             int columns = 0;
             for (rows = 0; rows < nbRows; rows++)
             {
-                Aspose.Pdf.Row row = table.Rows.Add();
-                for(columns = 0; columns < nbCol; columns++)
+                Row row = table.Rows.Add();
+                for (columns = 0; columns < nbCol; columns++)
                 {
                     CountCase++;
                     //Adding cells + symbols 
@@ -256,21 +256,21 @@ namespace Lilo_et_Stitch.Model
         /// <authors>Mattis GALOPPIN</authors>
         public void GenerateSymbols()
         {
-            int i= 0; //Index for char
-            int j= 0;//Index for number
+            int i = 0; //Index for char
+            int j = 0;//Index for number
             CatalogString.Clear();
-            foreach (var item in this.Catalog.Keys)
+            foreach (var item in Catalog.Keys)
             {
                 //If the symbols is not already in the catalogString and i exist in the list
-                if ((!this.CatalogString.ContainsValue(this.symbols[i])&&(i < this.symbols.Count - 1))) 
+                if (!CatalogString.ContainsValue(symbols[i]) && i < symbols.Count - 1)
                 {
                     //We put a char
-                    this.CatalogString.Add(item, this.symbols[i]);
-                    i++; 
+                    CatalogString.Add(item, symbols[i]);
+                    i++;
                 }
                 else //We put a number
                 {
-                    this.CatalogString.Add(item,j.ToString());
+                    CatalogString.Add(item, j.ToString());
                     j++;
                 }
             }
@@ -294,14 +294,14 @@ namespace Lilo_et_Stitch.Model
             document.Pages[1].Paragraphs.Add(title);
 
             //Create the image
-            System.Drawing.Image img = this.imgTrans.NewImage;
-                        
+            System.Drawing.Image img = imgTrans.NewImage;
+
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 img.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); //Save the image
                 Stream imgStream = memoryStream;  //Load the image into stream
                 document.Pages[1].AddImage(imgStream, new Aspose.Pdf.Rectangle(250, 1, 600, 600)); //Add image to page at the center
-            }   
+            }
         }
         #endregion
     }
