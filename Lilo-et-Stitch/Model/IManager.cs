@@ -22,26 +22,30 @@ namespace Lilo_et_Stitch.Model
         /// <param name="img"></param>
         public void Import(Image img);
 
+
         /// <summary>
         /// Will reset the palette to it's original form
         /// </summary>
         public void ResetPalette();
+
 
         /// <summary>
         /// Will update the palette with the given path
         /// </summary>
         /// <param name="path">Path to the new palette</param>
         public void UpdatePalette(string path);
-        0
+
+
         /// <summary>
         /// Transforms the image and creates the grid on it
         /// </summary>
         /// <param name="step">Step of the "pixel/case"</param>
         /// <param name="colorMax">Max amount of color to be used </param>
         /// <param name="gridColor">Color of the grid</param>
-        /// <returns></returns>
+        /// <returns>The newly generated image</returns>
         /// <author>Maxime LAFFAYE</author>
-        public void TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor);
+        public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor);
+
 
         /// <summary>
         /// Will create the PDF using the given path
