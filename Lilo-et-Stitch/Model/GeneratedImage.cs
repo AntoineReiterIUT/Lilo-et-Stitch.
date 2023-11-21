@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lilo_et_Stitch.Model.Transform;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,10 @@ namespace Lilo_et_Stitch.Model
         #region attributes
         private Dictionary<string, System.Windows.Media.Color> usedColor;
         private System.Windows.Media.Color gridColor;
+        private List<Case> cases;
         #endregion
 
-        #region 
+        #region  properties
         /// <summary>
         /// Property : Read or edit the list of used color
         /// </summary>
@@ -29,6 +31,12 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public Color GridColor { get => gridColor; set => gridColor = value; }
+
+        /// <summary>
+        /// Property : Read or edit the list of cases
+        /// </summary>
+        public List<Case> Cases { get => cases; set => cases = value; }
         #endregion
+
     }
 }

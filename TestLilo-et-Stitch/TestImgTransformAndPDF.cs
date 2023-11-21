@@ -17,7 +17,7 @@ namespace TestLilo_et_Stitch
     {
         #region attributes
         private Image img;
-        private ImgTransform transImg;
+        private Transformer transImg;
 
         private int maxColorForTests = 20;
         private PDF_DAO pDFforTesting;
@@ -107,7 +107,7 @@ namespace TestLilo_et_Stitch
 
             //we record an image
             img = Image.FromFile(cheminDestination);
-            transImg = ImgTransform.Instance;
+            transImg = Transformer.Instance;
             transImg.TransformingIMG(img,5,this.maxColorForTests,System.Windows.Media.Color.FromRgb(255, 0, 0));
 
 

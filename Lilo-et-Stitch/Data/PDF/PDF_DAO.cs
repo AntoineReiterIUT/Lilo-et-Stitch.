@@ -25,7 +25,7 @@ namespace Lilo_et_Stitch.Data.PDF
         #region attributes
         private string path;
         private Dictionary<RGB, int> catalog;
-        private ImgTransform imgTrans;
+        private Transformer imgTrans;
         private List<string> symbols;
         private Dictionary<RGB, string> catalogString;
         private Dictionary<RGB, string> catalogLegend;
@@ -61,7 +61,7 @@ namespace Lilo_et_Stitch.Data.PDF
         /// <param name="imgT">ImgTransform to get the list of cases</param>
         /// <param name="path">Path to save the file</param>
         /// <authors>Mattis GALOPPIN</authors>
-        public PDF_DAO(ImgTransform imgT, string path)
+        public PDF_DAO(Transformer imgT, string path)
         {
             //initialization
             this.path = path;
