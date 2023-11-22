@@ -154,10 +154,8 @@ namespace Lilo_et_Stitch.View
 
                         imageToImport = System.Drawing.Image.FromStream(memoryStream);
                     }
-                    if (Manager != null)
-                    {
+                    if (Manager == null)this.Manager = new Manager();
                         Manager.Import(imageToImport);
-                    }
                     //done importing
                 }
             }
@@ -218,9 +216,9 @@ namespace Lilo_et_Stitch.View
         /// <author>Maxime LAFFAYE</author>
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             
-            /*
+            
             //Create the bitmap
             WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
@@ -238,7 +236,7 @@ namespace Lilo_et_Stitch.View
                 //Start the transformation of the image
                 GeneratedImage generatedImage = Manager.TransformImage((int)ChangeStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
 
-                this.editedImage = generatedImage;
+                this.editedImage = generatedImage.Image;
 
                 //Clear the list so we don't stack all colors
                 usedColorList.Children.Clear(); 
@@ -269,7 +267,7 @@ namespace Lilo_et_Stitch.View
                 writeableBitmap = new WriteableBitmap(bitmapImage);
                 NewImg.Source = writeableBitmap;
             }
-            */
+            
         }
 
 
