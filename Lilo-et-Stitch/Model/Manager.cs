@@ -60,13 +60,20 @@ namespace Lilo_et_Stitch.Model
 
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
+            //Load the image before transforming
             this.imageStitch.Image = daoImage.LoadImage();
 
+            // If an image was already imported
             if(this.imageStitch != null)
             {
+                //Do the transformation
                 generatedImage = imageStitch.TransformImage(step, colorMax, gridColor,daoColorPalette.GetPalette());
+
+                //Add the image in it's bitmapImage form because it'll be needed within the View
+                generatedImage.BitmapImage = daoImage.BitmapToBitmapImage(generatedImage.Bitmap);
             }
 
+            //Return the newly generated image
             return generatedImage;
         }
 

@@ -30,6 +30,7 @@ namespace Lilo_et_Stitch.Model
         /// <author>Maxime LAFFAYE</author>
         public BitmapImage LoadBitmapImage();
 
+
         /// <summary>
         /// Will reset the palette to it's original form
         /// </summary>
