@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Color = System.Windows.Media.Color;
 
 namespace TestLilo_et_Stitch
 {
@@ -20,29 +21,29 @@ namespace TestLilo_et_Stitch
 
         #region attributes
         private ManagerCreator creator;
-        private GeneratedImage ?generatedImage;
-        private int stepForTests = 5;
-        private int maxColorForTests = 20;
+        private GeneratedImage? generatedImage;
+        private int stepForTests = 4;
+        private int maxColorForTests = 454;
         #endregion
 
 
 
         #region operations
+
+        /// <summary>
+        /// Test the Grid Creation with a 800 x 800 image 
+        /// </summary>
+        /// <authors>Mattis GALOPPIN</authors>
+        [Fact]
+        public void TestMakeGrid()
+        {
+            //the size of the image to test is 800 by 800
+
+            Assert.Equal(25600, generatedImage.Cases.Count);
+        }
+
+
         /*
-       /// <summary>
-       /// Test the Grid Creation with a 800 x 800 image 
-       /// </summary>
-       /// <authors>Mattis GALOPPIN</authors>
-       [Fact]
-       public void TestMakeGrid()
-       {
-           //the size of the image to test is 800 by 800
-
-           Assert.Equal(25600,transImg.Cases.Count());
-       }
-
-
-
        /// <summary>
        /// Test caseAverage with color pixels
        /// </summary>
@@ -66,38 +67,20 @@ namespace TestLilo_et_Stitch
            RGB expectedAverageColor = new RGB(85, 85, 85);
            Assert.Equal(expectedAverageColor, testCase.ColorRGB);
        }
+        
+        */
+        /// <summary>
+        /// Tests the method to convert RGB colors to the nearest DMC value
+        /// </summary>
+        /// <author>Antoine SAKKALIS</author>
+        [Fact]
+        public void TestToDMC()
+        {      
+            //Check if the found color (written in the generated image) is the closest to the DMC one
+            Assert.Equal(Color.FromArgb(0, 4, 196, 202), this.generatedImage.Cases[0].TransformedColor);
+            Assert.Equal(Color.FromArgb(0, 252, 251, 248).B, this.generatedImage.Cases[1].TransformedColor.B);
+        }
 
-
-       /// <summary>
-       /// Tests the method to convert RGB colors to the nearest DMC value
-       /// </summary>
-       /// <author>Antoine SAKKALIS</author>
-       [Fact]
-       public void TestToDMC()
-       {
-           //Clearing so we can test on fake cases
-           transImg.Cases.Clear();
-
-
-           transImg.Cases.Add(new Case(new Coordinate(1,2), new Coordinate(1, 2)));
-           transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
-           transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
-
-
-           transImg.Cases[0].ColorRGB = new RGB(12, 34, 238);
-           transImg.Cases[2].ColorRGB = new RGB(12, 34, 238);
-           transImg.Cases[1].ColorRGB = new RGB(255, 0, 0);
-
-           transImg.ToDMC(transImg.Cases[0]);
-           transImg.ToDMC(transImg.Cases[2]);
-           transImg.ToDMC(transImg.Cases[1]);
-
-
-           Assert.Equal(transImg.Cases[0].ColorDMC.B, new RGB(19, 71, 165).B);
-           Assert.Equal(transImg.Cases[2].ColorDMC.B, new RGB(19, 71, 165).B);
-           Assert.Equal(transImg.Cases[1].ColorDMC, new RGB(161, 75, 81));
-       }
-       */
 
         /// <summary>
         /// Constructor of the test
@@ -106,10 +89,10 @@ namespace TestLilo_et_Stitch
 
         public TestTransform()
         {
-           this.creator = new ManagerCreator();
+            this.creator = new ManagerCreator();
             creator.ManagerWithImage();
-            //creator.ManagerWithNewPalette();
-            generatedImage = this.creator.ManagerWithGeneratedImage(this.stepForTests,this.maxColorForTests, System.Windows.Media.Color.FromRgb(255, 0, 0));
+            creator.ManagerWithNewPalette();
+            generatedImage = this.creator.ManagerWithGeneratedImage(this.stepForTests, this.maxColorForTests, System.Windows.Media.Color.FromRgb(255, 0, 0));
         }
 
 
@@ -120,7 +103,7 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void TestGeneratedImage()
         {
-            Assert.NotNull(generatedImage);  
+            Assert.NotNull(generatedImage);
         }
         /*
         /// <summary>

@@ -45,7 +45,7 @@ namespace TestLilo_et_Stitch
         public void ManagerWithImage()
         {
             //Path of the image file to import it
-            string file = Path.Combine(projectFolder, @"../TestImages/pierre-d-argent800.jpg");
+            string file = Path.Combine(projectFolder, @"../TestImages/ImageTest.png");
             manager.Import(file);
         }
 
