@@ -13,7 +13,7 @@ public class DAOImage : IDAO_Image
     #region operations
     public void Save(Image image)
     {
-        image.Save("image.jpg");
+        this.image = image;
     }
 
     

@@ -12,7 +12,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
     /// <summary>
     /// This class will handle all the data access for the color palette
     /// </summary>
-    internal class DAOColorPalette : IDAOColorPalette
+    public class DAOColorPalette : IDAOColorPalette
     {
         #region attributes
         private Dictionary<string, Color> palette;
@@ -21,12 +21,17 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         #region operations
 
         /// <summary>
-        /// Change the palette used to transform the image
+        /// Constructor of the DAOColorPalette
         /// </summary>
-        /// <param name="csvPath"></param>
+        /// <author>Antoine SAKKALIS</author>
+        public DAOColorPalette()
+        {
+            palette = new Dictionary<string, Color>();
+            ResetPalette();
+        }
+        /// <author>Antoine SAKKALIS</author>
         public void ChangePalette(string csvPath)
         {
-
             //Read the file
             FileInfo fileInfo = new FileInfo(csvPath);
 
@@ -70,15 +75,30 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             }
         }
 
+
+        /// <author>Antoine SAKKALIS</author>
         public Dictionary<string, Color> GetPalette()
         {
-            throw new NotImplementedException();
+            return palette;
         }
 
+
+        ///<author>Antoine SAKKALIS</author>
         public void ResetPalette()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                var file = Path.Combine(projectFolder, @"../Data/DMCBackup/DMCcolors.csv");
+
+                ChangePalette(file.ToString());
+            }
+            catch
+            {
+                throw new Exception("Une erreur s'est produite lors de la réinitialisation de la palette de couleur");
+            }
         }
+
         #endregion
 
     }
