@@ -6,6 +6,7 @@ using Lilo_et_Stitch.Data.PDF;
 using System.Windows.Forms;
 using PdfSharp.BigGustave;
 using System.Drawing.Imaging;
+using Lilo_et_Stitch.Data.DAOColorPalette;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -16,6 +17,9 @@ namespace Lilo_et_Stitch.Model.Transform
     {
         #region attributes
         private Dictionary<System.Windows.Media.Color, System.Windows.Media.Color> ?colorMatches;
+        private Dictionary<string, System.Windows.Media.Color> colorPalette;
+        private int colorsStep;
+        private Dictionary<string, System.Windows.Media.Color> usedColors;
         #endregion
 
 
@@ -29,8 +33,11 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <param name="gridColor">Color of the grid</param>
         /// <returns>The image that was just generated</returns>
         /// <author>Maxime LAFFAYE</author>
-        public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor, ImageStitch imageStitch)
+        public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor, ImageStitch imageStitch,Dictionary<string, System.Windows.Media.Color> colorPalette)
         {
+            this.colorPalette = colorPalette;
+            this.colorsStep = colorPalette.Count / colorMax;
+
             GeneratedImage newImg = new GeneratedImage();
             newImg.Width = imageStitch.Width;
             newImg.Height = imageStitch.Height;
@@ -40,7 +47,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
             // Creating the case, AKA the new pixels of our new image
             MakeGrid(newImg.Cases,step,imageStitch.Height,imageStitch.Width);
-            
+            FillPixels(newImg.Cases, imageStitch);
 
             return newImg;
 
@@ -58,11 +65,10 @@ namespace Lilo_et_Stitch.Model.Transform
             {
 
                
-                CaseAverage(c, bitNewImage);
-                /*
+                CaseAverage(c, bitNewImage);    
                 if (c.BaseColor.A > 0)
                     ToDMC(c);
-                */
+                
             }
 
         }
@@ -138,7 +144,7 @@ namespace Lilo_et_Stitch.Model.Transform
             }
         }
 
-        /*
+        
         /// <summary>
         /// Change a RGB color in an existing DMC color from the color of a case
         /// </summary>
@@ -157,15 +163,15 @@ namespace Lilo_et_Stitch.Model.Transform
             }
             else
             {
-                foreach (string code in colorPalette.DMCColors.Keys)
+                foreach (string code in colorPalette.Keys)
                 {
                     if (steps % colorsStep == 0) //Only check every X colors (to respect the maxColors parameter)
                     {
                         //Calculate the color distance
-                        RGB colorDMC = colorPalette.DMCColors[code];
-                        int distance = Math.Abs(colorDMC.R - box.ColorRGB.R)
-                            + Math.Abs(colorDMC.G - box.ColorRGB.G)
-                            + Math.Abs(colorDMC.B - box.ColorRGB.B);
+                        System.Windows.Media.Color colorDMC = colorPalette[code];
+                        int distance = Math.Abs(colorDMC.R - box.BaseColor.R)
+                            + Math.Abs(colorDMC.G - box.BaseColor.G)
+                            + Math.Abs(colorDMC.B - box.BaseColor.B);
 
                         if (distance < bestDistance) //If the distance is better than the previous one, use this color
                         {
@@ -177,18 +183,18 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
 
                 //Store the closest DMC color RGB value in the colorMatches dictionary
-                colorMatches[box.ColorRGB] = closestDMCColorRGB;
+                colorMatches[box.BaseColor] = closestDMCColor;
             }
 
             //Get the DMC color code using the closest DMC color RGB value
-            string closestDMCColorCode = colorPalette.DMCColors.FirstOrDefault(x => x.Value == closestDMCColorRGB).Key;
+            string closestDMCColorCode = colorPalette.FirstOrDefault(x => x.Value == closestDMCColor).Key;
 
             //Set the ColorDMC of the case
-            box.ColorDMC = closestDMCColorRGB;
+            box.BaseColor = closestDMCColor;
             //Register the used DMC color RGB value
-            usedColors[closestDMCColorCode] = closestDMCColorRGB;
+            usedColors[closestDMCColorCode] = closestDMCColor;
         }
-        */
+        
 
 
         #endregion
