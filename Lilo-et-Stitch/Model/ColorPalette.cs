@@ -16,7 +16,7 @@ namespace Lilo_et_Stitch.Model
     public class ColorPalette
     {
         #region attributes
-        private Dictionary<string, RGB> dmcColors;
+        private Dictionary<string, Color> dmcColors;
         #endregion
 
 
@@ -25,7 +25,7 @@ namespace Lilo_et_Stitch.Model
         /// Stores the DMCs colors in a Dictionnary with their RGB values and DMC value code
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
-        public Dictionary<string, RGB> DMCColors { get { return dmcColors; } }
+        public Dictionary<string, Color> DMCColors { get { return dmcColors; } }
         #endregion
 
 
@@ -62,7 +62,10 @@ namespace Lilo_et_Stitch.Model
                             if (values.Length == 4) //Tests if there's 4 elements in the csv file line
                             {
                                 //Add the color to the list
-                                RGB couleur = new RGB(int.Parse(values[1]), int.Parse(values[2]), int.Parse(values[3]));
+                                Color couleur = new Color();
+                                couleur.R = Byte.Parse(values[1]);
+                                couleur.G = Byte.Parse(values[2]);
+                                couleur.B = Byte.Parse(values[3]);
                                 dmcColors[values[0]] = couleur;
                             }
                             else
@@ -87,7 +90,7 @@ namespace Lilo_et_Stitch.Model
         /// <author>Antoine SAKKALIS</author>
         public ColorPalette()
         {
-            dmcColors = new Dictionary<string, RGB>();
+            dmcColors = new Dictionary<string, Color>();
         }
         #endregion
     }
