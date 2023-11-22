@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-
+using System.Windows.Media.Imaging;
+using System.Drawing;
+using Color = System.Windows.Media.Color;
 namespace Lilo_et_Stitch.Model
 {
     /// <summary>
@@ -22,6 +24,8 @@ namespace Lilo_et_Stitch.Model
         private int width;
         private int height;
         private DrawImage image;
+        private Bitmap bitmap;
+        private BitmapImage bitmapImage;
         #endregion
 
 
@@ -67,6 +71,17 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <author>Antoine Sakkalis</author>
         public DrawImage Image { get => image; set => image = value; }
+
+        /// <summary>
+        /// Property : Read or edit the bitmapImage (System.windows.media)
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        public BitmapImage BitmapImage { get => bitmapImage; set => bitmapImage = value; }
+
+        /// <summary>
+        /// Property : Read or edit the bitmap (System.Drawing)
+        /// </summary>
+        public Bitmap Bitmap { get => bitmap; set => bitmap = value; }
         #endregion
 
 

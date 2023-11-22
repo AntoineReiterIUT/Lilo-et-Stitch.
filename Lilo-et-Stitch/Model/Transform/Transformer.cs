@@ -71,7 +71,10 @@ namespace Lilo_et_Stitch.Model.Transform
                     ToDMC(c);              
             }
             RebuildImage(cases,bitNewImage,generatedImage);
+
+            //Stocking as a bitmap and as an image
             generatedImage.Image = bitNewImage;
+            generatedImage.Bitmap = bitNewImage;
         }
 
 
