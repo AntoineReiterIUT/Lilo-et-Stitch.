@@ -60,8 +60,10 @@ namespace Lilo_et_Stitch.Model.Transform
             Bitmap bitNewImage = new Bitmap(img.Image);
             foreach (Case c in cases)
             {            
-                CaseAverage(c, bitNewImage);    
-                ToDMC(c);              
+                CaseAverage(c, bitNewImage);
+                if (c.BaseColor.A > 50)
+                    ToDMC(c);
+         
             }
             RebuildImage(cases,bitNewImage, newImage);
 
