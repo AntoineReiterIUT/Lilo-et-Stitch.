@@ -11,14 +11,24 @@ public interface IDAOImage
     /// <summary>
     /// Save the image in the file
     /// </summary>
-    /// <param name="image">Image</param>
+    /// <param name="path">Path to the image</param>
     /// /// <author>Antoine SAKKALIS</author>
-    public void Save(Image image);
+    public void Save(string path);
+
 
     /// <summary>
     /// Load the image from the file
-    /// </summary>
     /// <returns>Image</returns>
     /// <author>Antoine SAKKALIS</author>
-    public Image Load();
+    public Image LoadImage();
+
+
+    /// <summary>
+    /// Load a BitmapImage to display in the IHM
+    /// </summary>
+    /// <returns>A BitmapImage</returns>
+    /// <author>Maxime LAFFAYE</author>
+    public BitmapImage LoadBitmapImage();
+
+
 }
