@@ -196,28 +196,14 @@ namespace Lilo_et_Stitch.View
         /// <param name="e"></param>
         /// <author>Maxime LAFFAYE</author>
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
-        {
-            //throw new NotImplementedException();
-            
-            
+        {            
             //Create the bitmap
             WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
             {
-                Bitmap bitmap;
-                using (var stream = new MemoryStream())
-                {
-                    var encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)imagePrev.Source));
-                    encoder.Save(stream);
-                    bitmap = new Bitmap(stream);
-                }
-                if (this.Manager == null) this.Manager = new Manager();
 
                 //Start the transformation of the image
                 GeneratedImage generatedImage = Manager.TransformImage((int)ChangeStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
-
-                this.editedImage = generatedImage.Image;
 
                 //Clear the list so we don't stack all colors
                 usedColorList.Children.Clear(); 
@@ -234,19 +220,9 @@ namespace Lilo_et_Stitch.View
                 }
 
                 //Rebuild the image
-                BitmapImage bitmapImage = new BitmapImage();
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    editedImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); 
-                    memoryStream.Seek(0, SeekOrigin.Begin);
+                BitmapImage bitmapImage = generatedImage.BitmapImage;
 
-                    bitmapImage.BeginInit();
-                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.StreamSource = memoryStream;
-                    bitmapImage.EndInit();
-                }
-                writeableBitmap = new WriteableBitmap(bitmapImage);
-                NewImg.Source = writeableBitmap;
+                NewImg.Source = bitmapImage;
             }
             
         }
