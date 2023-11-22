@@ -20,6 +20,15 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
 
         #region operations
 
+        /// <summary>
+        /// Constructor of the DAOColorPalette
+        /// </summary>
+        /// <author>Antoine SAKKALIS</author>
+        public DAOColorPalette()
+        {
+            palette = new Dictionary<string, Color>();
+            ResetPalette();
+        }
         /// <author>Antoine SAKKALIS</author>
         public void ChangePalette(string csvPath)
         {
@@ -66,6 +75,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             }
         }
 
+
         /// <author>Antoine SAKKALIS</author>
         public Dictionary<string, Color> GetPalette()
         {
@@ -88,6 +98,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
                 throw new Exception("Une erreur s'est produite lors de la réinitialisation de la palette de couleur");
             }
         }
+
         #endregion
 
     }
