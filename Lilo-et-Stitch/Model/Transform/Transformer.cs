@@ -15,7 +15,7 @@ namespace Lilo_et_Stitch.Model.Transform
         private Dictionary<System.Windows.Media.Color, System.Windows.Media.Color> colorMatches = new Dictionary<System.Windows.Media.Color, System.Windows.Media.Color>();
         private Dictionary<string, System.Windows.Media.Color> colorPalette;
         private int colorsStep;
-        private Dictionary<string, System.Windows.Media.Color> usedColors = new Dictionary<string, System.Windows.Media.Color>();
+        private GeneratedImage newImage = new GeneratedImage();
         #endregion
 
 
@@ -34,18 +34,17 @@ namespace Lilo_et_Stitch.Model.Transform
             this.colorPalette = colorPalette;
             this.colorsStep = colorPalette.Count / colorMax;
 
-            GeneratedImage newImg = new GeneratedImage();
-            newImg.Width = imageStitch.Width;
-            newImg.Height = imageStitch.Height;
-            newImg.Step = step;
-            newImg.GridColor = gridColor;
+            newImage.Width = imageStitch.Width;
+            newImage.Height = imageStitch.Height;
+            newImage.Step = step;
+            newImage.GridColor = gridColor;
 
 
             // Creating the case, AKA the new pixels of our new image
-            MakeGrid(newImg.Cases,step,imageStitch.Height,imageStitch.Width);
-            FillPixels(newImg.Cases, imageStitch,newImg);
+            MakeGrid(newImage.Cases,step,imageStitch.Height,imageStitch.Width);
+            FillPixels(newImage.Cases, imageStitch);
 
-            return newImg;
+            return newImage;
         }
 
 
@@ -56,7 +55,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <param name="img">The ImageStitch</param>
         /// <param name="generatedImage">The newly generated image</param>
         /// /// <author>Maxime LAFFAYE</author>
-        public void FillPixels(List<Case> cases, ImageStitch img, GeneratedImage generatedImage)
+        public void FillPixels(List<Case> cases, ImageStitch img)
         {
             Bitmap bitNewImage = new Bitmap(img.Image);
             foreach (Case c in cases)
@@ -64,11 +63,11 @@ namespace Lilo_et_Stitch.Model.Transform
                 CaseAverage(c, bitNewImage);    
                 ToDMC(c);              
             }
-            RebuildImage(cases,bitNewImage,generatedImage);
+            RebuildImage(cases,bitNewImage, newImage);
 
             //Stocking as a bitmap and as an image
-            generatedImage.Image = bitNewImage;
-            generatedImage.Bitmap = bitNewImage;
+            newImage.Image = bitNewImage;
+            newImage.Bitmap = bitNewImage;
         }
 
 
@@ -227,7 +226,7 @@ namespace Lilo_et_Stitch.Model.Transform
             //Set the ColorDMC of the case
             box.TransformedColor = closestDMCColor;
             //Register the used DMC color RGB value
-            usedColors[closestDMCColorCode] = closestDMCColor;
+            newImage.UsedColor[closestDMCColorCode] = closestDMCColor;
         }
         
 
