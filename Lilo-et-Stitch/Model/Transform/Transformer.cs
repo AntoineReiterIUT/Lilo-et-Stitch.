@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using PdfSharp.BigGustave;
 using System.Drawing.Imaging;
 using Lilo_et_Stitch.Data.DAOColorPalette;
+using System.Windows.Media.Media3D;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
@@ -16,10 +17,10 @@ namespace Lilo_et_Stitch.Model.Transform
     public class Transformer
     {
         #region attributes
-        private Dictionary<System.Windows.Media.Color, System.Windows.Media.Color> ?colorMatches;
+        private Dictionary<System.Windows.Media.Color, System.Windows.Media.Color> colorMatches = new Dictionary<System.Windows.Media.Color, System.Windows.Media.Color>();
         private Dictionary<string, System.Windows.Media.Color> colorPalette;
         private int colorsStep;
-        private Dictionary<string, System.Windows.Media.Color> usedColors;
+        private Dictionary<string, System.Windows.Media.Color> usedColors = new Dictionary<string, System.Windows.Media.Color>();
         #endregion
 
 
@@ -47,31 +48,71 @@ namespace Lilo_et_Stitch.Model.Transform
 
             // Creating the case, AKA the new pixels of our new image
             MakeGrid(newImg.Cases,step,imageStitch.Height,imageStitch.Width);
-            FillPixels(newImg.Cases, imageStitch);
+            FillPixels(newImg.Cases, imageStitch,newImg);
 
             return newImg;
-
         }
 
 
         /// <summary>
         /// Will loop through all cases and get the average + the code DMC if necessary (if the opacity isn't 0)
         /// </summary>
-        /// <author>Maxime LAFFAYE</author>
-        public void FillPixels(List<Case> cases, ImageStitch img)
+        /// <param name="cases">List of cases</param>
+        /// <param name="img">The ImageStitch</param>
+        /// <param name="generatedImage">The newly generated image</param>
+        /// /// <author>Maxime LAFFAYE</author>
+        public void FillPixels(List<Case> cases, ImageStitch img, GeneratedImage generatedImage)
         {
             Bitmap bitNewImage = new Bitmap(img.Image);
             foreach (Case c in cases)
-            {
-
-               
+            {            
                 CaseAverage(c, bitNewImage);    
                 if (c.BaseColor.A > 0)
-                    ToDMC(c);
-                
+                    ToDMC(c);              
             }
-
+            RebuildImage(cases,bitNewImage,generatedImage);
+            generatedImage.Image = bitNewImage;
         }
+
+
+        /// <summary>
+        /// Will draw the new pixels on the bitmap
+        /// </summary>
+        /// <param name="cases">List of cases (AKA the new pixels of the generated image)</param>
+        /// <param name="img">New bitMap image that is being built</param>
+        /// <param name="generatedImage">The newly generated image</param>
+        /// <author>Maxime LAFFAYE</author>
+        private void RebuildImage(List<Case> cases, Bitmap img, GeneratedImage generatedImage)
+        {
+            foreach (Case c in cases)
+            {
+
+                // the pixels/cases
+                for (int i = c.Coord1.X; i < c.Coord2.X; i++) //Foreach pixel of the case's line
+                {
+
+                    for (int j = c.Coord1.Y; j < c.Coord2.Y; j++) //Foreach pixel of the case's column
+                    {
+                        img.SetPixel(i, j, Color.FromArgb(c.TransformedColor.A, c.TransformedColor.R, c.TransformedColor.G, c.TransformedColor.B));
+                    }
+                }
+
+
+                //Creation of the grid (using the color from the parameters)
+                for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, img.Width); i++) //Foreach pixel of the case's line
+                {
+                    //Draw the top line
+                    img.SetPixel(i, c.Coord1.Y, Color.FromArgb(generatedImage.GridColor.A, generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
+                }
+
+                for (int j = Math.Max(c.Coord1.Y, 0); j < Math.Min(c.Coord2.Y, img.Height); j++) //Foreach pixel of the case's column
+                {
+                    //Draw the left line
+                    img.SetPixel(c.Coord1.X, j, Color.FromArgb(generatedImage.GridColor.A, generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
+                }
+            }
+        }
+
 
         /// <summary>
         /// Will find the avg color of the case given (using each pixel's color)
@@ -106,14 +147,13 @@ namespace Lilo_et_Stitch.Model.Transform
                     pixelCount++;
                 }
             }
+                avgR = sumR / pixelCount;
+                avgG = sumG / pixelCount;
+                avgB = sumB / pixelCount;
+                avgOpacity = sumOpacity / pixelCount;
 
-            avgR = sumR / pixelCount;
-            avgG = sumG / pixelCount;
-            avgB = sumB / pixelCount;
-            avgOpacity = sumOpacity / pixelCount;
-
-            //Adds it to the case.BaseColor
-            caseToCheck.BaseColor = System.Windows.Media.Color.FromArgb((byte)avgOpacity, (byte)avgR, (byte)avgG, (byte)avgB);
+                //Adds it to the case.BaseColor
+                caseToCheck.TransformedColor = System.Windows.Media.Color.FromArgb((byte)avgOpacity, (byte)avgR, (byte)avgG, (byte)avgB);
         }
 
 
@@ -132,7 +172,7 @@ namespace Lilo_et_Stitch.Model.Transform
                 for (int x = 0; x < width; x += step) //for each column
                 {
                     //Create the case
-                    int rightX = Math.Min(x + step, height);
+                    int rightX = Math.Min(x + step, width);
                     int bottomY = Math.Min(y + step, height);
 
                     Coordinate c1 = new Coordinate(x, y);
@@ -143,6 +183,7 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
             }
         }
+
 
         
         /// <summary>
