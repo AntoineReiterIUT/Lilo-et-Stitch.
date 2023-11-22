@@ -46,5 +46,26 @@ public class DAOImage : IDAOImage
     {
         return bitmapImage;
     }
+
+    public BitmapImage BitmapToBitmapImage(Bitmap bitmap)
+    {
+        //Creation of the bitmapImage
+        BitmapImage bitmapImage = new BitmapImage();
+
+        //Convert it into a bitmapImage
+        using (MemoryStream memoryStream = new MemoryStream())
+        {
+            bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            bitmapImage.BeginInit();
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.StreamSource = memoryStream;
+            bitmapImage.EndInit();
+        }
+
+        //Return the converted
+        return bitmapImage;
+    }
     #endregion
 }

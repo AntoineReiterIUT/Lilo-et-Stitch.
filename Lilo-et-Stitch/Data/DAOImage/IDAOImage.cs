@@ -31,4 +31,10 @@ public interface IDAOImage
     public BitmapImage LoadBitmapImage();
 
 
+    /// <summary>
+    /// Convert the given bitmap (system.drawing) to a bitmapImage (system.windows.media)
+    /// </summary>
+    /// <param name="bitmap"></param>
+    /// <returns>Maxime LAFFAYE</returns>
+    public BitmapImage BitmapToBitmapImage(Bitmap bitmap);
 }
