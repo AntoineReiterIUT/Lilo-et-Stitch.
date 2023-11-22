@@ -1,5 +1,6 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Text;
+using Lilo_et_Stitch.Data.DAO_PDF;
 using Lilo_et_Stitch.Model;
 using Lilo_et_Stitch.Model.Transform;
 using System;
@@ -20,12 +21,14 @@ namespace Lilo_et_Stitch.Data.PDF
     /// <summary>
     /// This class will handle the creation of the PDF
     /// </summary>
-    public class PDF_DAO
+    public class PDF_DAO : IPDF_DAO
     {
         #region attributes
         private string path;
         private Dictionary<Color, int> catalog;
+
         private GeneratedImage generatedImage;
+
         private List<string> symbols;
 
         private Dictionary<Color, string> catalogString;
@@ -59,19 +62,21 @@ namespace Lilo_et_Stitch.Data.PDF
         /// <summary>
         /// Constructor of the PDF
         /// </summary>
-        /// <param name="path">Path to save the file</param>
-        /// <param name="generatedImage">The new generated image</param>
-        /// <param name="imageStitch">The old image</param>
         /// <authors>Mattis GALOPPIN</authors>
-        public PDF_DAO(string path,GeneratedImage generatedImage, ImageStitch imageStitch)
+        public PDF_DAO()
         {
             //initialization
-            this.path = path;
-            generatedImage = generatedImage;
             Catalog = new Dictionary<Color, int>();
             symbols = new List<string> { "☺", "♥", "♦", "♣", "♠", "•", "◘", "○", "☻", "*", "+", "-", "/", "|", "&", "~", "#", "`", "^", "@", "°", "[", "]", "=", "£", "¤", "µ", "$", "%", "§", "<", ">", "?", "!", ":", "(", ")", "{", "}", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", };
             CatalogString = new Dictionary<Color, string>();
             catalogLegend = new Dictionary<Color, string>();
+        }
+
+        /// <author>Antoine SAKKALIS</author>
+        public void ExportPDF(string path, GeneratedImage generatedImage)
+        {
+            this.path = path;
+            this.generatedImage = generatedImage;
 
             GenerateCatalog();
             GenerateSymbols();
@@ -169,7 +174,7 @@ namespace Lilo_et_Stitch.Data.PDF
 
                 //Add a view of the color next to the symbol or the number and there DMC color
                 currentRow.Cells.Add("");
-                currentRow.Cells[CellCounter + 2].BackgroundColor = Aspose.Pdf.Color.FromArgb(a.A,a.R, a.G, a.B);
+                currentRow.Cells[CellCounter + 2].BackgroundColor = Aspose.Pdf.Color.FromArgb(a.A, a.R, a.G, a.B);
 
                 CellCounter += 2;
             }
@@ -206,7 +211,7 @@ namespace Lilo_et_Stitch.Data.PDF
             table.ColumnWidths = "15 15 15";
 
             //Changing the color of the borders
-            table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb( generatedImage.GridColor.R, generatedImage.GridColor.G,generatedImage.GridColor.B));
+            table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
 
             //Calculating the amount of cells and rows
             int nbCol = Math.Max((int)Math.Ceiling((double)generatedImage.Width / generatedImage.Step), 0);
@@ -296,18 +301,16 @@ namespace Lilo_et_Stitch.Data.PDF
             document.Pages[1].Paragraphs.Add(title);
 
             //Create the image
-            /*
-            
-            System.Drawing.Image img = imgTrans.NewImage; A RECHECK
+            System.Drawing.Image img = generatedImage.Image;
 
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (MemoryStream memoryStream = new MemoryStream()) 
             {
-                img.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); //Save the image
+                img.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); //Registers the image to put it in a stream (aspose.PDF only accepts streams)
                 Stream imgStream = memoryStream;  //Load the image into stream
                 document.Pages[1].AddImage(imgStream, new Aspose.Pdf.Rectangle(250, 1, 600, 600)); //Add image to page at the center
             }
-            */
         }
+
         #endregion
     }
 }
