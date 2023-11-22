@@ -67,9 +67,11 @@ namespace TestLilo_et_Stitch
         /// <param name="step">The transformation step</param>
         /// <param name="colorMax">The maximum number of colors</param>
         /// <param name="gridColor">The color of the grid</param>
-        public void ManagerWithGeneratedImage(int step, int colorMax, System.Windows.Media.Color gridColor)
+        /// <author>Antoine SAKKALIS</author>
+        /// <returns>The newly generated image</returns>
+        public GeneratedImage ManagerWithGeneratedImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
-            manager.TransformImage(step, colorMax, gridColor);
+            return manager.TransformImage(step, colorMax, gridColor);
         }
 
         #endregion
