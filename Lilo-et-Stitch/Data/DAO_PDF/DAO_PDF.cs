@@ -36,6 +36,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
 
         #endregion
 
+
         #region properties
         /// <summary>
         /// Property : read or edit the catalog
@@ -198,58 +199,66 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
             document.PageInfo.Margin.Right = 0;
             document.PageInfo.IsLandscape = true;
 
-            //Add the page to the document
-            Page page = document.Pages.Add();
-
-            //adding page 1
+            //adding page 0 with the generated image
             GeneratePage1(document);
 
-            //Creating the table
-            Table table = new Table();
-
-            //Setting the margin of the table
-            table.ColumnWidths = "15 15 15";
-
-            //Changing the color of the borders
-            table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
-
-            //Calculating the amount of cells and rows
-            int nbCol = Math.Max((int)Math.Ceiling((double)generatedImage.Width / generatedImage.Step), 0);
-            int nbRows = Math.Max((int)Math.Ceiling((double)generatedImage.Height / generatedImage.Step), 0);
-
-            //Adding rows and cells
-            int CountCase = -1;
-            int rows = 0;
-            int columns = 0;
-            for (rows = 0; rows < nbRows; rows++)
+            int i;
+            for(i = 2;i <= 3; i++)
             {
-                Row row = table.Rows.Add();
-                for (columns = 0; columns < nbCol; columns++)
+                //Add the page to the document
+                document.Pages.Add();
+
+                //Creating the table
+                Table table = new Table();
+
+                //Setting the margin of the table
+                table.ColumnWidths = "15 15 15";
+
+                //Changing the color of the borders
+                table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
+
+                //Calculating the amount of cells and rows
+                int nbCol = Math.Max((int)Math.Ceiling((double)generatedImage.Width / generatedImage.Step), 0);
+                int nbRows = Math.Max((int)Math.Ceiling((double)generatedImage.Height / generatedImage.Step), 0);
+
+                //Adding rows and cells
+                int CountCase = -1;
+                int rows = 0;
+                int columns = 0;
+                for (rows = 0; rows < nbRows; rows++)
                 {
-                    CountCase++;
-                    //Adding cells + symbols 
-                    Case c = generatedImage.Cases[CountCase];
-                    if (c.BaseColor.A > 0) //if the case is not transparent
+                    Row row = table.Rows.Add();
+                    for (columns = 0; columns < nbCol; columns++)
                     {
-                        string carac = CatalogString[c.TransformedColor];
-                        var newCell = row.Cells.Add(" " + carac.ToString());
-                        //newCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(250,c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
-                        //For future use, ^
-                    }
-                    else //if the case is transparent
-                    {
-                        row.Cells.Add(" ");
+                        CountCase++;
+                        //Adding cells + symbols 
+                        Case c = generatedImage.Cases[CountCase];
+                        if (c.BaseColor.A > 0) //if the case is not transparent
+                        {
+                            string carac = CatalogString[c.TransformedColor];
+                            var newCell = row.Cells.Add(" " + carac.ToString());
+                            
+                            //Adding background color to the second page
+                            if(i==3)newCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(250, c.TransformedColor.R, c.TransformedColor.G, c.TransformedColor.B));
+
+                        }
+                        else //if the case is transparent
+                        {
+                            row.Cells.Add(" ");
+                        }
                     }
                 }
+
+                //Setting the size of the page according to the table, if the table is too small the page will stay at 60 60.
+                document.Pages[i].SetPageSize(
+                    Math.Max(columns * 16 + (document.Pages[i].PageInfo.Margin.Left + document.Pages[i].PageInfo.Margin.Right), 60),
+                    Math.Max(rows * 11 + (document.Pages[i].PageInfo.Margin.Top + document.Pages[i].PageInfo.Margin.Bottom), 60));
+
+                //Adding the table to the page
+                document.Pages[i].Paragraphs.Add(table);
             }
-
-            //Setting the size of the page according to the table, if the table is too small the page will stay at 60 60.
-            document.Pages[2].SetPageSize(
-                Math.Max(columns * 16 + (document.Pages[2].PageInfo.Margin.Left + document.Pages[2].PageInfo.Margin.Right), 60),
-                Math.Max(rows * 11 + (document.Pages[2].PageInfo.Margin.Top + document.Pages[2].PageInfo.Margin.Bottom), 60));
-
-            //Adding the table to the page
-            document.Pages[2].Paragraphs.Add(table);
+          
+            
 
             AddLegend(document);
 
