@@ -24,7 +24,7 @@ namespace Lilo_et_Stitch.View
     {
         #region attributes
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(0,0,0);
-        private IManager mainstitch;
+        private IManager Manager;
         private System.Drawing.Image editedImage;
         #endregion
 
@@ -51,7 +51,7 @@ namespace Lilo_et_Stitch.View
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             //checking if the image has been transformed
-            if (mainstitch != null)
+            if (Manager != null)
             {
                 //Creating the dialog object
                 System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -71,7 +71,7 @@ namespace Lilo_et_Stitch.View
                     }
                     else
                     {
-                        mainstitch.ExportPDF(path);
+                        Manager.ExportPDF(path);
                         System.Windows.MessageBox.Show("Exporté avec sucès!");
                     }
 
@@ -325,8 +325,8 @@ namespace Lilo_et_Stitch.View
             {
                 try
                 {
-                    mainstitch.UpdatePalette(openFileDialog.FileName);
-                    NbColorsSlider.Maximum = NbColorsSlider.Value = mainstitch.GetPalette().Count();
+                    Manager.UpdatePalette(openFileDialog.FileName);
+                    NbColorsSlider.Maximum = NbColorsSlider.Value = Manager.GetPalette().Count();
                 }
 
                 catch (Exception ex)

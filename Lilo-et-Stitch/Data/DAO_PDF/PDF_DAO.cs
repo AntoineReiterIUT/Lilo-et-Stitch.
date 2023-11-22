@@ -1,5 +1,6 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Text;
+using Lilo_et_Stitch.Model;
 using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 
-using Color = Aspose.Pdf.Color;
+using Color = System.Windows.Media.Color;
 using Document = Aspose.Pdf.Document;
 
 
@@ -19,16 +20,16 @@ namespace Lilo_et_Stitch.Data.PDF
     /// <summary>
     /// This class will handle the creation of the PDF
     /// </summary>
-    /// <Author>Mattis GALOPPIN</Author>
     public class PDF_DAO
     {
         #region attributes
         private string path;
-        private Dictionary<RGB, int> catalog;
-        private Transformer imgTrans;
+        private Dictionary<Color, int> catalog;
+        private GeneratedImage generatedImage;
         private List<string> symbols;
-        private Dictionary<RGB, string> catalogString;
-        private Dictionary<RGB, string> catalogLegend;
+
+        private Dictionary<Color, string> catalogString;
+        private Dictionary<Color, string> catalogLegend;
 
         #endregion
 
@@ -37,7 +38,7 @@ namespace Lilo_et_Stitch.Data.PDF
         /// Property : read or edit the catalog
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public Dictionary<RGB, int> Catalog { get => catalog; set => catalog = value; }
+        public Dictionary<Color, int> Catalog { get => catalog; set => catalog = value; }
 
         /// <summary>
         /// Property : read or edit the list of symbols
@@ -49,7 +50,7 @@ namespace Lilo_et_Stitch.Data.PDF
         /// Property : read or edit the stringcatalog
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public Dictionary<RGB, string> CatalogString { get => catalogString; set => catalogString = value; }
+        public Dictionary<Color, string> CatalogString { get => catalogString; set => catalogString = value; }
 
         #endregion
 
@@ -58,18 +59,19 @@ namespace Lilo_et_Stitch.Data.PDF
         /// <summary>
         /// Constructor of the PDF
         /// </summary>
-        /// <param name="imgT">ImgTransform to get the list of cases</param>
         /// <param name="path">Path to save the file</param>
+        /// <param name="generatedImage">The new generated image</param>
+        /// <param name="imageStitch">The old image</param>
         /// <authors>Mattis GALOPPIN</authors>
-        public PDF_DAO(Transformer imgT, string path)
+        public PDF_DAO(string path,GeneratedImage generatedImage, ImageStitch imageStitch)
         {
             //initialization
             this.path = path;
-            imgTrans = imgT;
-            Catalog = new Dictionary<RGB, int>();
+            generatedImage = generatedImage;
+            Catalog = new Dictionary<Color, int>();
             symbols = new List<string> { "☺", "♥", "♦", "♣", "♠", "•", "◘", "○", "☻", "*", "+", "-", "/", "|", "&", "~", "#", "`", "^", "@", "°", "[", "]", "=", "£", "¤", "µ", "$", "%", "§", "<", ">", "?", "!", ":", "(", ")", "{", "}", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", };
-            CatalogString = new Dictionary<RGB, string>();
-            catalogLegend = new Dictionary<RGB, string>();
+            CatalogString = new Dictionary<Color, string>();
+            catalogLegend = new Dictionary<Color, string>();
 
             GenerateCatalog();
             GenerateSymbols();
@@ -84,7 +86,7 @@ namespace Lilo_et_Stitch.Data.PDF
         public void GenerateCatalog()
         {
             int i = 0;
-            foreach (var item in imgTrans.UsedColors) //Loop through the list of used color
+            foreach (var item in generatedImage.UsedColor) //Loop through the list of used color
             {
                 i++;
                 Catalog.Add(item.Value, i); //Add a symbol and the color to the catalog
@@ -116,16 +118,16 @@ namespace Lilo_et_Stitch.Data.PDF
             text1 = new TextFragment("");
             page.Paragraphs.Add(text1);
 
-            foreach (var item in imgTrans.UsedColors) //For all items in usedcolor
+            foreach (var item in generatedImage.UsedColor) //For all items in usedcolor
             {
                 catalogLegend[item.Value] = item.Key;
             }
 
             Table table = new Table() //Creates a table that will be used to store the couleur and legend
             {
-                Border = new BorderInfo(BorderSide.All, .5f, Color.Black), //Sets the border of the table
+                Border = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.Black), //Sets the border of the table
 
-                DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.Black) //Sets the default border for cells
+                DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.Black) //Sets the default border for cells
             };
 
             table.Margin.Left = 30;
@@ -136,7 +138,7 @@ namespace Lilo_et_Stitch.Data.PDF
 
             int CellCounter = -1;
 
-            foreach (RGB a in catalogLegend.Keys)  //For each color in the catalogLegend
+            foreach (Color a in catalogLegend.Keys)  //For each color in the catalogLegend
             {
                 //We get the symbol, the color and the number
                 string x = catalogLegend[a];
@@ -167,7 +169,7 @@ namespace Lilo_et_Stitch.Data.PDF
 
                 //Add a view of the color next to the symbol or the number and there DMC color
                 currentRow.Cells.Add("");
-                currentRow.Cells[CellCounter + 2].BackgroundColor = Color.FromArgb(a.R, a.G, a.B);
+                currentRow.Cells[CellCounter + 2].BackgroundColor = Aspose.Pdf.Color.FromArgb(a.A,a.R, a.G, a.B);
 
                 CellCounter += 2;
             }
@@ -204,11 +206,11 @@ namespace Lilo_et_Stitch.Data.PDF
             table.ColumnWidths = "15 15 15";
 
             //Changing the color of the borders
-            table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Color.FromRgb(System.Drawing.Color.FromArgb(imgTrans.GridColor.A, imgTrans.GridColor.R, imgTrans.GridColor.G, imgTrans.GridColor.B)));
+            table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb( generatedImage.GridColor.R, generatedImage.GridColor.G,generatedImage.GridColor.B));
 
             //Calculating the amount of cells and rows
-            int nbCol = Math.Max((int)Math.Ceiling((double)imgTrans.Img.Width / imgTrans.Step), 0);
-            int nbRows = Math.Max((int)Math.Ceiling((double)imgTrans.Img.Height / imgTrans.Step), 0);
+            int nbCol = Math.Max((int)Math.Ceiling((double)generatedImage.Width / generatedImage.Step), 0);
+            int nbRows = Math.Max((int)Math.Ceiling((double)generatedImage.Height / generatedImage.Step), 0);
 
             //Adding rows and cells
             int CountCase = -1;
@@ -221,10 +223,10 @@ namespace Lilo_et_Stitch.Data.PDF
                 {
                     CountCase++;
                     //Adding cells + symbols 
-                    Case c = imgTrans.Cases[CountCase];
-                    if (c.Opacity > 0) //if the case is not transparent
+                    Case c = generatedImage.Cases[CountCase];
+                    if (c.BaseColor.A > 0) //if the case is not transparent
                     {
-                        string carac = CatalogString[c.ColorDMC];
+                        string carac = CatalogString[c.TransformedColor];
                         var newCell = row.Cells.Add(" " + carac.ToString());
                         //newCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.FromArgb(250,c.ColorDMC.R,c.ColorDMC.G,c.ColorDMC.B));
                         //For future use, ^
@@ -294,7 +296,9 @@ namespace Lilo_et_Stitch.Data.PDF
             document.Pages[1].Paragraphs.Add(title);
 
             //Create the image
-            System.Drawing.Image img = imgTrans.NewImage;
+            /*
+            
+            System.Drawing.Image img = imgTrans.NewImage; A RECHECK
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -302,6 +306,7 @@ namespace Lilo_et_Stitch.Data.PDF
                 Stream imgStream = memoryStream;  //Load the image into stream
                 document.Pages[1].AddImage(imgStream, new Aspose.Pdf.Rectangle(250, 1, 600, 600)); //Add image to page at the center
             }
+            */
         }
         #endregion
     }

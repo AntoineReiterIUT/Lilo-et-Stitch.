@@ -56,6 +56,8 @@ namespace Lilo_et_Stitch.Model
 
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
+            this.imageStitch.Image = daoImage.Load();
+
             if(this.imageStitch != null)
             {
                 generatedImage = imageStitch.TransformImage(step, colorMax, gridColor);

@@ -19,7 +19,6 @@ namespace Lilo_et_Stitch.Model.Transform
         #endregion
 
 
-
         #region operations
 
         /// <summary>
@@ -33,7 +32,10 @@ namespace Lilo_et_Stitch.Model.Transform
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor, ImageStitch imageStitch)
         {
             GeneratedImage newImg = new GeneratedImage();
-           
+            newImg.Width = imageStitch.Width;
+            newImg.Height = imageStitch.Height;
+            newImg.Step = step;
+            newImg.GridColor = gridColor;
 
 
             // Creating the case, AKA the new pixels of our new image
