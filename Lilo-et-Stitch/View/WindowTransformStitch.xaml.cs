@@ -25,7 +25,7 @@ namespace Lilo_et_Stitch.View
     {
         #region attributes
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(0,0,0);
-        private IManager Manager;
+        private IManager Manager = new Manager();
         private System.Drawing.Image editedImage;
         #endregion
 
@@ -39,7 +39,7 @@ namespace Lilo_et_Stitch.View
         public WindowTransformStitch()
         {     
             InitializeComponent();
-            ResetPalette_Click(null,null);
+            ResetPalette_Click(null, null);
         }
 
 
@@ -66,11 +66,7 @@ namespace Lilo_et_Stitch.View
 
                     string path = saveFileDialog.FileName;
 
-                    if(path == "")
-                    {
-                        System.Windows.MessageBox.Show("Vous n'avez pas sélectioné d'emplacement!");
-                    }
-                    else
+                    if (path != "")
                     {
                         Manager.ExportPDF(path);
                         System.Windows.MessageBox.Show("Exporté avec sucès!");
@@ -79,7 +75,7 @@ namespace Lilo_et_Stitch.View
                 }
                 catch (Exception excepiton)
                 {
-                    System.Windows.MessageBox.Show(excepiton.ToString());
+                    System.Windows.MessageBox.Show(excepiton.Message);
                 }
                     
             }
@@ -154,7 +150,7 @@ namespace Lilo_et_Stitch.View
 
                         imageToImport = System.Drawing.Image.FromStream(memoryStream);
                     }
-                    if (Manager == null)this.Manager = new Manager();
+
                         Manager.Import(imageToImport);
                     //done importing
                 }
@@ -231,7 +227,6 @@ namespace Lilo_et_Stitch.View
                     encoder.Save(stream);
                     bitmap = new Bitmap(stream);
                 }
-                if (this.Manager == null) this.Manager = new Manager();
 
                 //Start the transformation of the image
                 GeneratedImage generatedImage = Manager.TransformImage((int)ChangeStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
@@ -360,31 +355,19 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="sender">The sender object that raised the event.</param>
         /// <param name="e">The event arguments.</param>
-        /// <author>Antoine Sakkalis</author>
+        /// <author>Antoine SAKKALIS</author>
         private void ResetPalette_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                var file = Path.Combine(projectFolder, @"../Data/DMCBackup/DMCcolors.csv");
-                string selectedFilePath = file.ToString(); //Path to the backup
-
-                string csvData = File.ReadAllText(selectedFilePath);
-
-
-                //Write the CSV backup data to the in use palette file
-                file = Path.Combine(projectFolder, @"../Data/InUsePalette.csv");
-                string targetFilePath = file.ToString();
-                File.WriteAllText(targetFilePath, csvData);
-
-                NbColorsSlider.Maximum = File.ReadAllLines(targetFilePath).Length;
-                NbColorsSlider.Value = File.ReadAllLines(targetFilePath).Length;
+                Manager.ResetPalette();
+                NbColorsSlider.Maximum = NbColorsSlider.Value = Manager.GetPalette().Count();
             }
 
             catch (Exception ex)
             {
                 //Show a dialog box with the error message
-                System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
