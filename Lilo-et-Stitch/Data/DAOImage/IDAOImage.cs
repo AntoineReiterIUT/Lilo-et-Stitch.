@@ -5,7 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 
-public interface IDAO_Image
+public interface IDAOImage
 {
 
     /// <summary>
