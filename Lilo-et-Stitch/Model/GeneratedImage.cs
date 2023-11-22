@@ -1,6 +1,7 @@
 ﻿using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
+using DrawImage = System.Drawing.Image;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +15,13 @@ namespace Lilo_et_Stitch.Model
     public class GeneratedImage
     {
         #region attributes
-        private Dictionary<string, System.Windows.Media.Color> usedColor;
-        private System.Windows.Media.Color gridColor;
+        private Dictionary<string, Color> usedColor;
+        private Color gridColor;
         private int step;
         private List<Case> cases;
         private int width;
         private int height;
+        private DrawImage image;
         #endregion
 
 
@@ -59,6 +61,12 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public int Height { get => height; set => height = value; }
+
+        /// <summary>
+        /// Property : Read or edit the image
+        /// </summary>
+        /// <author>Antoine Sakkalis</author>
+        public DrawImage Image { get => image; set => image = value; }
         #endregion
 
 
