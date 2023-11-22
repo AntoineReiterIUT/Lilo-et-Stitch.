@@ -62,8 +62,7 @@ namespace Lilo_et_Stitch.Model.Transform
             foreach (Case c in cases)
             {            
                 CaseAverage(c, bitNewImage);    
-                if (c.BaseColor.A > 0)
-                    ToDMC(c);              
+                ToDMC(c);              
             }
             RebuildImage(cases,bitNewImage,generatedImage);
             generatedImage.Image = bitNewImage;
@@ -81,17 +80,14 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             foreach (Case c in cases)
             {
-
                 // the pixels/cases
                 for (int i = c.Coord1.X; i < c.Coord2.X; i++) //Foreach pixel of the case's line
                 {
-
                     for (int j = c.Coord1.Y; j < c.Coord2.Y; j++) //Foreach pixel of the case's column
                     {
-                        img.SetPixel(i, j, Color.FromArgb(c.TransformedColor.A, c.TransformedColor.R, c.TransformedColor.G, c.TransformedColor.B));
+                        img.SetPixel(i, j, Color.FromArgb(c.BaseColor.A, c.TransformedColor.R, c.TransformedColor.G, c.TransformedColor.B));
                     }
                 }
-
 
                 //Creation of the grid (using the color from the parameters)
                 for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, img.Width); i++) //Foreach pixel of the case's line
@@ -147,8 +143,8 @@ namespace Lilo_et_Stitch.Model.Transform
                 avgB = sumB / pixelCount;
                 avgOpacity = sumOpacity / pixelCount;
 
-                //Adds it to the case.BaseColor
-                caseToCheck.TransformedColor = System.Windows.Media.Color.FromArgb((byte)avgOpacity, (byte)avgR, (byte)avgG, (byte)avgB);
+            //Adds it to the case.BaseColor
+            caseToCheck.BaseColor = System.Windows.Media.Color.FromArgb((byte)avgOpacity, (byte)avgR, (byte)avgG, (byte)avgB);
         }
 
 
@@ -226,7 +222,7 @@ namespace Lilo_et_Stitch.Model.Transform
             string closestDMCColorCode = colorPalette.FirstOrDefault(x => x.Value == closestDMCColor).Key;
 
             //Set the ColorDMC of the case
-            box.BaseColor = closestDMCColor;
+            box.TransformedColor = closestDMCColor;
             //Register the used DMC color RGB value
             usedColors[closestDMCColorCode] = closestDMCColor;
         }

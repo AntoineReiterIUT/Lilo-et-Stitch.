@@ -17,11 +17,18 @@ namespace Lilo_et_Stitch.Model
     {
 
         /// <summary>
-        /// Import the image to the model
+        /// Import the path of the image to the model
         /// </summary>
-        /// <param name="img"></param>
-        public void Import(Image img);
+        /// <param name="path">Path to the image</param>
+        public void Import(string path);
 
+
+        /// <summary>
+        /// Load a BitmapImage to display in the IHM
+        /// </summary>
+        /// <returns>A BitmapImage</returns>
+        /// <author>Maxime LAFFAYE</author>
+        public BitmapImage LoadBitmapImage();
 
         /// <summary>
         /// Will reset the palette to it's original form
