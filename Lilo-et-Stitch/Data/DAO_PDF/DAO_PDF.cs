@@ -16,12 +16,12 @@ using Color = System.Windows.Media.Color;
 using Document = Aspose.Pdf.Document;
 
 
-namespace Lilo_et_Stitch.Data.PDF
+namespace Lilo_et_Stitch.Data.DAO_PDF
 {
     /// <summary>
     /// This class will handle the creation of the PDF
     /// </summary>
-    public class PDF_DAO : IPDF_DAO
+    public class DAO_PDF : IDAO_PDF
     {
         #region attributes
         private string path;
@@ -63,7 +63,7 @@ namespace Lilo_et_Stitch.Data.PDF
         /// Constructor of the PDF
         /// </summary>
         /// <authors>Mattis GALOPPIN</authors>
-        public PDF_DAO()
+        public DAO_PDF()
         {
             //initialization
             Catalog = new Dictionary<Color, int>();

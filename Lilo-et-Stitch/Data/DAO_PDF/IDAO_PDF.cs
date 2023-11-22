@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lilo_et_Stitch.Data.DAO_PDF
 {
-    interface IPDF_DAO
+    interface IDAO_PDF
     {
         /// <summary>
         /// Export the generated image to a PDF file

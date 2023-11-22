@@ -29,6 +29,8 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             palette = new Dictionary<string, Color>();
             ResetPalette();
         }
+
+
         /// <author>Antoine SAKKALIS</author>
         public void ChangePalette(string csvPath)
         {
@@ -41,6 +43,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             }
             else //when the color file is not empty
             {
+                palette.Clear();
                 using (TextFieldParser sr = new TextFieldParser(csvPath))
                 {
                     while (!sr.EndOfData)
