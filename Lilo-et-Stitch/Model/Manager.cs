@@ -18,7 +18,7 @@ namespace Lilo_et_Stitch.Model
         #region attributes
         private ImageStitch imageStitch = new ImageStitch();
         private GeneratedImage ?generatedImage;
-        private IDAOColorPalette daoColorPalette;
+        private IDAOColorPalette daoColorPalette = new DAOColorPalette();
         private IDAO_Image daoImage = new DAOImage();
         #endregion
 
@@ -60,7 +60,7 @@ namespace Lilo_et_Stitch.Model
 
             if(this.imageStitch != null)
             {
-                generatedImage = imageStitch.TransformImage(step, colorMax, gridColor);
+                generatedImage = imageStitch.TransformImage(step, colorMax, gridColor,daoColorPalette.GetPalette());
             }
 
             return generatedImage;
