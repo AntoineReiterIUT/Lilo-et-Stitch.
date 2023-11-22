@@ -48,15 +48,19 @@ namespace Lilo_et_Stitch.Model
         }
 
 
-        public void Import(Image img)
+        public void Import(string path)
         {
-            daoImage.Save(img);
+            daoImage.Save(path);
         }
 
+        public BitmapImage LoadBitmapImage()
+        {
+            return daoImage.LoadBitmapImage();
+        }
 
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
-            this.imageStitch.Image = daoImage.Load();
+            this.imageStitch.Image = daoImage.LoadImage();
 
             if(this.imageStitch != null)
             {
@@ -81,6 +85,8 @@ namespace Lilo_et_Stitch.Model
         {
             return daoColorPalette.GetPalette();
         }
+
+        
 
         #endregion
     }

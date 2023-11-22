@@ -115,49 +115,30 @@ namespace Lilo_et_Stitch.View
                 //Show the dialog and wait for the user to select a file
                 DialogResult result = openFileDialog.ShowDialog();
 
-                if (result != null)
-                {
-                    //File path selected by the user
-                    string cheminFichierSource = openFileDialog.FileName;
-                    //Copy the file to an application directory
-                    string cheminDestination = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
-                    File.Copy(cheminFichierSource, cheminDestination, true);
-                    //Load the image into a WPF Image
-                    BitmapImage bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(cheminFichierSource);
-                    bitmap.EndInit();
-                    //Display the image in the Image control in the UI
-                    imagePrev.Source = bitmap; 
-                    int i;
-                    int y;
+                //File path selected by the user
+                string cheminFichierSource = openFileDialog.FileName;
+                    
+                //Import it to the model
+                if (Manager == null) this.Manager = new Manager();
+                Manager.Import(cheminFichierSource);
+                //done importing
 
-                    //Initialization step with img
-                    int stepIni = 35;
+                //Load the bitmapImage
+                BitmapImage bitmap = Manager.LoadBitmapImage();
+                imagePrev.Source = bitmap;
 
-                    //Calculate the step
-                    i = (int)bitmap.Height / stepIni; 
-                    y = (int)bitmap.Width / stepIni;
-                    i = (i + y) / 2;
-                    ChangeStepSlider.Minimum = i;
-                    ChangeStepSlider.Maximum = i*3;
-                    ChangeStepSlider.Value = i*2;
 
-                    //Import it to the model
-                    System.Drawing.Image imageToImport;
+                //Initialization step with img
+                int stepIni = 35;
+                 
+                //Calculate the step
+                int i = (int)bitmap.Height / stepIni;
+                int y = (int)bitmap.Width / stepIni;
+                i = (i + y) / 2;
+                ChangeStepSlider.Minimum = i;
+                ChangeStepSlider.Maximum = i*3;
+                ChangeStepSlider.Value = i*2;
 
-                    using (MemoryStream memoryStream = new MemoryStream())
-                    {
-                        BitmapEncoder encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(BitmapFrame.Create(bitmap));
-                        encoder.Save(memoryStream);
-
-                        imageToImport = System.Drawing.Image.FromStream(memoryStream);
-                    }
-                    if (Manager == null)this.Manager = new Manager();
-                        Manager.Import(imageToImport);
-                    //done importing
-                }
             }
             catch (Exception ex)
             {
