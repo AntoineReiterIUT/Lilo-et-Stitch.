@@ -6,7 +6,6 @@ using System.Windows.Media.Imaging;
 
 public class DAOImage : IDAOImage
 {
-
     #region attributes
     private BitmapImage bitmapImage;
     private Image image;
@@ -14,10 +13,12 @@ public class DAOImage : IDAOImage
 
 
     #region operations
+
     public void Save(string path)
     {
         //Copy the file to an application directory
         string cheminDestination = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+        File.Copy(path, cheminDestination, true);
 
         //Load the image into a BitmapImage
         bitmapImage = new BitmapImage();
@@ -47,6 +48,7 @@ public class DAOImage : IDAOImage
         return bitmapImage;
     }
 
+
     public BitmapImage BitmapToBitmapImage(Bitmap bitmap)
     {
         //Creation of the bitmapImage
@@ -67,5 +69,6 @@ public class DAOImage : IDAOImage
         //Return the converted
         return bitmapImage;
     }
+
     #endregion
 }
