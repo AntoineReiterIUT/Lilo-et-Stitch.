@@ -1,5 +1,6 @@
-﻿using Lilo_et_Stitch.Data.PDF;
+﻿using Lilo_et_Stitch.Data.DAO_PDF;
 using Lilo_et_Stitch.Model.Transform;
+using SixLabors.ImageSharp.Memory;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,20 +12,21 @@ using System.Windows.Media.Imaging;
 namespace TestLilo_et_Stitch
 {
     /// <summary>
-    /// This class will run tests to check if the "ImgTransform" class is working as intented
+    /// This class will run tests to check if the "Transformer is working as expected" class is working as intented
     /// </summary>
-    public class TestImgTransformAndPDF
+    public class TestTransform
     {
+
         #region attributes
         private Image img;
         private Transformer transImg;
 
         private int maxColorForTests = 20;
-        private PDF_DAO pDFforTesting;
         private string pathToTest = @"../Data/testPDF.pdf";
         #endregion
 
 
+        
         #region operations
         /// <summary>
         /// Test the Grid Creation with a 800 x 800 image 
@@ -38,7 +40,7 @@ namespace TestLilo_et_Stitch
             Assert.Equal(25600,transImg.Cases.Count());
         }
 
-
+      
         /// <summary>
         /// Test caseAverage with color pixels
         /// </summary>
@@ -99,13 +101,14 @@ namespace TestLilo_et_Stitch
         /// Constructor of the test
         /// </summary>
         /// <author>Antoine SAKKALIS - Maxime LAFFAYE</author>
-        public TestImgTransformAndPDF()
+        public TestTransform()
         {
             var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             var file = Path.Combine(projectFolder, @"../TestImages/pierre-d-argent800.jpg");
             string cheminDestination = file;
 
             //we record an image
+
             img = Image.FromFile(cheminDestination);
             transImg = Transformer.Instance;
             transImg.TransformingIMG(img,5,this.maxColorForTests,System.Windows.Media.Color.FromRgb(255, 0, 0));
@@ -186,5 +189,6 @@ namespace TestLilo_et_Stitch
 
         }
         #endregion
+        
     }
 }
