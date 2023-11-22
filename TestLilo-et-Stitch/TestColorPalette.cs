@@ -14,15 +14,16 @@ namespace TestLilo_et_Stitch
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
         [Fact]
-        public void TestLoadColors()
+        public void TestGetPalette()
         {
             ManagerCreator manager = new();
             manager.ManagerWithNewPalette();
             Manager paletteManager = manager.Manager;
 
-            /*
             //Checking if the colors have been properly loaded
-            Assert.Equal(paletteManager.GetPalette()["315"], Color.FromRgb(129, 79, 1));
+            Assert.Equal(paletteManager.GetPalette()["315"], Color.FromArgb(0,129, 73, 82));
+            Assert.Equal(paletteManager.GetPalette()["3685"], Color.FromArgb(0, 136,21,49));
+            Assert.Equal(paletteManager.GetPalette()["White"], Color.FromArgb(0, 252, 251, 248));
         }
         #endregion
     }
