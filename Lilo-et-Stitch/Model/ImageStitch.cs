@@ -61,9 +61,9 @@ namespace Lilo_et_Stitch.Model
         /// <param name="gridColor">Color of the grid</param>
         /// <returns>The newly generated image</returns>
         /// <author>Maxime LAFFAYE</author>
-        public GeneratedImage TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor)
+        public GeneratedImage TransformImage(int step,int colorMax, System.Windows.Media.Color gridColor, Dictionary<string, System.Windows.Media.Color> colorPalette)
         {
-            return new Transformer().TransformImage(step, colorMax, gridColor,this);
+            return new Transformer().TransformImage(step, colorMax, gridColor,this,colorPalette);
         }
         #endregion
     }

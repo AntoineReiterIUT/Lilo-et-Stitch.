@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
+using Color = System.Windows.Media.Color;
 
 namespace Lilo_et_Stitch.View
 {
@@ -141,6 +142,23 @@ namespace Lilo_et_Stitch.View
                     ChangeStepSlider.Minimum = i;
                     ChangeStepSlider.Maximum = i*3;
                     ChangeStepSlider.Value = i*2;
+
+                    //Import it to the model
+                    System.Drawing.Image imageToImport;
+
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        BitmapEncoder encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(bitmap));
+                        encoder.Save(memoryStream);
+
+                        imageToImport = System.Drawing.Image.FromStream(memoryStream);
+                    }
+                    if (Manager != null)
+                    {
+                        Manager.Import(imageToImport);
+                    }
+                    //done importing
                 }
             }
             catch (Exception ex)
@@ -201,7 +219,8 @@ namespace Lilo_et_Stitch.View
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
-            /* 
+            
+            /*
             //Create the bitmap
             WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
@@ -214,23 +233,23 @@ namespace Lilo_et_Stitch.View
                     encoder.Save(stream);
                     bitmap = new Bitmap(stream);
                 }
-                this.mainstitch = new MainStitch(bitmap);
+                if (this.Manager == null) this.Manager = new Manager();
 
                 //Start the transformation of the image
-                var (editedImage, colorFromImage) = mainstitch.TransformImage((int)(ChangeStepSlider.Value),(int)(NbColorsSlider.Value),gridColor);
+                GeneratedImage generatedImage = Manager.TransformImage((int)ChangeStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
 
-                this.editedImage = editedImage;
+                this.editedImage = generatedImage;
 
                 //Clear the list so we don't stack all colors
                 usedColorList.Children.Clear(); 
 
                 //Add the code - rgb color to the scrollViewer
-                foreach (string code in colorFromImage.Keys)
+                foreach (string code in generatedImage.UsedColor.Keys)
                 {
-                    RGB rgb = colorFromImage[code];
+                    Color colorFound = generatedImage.UsedColor[code];
 
-                    UsedColorTemplate current = new UsedColorTemplate();
-                    current.setValues(code, rgb);
+                    TemplateUsedColorColor current = new TemplateUsedColorColor();
+                    current.setValues(code, colorFound);
                     
                     usedColorList.Children.Add(current);
                 }
