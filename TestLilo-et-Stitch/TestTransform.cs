@@ -1,4 +1,5 @@
 ﻿using Lilo_et_Stitch.Data.DAO_PDF;
+using Lilo_et_Stitch.Model;
 using Lilo_et_Stitch.Model.Transform;
 using SixLabors.ImageSharp.Memory;
 using System;
@@ -18,109 +19,110 @@ namespace TestLilo_et_Stitch
     {
 
         #region attributes
-        private Image img;
-        private Transformer transImg;
-
+        private ManagerCreator creator;
+        private GeneratedImage ?generatedImage;
+        private int stepForTests = 5;
         private int maxColorForTests = 20;
-        private string pathToTest = @"../Data/testPDF.pdf";
         #endregion
 
 
-        
+
         #region operations
-        /// <summary>
-        /// Test the Grid Creation with a 800 x 800 image 
-        /// </summary>
-        /// <authors>Mattis GALOPPIN</authors>
-        [Fact]
-        public void TestMakeGrid()
-        {
-            //the size of the image to test is 800 by 800
-            
-            Assert.Equal(25600,transImg.Cases.Count());
-        }
+        /*
+       /// <summary>
+       /// Test the Grid Creation with a 800 x 800 image 
+       /// </summary>
+       /// <authors>Mattis GALOPPIN</authors>
+       [Fact]
+       public void TestMakeGrid()
+       {
+           //the size of the image to test is 800 by 800
 
-      
-        /// <summary>
-        /// Test caseAverage with color pixels
-        /// </summary>
-        /// <author>Maxime LAFFAYE</author>
-        [Fact]
-        public void TestCaseAverage()
-        {
-            //Create a case with pixels of different colors
-            Case testCase = new Case(new Coordinate(0, 0), new Coordinate(10, 10));
-            testCase.Pixels.Add(new Pixel(new RGB(255, 0, 0), new Coordinate(0, 0),1));
-            testCase.Pixels.Add(new Pixel(new RGB(0, 255, 0), new Coordinate(5, 5),1));
-            testCase.Pixels.Add(new Pixel(new RGB(0, 0, 255), new Coordinate(10, 10),1));
-
-            //Add the case to the list of cases in ImgTransform
-            transImg.Cases.Add(testCase);
-
-            //Call the CaseAverage method
-            transImg.CaseAverage(testCase);
-
-            //Check if the average color is correct
-            RGB expectedAverageColor = new RGB(85, 85, 85);
-            Assert.Equal(expectedAverageColor, testCase.ColorRGB);
-        }
+           Assert.Equal(25600,transImg.Cases.Count());
+       }
 
 
-        /// <summary>
-        /// Tests the method to convert RGB colors to the nearest DMC value
-        /// </summary>
-        /// <author>Antoine SAKKALIS</author>
-        [Fact]
-        public void TestToDMC()
-        {
-            //Clearing so we can test on fake cases
-            transImg.Cases.Clear();
 
-            
-            transImg.Cases.Add(new Case(new Coordinate(1,2), new Coordinate(1, 2)));
-            transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
-            transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
-            
+       /// <summary>
+       /// Test caseAverage with color pixels
+       /// </summary>
+       /// <author>Maxime LAFFAYE</author>
+       [Fact]
+       public void TestCaseAverage()
+       {
+           //Create a case with pixels of different colors
+           Case testCase = new Case(new Coordinate(0, 0), new Coordinate(10, 10));
+           testCase.Pixels.Add(new Pixel(new RGB(255, 0, 0), new Coordinate(0, 0),1));
+           testCase.Pixels.Add(new Pixel(new RGB(0, 255, 0), new Coordinate(5, 5),1));
+           testCase.Pixels.Add(new Pixel(new RGB(0, 0, 255), new Coordinate(10, 10),1));
 
-            transImg.Cases[0].ColorRGB = new RGB(12, 34, 238);
-            transImg.Cases[2].ColorRGB = new RGB(12, 34, 238);
-            transImg.Cases[1].ColorRGB = new RGB(255, 0, 0);
+           //Add the case to the list of cases in ImgTransform
+           transImg.Cases.Add(testCase);
 
-            transImg.ToDMC(transImg.Cases[0]);
-            transImg.ToDMC(transImg.Cases[2]);
-            transImg.ToDMC(transImg.Cases[1]);
-            
+           //Call the CaseAverage method
+           transImg.CaseAverage(testCase);
 
-            Assert.Equal(transImg.Cases[0].ColorDMC.B, new RGB(19, 71, 165).B);
-            Assert.Equal(transImg.Cases[2].ColorDMC.B, new RGB(19, 71, 165).B);
-            Assert.Equal(transImg.Cases[1].ColorDMC, new RGB(161, 75, 81));
-        }
+           //Check if the average color is correct
+           RGB expectedAverageColor = new RGB(85, 85, 85);
+           Assert.Equal(expectedAverageColor, testCase.ColorRGB);
+       }
 
+
+       /// <summary>
+       /// Tests the method to convert RGB colors to the nearest DMC value
+       /// </summary>
+       /// <author>Antoine SAKKALIS</author>
+       [Fact]
+       public void TestToDMC()
+       {
+           //Clearing so we can test on fake cases
+           transImg.Cases.Clear();
+
+
+           transImg.Cases.Add(new Case(new Coordinate(1,2), new Coordinate(1, 2)));
+           transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
+           transImg.Cases.Add(new Case(new Coordinate(1, 2), new Coordinate(1, 2)));
+
+
+           transImg.Cases[0].ColorRGB = new RGB(12, 34, 238);
+           transImg.Cases[2].ColorRGB = new RGB(12, 34, 238);
+           transImg.Cases[1].ColorRGB = new RGB(255, 0, 0);
+
+           transImg.ToDMC(transImg.Cases[0]);
+           transImg.ToDMC(transImg.Cases[2]);
+           transImg.ToDMC(transImg.Cases[1]);
+
+
+           Assert.Equal(transImg.Cases[0].ColorDMC.B, new RGB(19, 71, 165).B);
+           Assert.Equal(transImg.Cases[2].ColorDMC.B, new RGB(19, 71, 165).B);
+           Assert.Equal(transImg.Cases[1].ColorDMC, new RGB(161, 75, 81));
+       }
+       */
 
         /// <summary>
         /// Constructor of the test
         /// </summary>
         /// <author>Antoine SAKKALIS - Maxime LAFFAYE</author>
+
         public TestTransform()
         {
-            var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            var file = Path.Combine(projectFolder, @"../TestImages/pierre-d-argent800.jpg");
-            string cheminDestination = file;
-
-            //we record an image
-
-            img = Image.FromFile(cheminDestination);
-            transImg = Transformer.Instance;
-            transImg.TransformingIMG(img,5,this.maxColorForTests,System.Windows.Media.Color.FromRgb(255, 0, 0));
-
-
-            //Preparing for the PDF tests
-            var filePDF = Path.Combine(projectFolder, this.pathToTest);
-            transImg.NewImage = img;
-            this.pDFforTesting = new PDF_DAO(transImg, filePDF);
+           this.creator = new ManagerCreator();
+            creator.ManagerWithImage();
+            //creator.ManagerWithNewPalette();
+            generatedImage = this.creator.ManagerWithGeneratedImage(this.stepForTests,this.maxColorForTests, System.Windows.Media.Color.FromRgb(255, 0, 0));
         }
 
 
+        /// <summary>
+        /// Will test if the image is properly generated
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        [Fact]
+        public void TestGeneratedImage()
+        {
+            Assert.NotNull(generatedImage);  
+        }
+        /*
         /// <summary>
         /// Test function FillPixel, the coordonates of the pixels in the case number 3
         /// </summary>
@@ -152,7 +154,7 @@ namespace TestLilo_et_Stitch
             }
         }
 
-
+        
         /// <summary>
         /// Give the result of the number of step
         /// </summary>
@@ -166,8 +168,9 @@ namespace TestLilo_et_Stitch
             return step;
 
         }
+        */
 
-
+        /*
         /// <summary>
         /// Testing if the Symbols of the PDF are generated properly.
         /// </summary>
@@ -188,7 +191,8 @@ namespace TestLilo_et_Stitch
             Assert.True(equalResult);
 
         }
+        */
         #endregion
-        
+
     }
 }

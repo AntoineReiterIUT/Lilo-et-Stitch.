@@ -20,7 +20,7 @@ namespace TestLilo_et_Stitch
             manager.ManagerWithNewPalette();
             Manager paletteManager = manager.Manager;
 
-            /*
+            
             //Checking if the colors have been properly loaded
             Assert.Equal(paletteManager.GetPalette()["315"], Color.FromRgb(129, 79, 1));
         }
