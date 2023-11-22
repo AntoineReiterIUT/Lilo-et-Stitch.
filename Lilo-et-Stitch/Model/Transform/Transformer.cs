@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
-using Lilo_et_Stitch.Data.PDF;
-using System.Windows.Forms;
-using PdfSharp.BigGustave;
-using System.Drawing.Imaging;
-using Lilo_et_Stitch.Data.DAOColorPalette;
-using System.Windows.Media.Media3D;
+
 
 namespace Lilo_et_Stitch.Model.Transform
 {

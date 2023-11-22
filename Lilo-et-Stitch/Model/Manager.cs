@@ -1,4 +1,5 @@
 ﻿using Lilo_et_Stitch.Data.DAOColorPalette;
+using Lilo_et_Stitch.Data.DAO_PDF;
 using Lilo_et_Stitch.Model.Transform;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Lilo_et_Stitch.Model
     {
         #region attributes
         private ImageStitch imageStitch = new ImageStitch();
-        private GeneratedImage ?generatedImage;
+        private GeneratedImage? generatedImage;
         private IDAOColorPalette daoColorPalette = new DAOColorPalette();
         private IDAOImage daoImage = new DAOImage();
         #endregion
@@ -36,7 +37,7 @@ namespace Lilo_et_Stitch.Model
         /// Property : read or edit the generated image
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public GeneratedImage ?GeneratedImage { get => generatedImage; set => generatedImage = value; }
+        public GeneratedImage? GeneratedImage { get => generatedImage; set => generatedImage = value; }
 
         #endregion
 
@@ -44,7 +45,16 @@ namespace Lilo_et_Stitch.Model
         #region operations
         public void ExportPDF(string path)
         {
-            throw new NotImplementedException();
+            if (generatedImage != null)
+            {
+                IDAO_PDF daoPDF = new DAO_PDF();
+                daoPDF.ExportPDF(path, generatedImage);
+            }
+            else
+            {
+                throw new Exception("Transformez une image avant d'exporter");
+            }
+
         }
 
 
@@ -58,9 +68,14 @@ namespace Lilo_et_Stitch.Model
         {
             this.imageStitch.Image = daoImage.Load();
 
-            if(this.imageStitch != null)
+            if (this.imageStitch != null)
             {
-                generatedImage = imageStitch.TransformImage(step, colorMax, gridColor,daoColorPalette.GetPalette());
+                generatedImage = imageStitch.TransformImage(step, colorMax, gridColor, daoColorPalette.GetPalette());
+            }
+
+            else
+            {                 
+                throw new Exception("Importez une image avant de la transformer");
             }
 
             return generatedImage;
