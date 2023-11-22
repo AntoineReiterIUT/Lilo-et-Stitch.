@@ -21,9 +21,9 @@
 - [x] export du patron et de sa légende au format PDF
 
 
-## Page d'acceuil
+## Page d'accueil
 <p align="center">
-  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134507319/0216827e-6e62-422d-8fa5-3706cd67d93b" alt="Page d'acceuil" width="100%">
+  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134507319/0216827e-6e62-422d-8fa5-3706cd67d93b" alt="Page d'accueil" width="100%">
 </p>
 
 ## Page de transformation
