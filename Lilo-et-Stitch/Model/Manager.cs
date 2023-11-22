@@ -19,7 +19,7 @@ namespace Lilo_et_Stitch.Model
         private ImageStitch imageStitch = new ImageStitch();
         private GeneratedImage ?generatedImage;
         private IDAOColorPalette daoColorPalette;
-        private IDAO_Image daoImage = new DAOImage();
+        private IDAOImage daoImage = new DAOImage();
         #endregion
 
 
