@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestImages\ImageTest.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Aspose.PDF" Version="23.11.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
@@ -33,6 +37,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lilo-et-Stitch\Lilo-et-Stitch.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="TestImages\ImageTest.png" />
   </ItemGroup>
 
 </Project>
