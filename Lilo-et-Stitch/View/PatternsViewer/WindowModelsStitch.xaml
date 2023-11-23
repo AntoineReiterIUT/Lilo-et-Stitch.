@@ -24,16 +24,44 @@
                 <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
 
-            <patterns:TemplateUserModel x:Name="Pattern1" Grid.Column="0" Grid.Row="0"/>
-            <patterns:TemplateUserModel x:Name="Pattern2" Grid.Column="01" Grid.Row="0"/>
-            <patterns:TemplateUserModel x:Name="Pattern3" Grid.Column="02" Grid.Row="0"/>
+            <ItemsControl Grid.RowSpan="2" Grid.ColumnSpan="3" ItemsSource="{Binding Patterns}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <patterns:TemplateUserModel />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-            <patterns:TemplateUserModel x:Name="Pattern4" Grid.Column="0" Grid.Row="01"/>
-            <patterns:TemplateUserModel x:Name="Pattern5" Grid.Column="01" Grid.Row="01"/>
-            <patterns:TemplateUserModel x:Name="Pattern6" Grid.Column="02" Grid.Row="01"/>
+            <Button Style="{StaticResource MenuButton}" Width="30" FontSize="30" Grid.Column="2" Grid.Row="3" Margin="0,0,50,0" BorderThickness="0" Content="&lt;" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_PreviousClick" Foreground="Black"/>
+            <Label Foreground="White" Grid.Column="2" Content="&lt;" FontSize="30" HorizontalAlignment="Center" Margin="0,0,50,8" Grid.Row="2" VerticalAlignment="Center" IsHitTestVisible="False"/>
 
-            <Button FontSize="30" Grid.Column="2" Grid.Row="3" Margin="0,0,50,0" BorderThickness="0" Content="⏪" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
-            <Button FontSize="30" Grid.Column="2" Grid.Row="3" Margin="50,0,0,0" BorderThickness="0" Content="⏩" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
+
+            <Button Style="{StaticResource MenuButton}" Width="30" FontSize="30" Grid.Column="2" Grid.Row="3" Margin="50,0,0,0" BorderThickness="0" Content=">" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_NextClick" Foreground="Black"/>
+            <Label Foreground="White" Grid.Column="2" Content=">" FontSize="30" HorizontalAlignment="Center" Margin="50,0,0,8" Grid.Row="2" VerticalAlignment="Center" IsHitTestVisible="False"/>
+
+            <Label Grid.Column="1" Content="Page : " HorizontalAlignment="Left" Margin="113,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBlock x:Name="numPage" Grid.Column="1" HorizontalAlignment="Left" Margin="158,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="1" VerticalAlignment="Center" Width="24" Height="15"/>
+
+
+            <Rectangle Grid.Column="3" HorizontalAlignment="Left" Stretch="UniformToFill" Margin="24,0,0,0" Grid.RowSpan="3" Stroke="Black" VerticalAlignment="Top" Width="1" Height="450"/>
+            <patterns:TemplateUserModel x:Name="Pattern1_Copy" Grid.Column="3" Grid.Row="0" Margin="33,10,10,170" Grid.RowSpan="2" />
+            
+            <Button Style="{StaticResource TrsfrmAppButton}" Grid.Column="3" Content="Télécharger" HorizontalAlignment="Left" Height="41" Margin="60,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="189"/>
         </Grid>
     </Viewbox>
 </Window>
