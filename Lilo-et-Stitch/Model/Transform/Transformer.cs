@@ -61,8 +61,7 @@ namespace Lilo_et_Stitch.Model.Transform
             foreach (Case c in cases)
             {            
                 CaseAverage(c, bitNewImage);
-                if (c.BaseColor.A > 50)
-                    ToDMC(c);
+                ToDMC(c);
          
             }
             RebuildImage(cases,bitNewImage, newImage);

@@ -235,7 +235,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
                         CountCase++;
                         //Adding cells + symbols 
                         Case c = generatedImage.Cases[CountCase];
-                        if (c.BaseColor.A > 0) //if the case is not transparent
+                        if (c.BaseColor.A > 50) //if the case is not transparent
                         {
                             string carac = CatalogString[c.TransformedColor];
                             var newCell = row.Cells.Add(" " + carac.ToString());
