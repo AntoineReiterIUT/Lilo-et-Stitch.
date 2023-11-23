@@ -6,20 +6,18 @@
              xmlns:local="clr-namespace:Lilo_et_Stitch.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="85*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
 
-    <Border BorderBrush="Black" BorderThickness="3" >
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="85*"/>
-                <RowDefinition Height="15*"/>
-            </Grid.RowDefinitions>
-
-
-            <Image x:Name="PatternImage" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Top" />
-            <Rectangle Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Visible"  Fill="Black" Stretch="UniformToFill" Height="3" />
-            <Viewbox Grid.Row="1">
-                <TextBlock Name="PatternName" HorizontalAlignment="Center"  VerticalAlignment="Center" FontStretch="Normal" FontSize="20" Grid.Row="1"/>
-            </Viewbox>
-        </Grid>
-    </Border>
+        <Image  x:Name="PatternImage" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Rectangle Grid.Column="0" Grid.Row="0" Margin="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Visible"  Fill="Black" Stretch="UniformToFill" Height="3" />
+        <Viewbox Margin="3" Grid.Row="1">
+            <TextBlock Name="PatternName" HorizontalAlignment="Center" VerticalAlignment="Center" FontStretch="Normal" FontSize="20" Grid.Row="1"/>
+        </Viewbox>
+        <Button Grid.RowSpan="2" BorderBrush="Black" BorderThickness="3" Margin="3" Style="{StaticResource TrsfrmAppButton}" Background="Transparent"></Button>
+    </Grid>
 </UserControl>
