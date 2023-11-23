@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lilo_et_Stitch.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,8 +23,9 @@ namespace Lilo_et_Stitch.View
     public partial class WindowMenuStitch : Window
     {
         #region attributes
-        WindowTransformStitch stitchTransform = new ();
-        WindowModelsStitch stitchModels = new ();
+        private WindowTransformStitch stitchTransform;
+        private WindowModelsStitch stitchModels;
+        private Manager manager = new Manager();
         #endregion
 
         #region operations
@@ -45,6 +47,7 @@ namespace Lilo_et_Stitch.View
         /// <author>Mattis GALOPPIN</author>
         private void NewModel_Click(object sender, RoutedEventArgs e)
         {
+            stitchTransform = new WindowTransformStitch(manager); //Create a new page
             stitchTransform.Show();  //Display the new page
             this.Close();  //Close the the first one
         }
@@ -58,6 +61,7 @@ namespace Lilo_et_Stitch.View
         /// <author>Mattis GALOPPIN</author>
         private void ModelServ_Click(object sender, RoutedEventArgs e)
         {
+            stitchModels = new WindowModelsStitch(manager); //Create a new page
             stitchModels.Show(); //Display the new page 
             this.Close(); //Close the first one
         }

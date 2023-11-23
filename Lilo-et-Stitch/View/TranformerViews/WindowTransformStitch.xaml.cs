@@ -27,7 +27,7 @@ namespace Lilo_et_Stitch.View
     {
         #region attributes
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(0,0,0);
-        private IManager Manager = new Manager();
+        private IManager manager;
         private System.Drawing.Image editedImage;
         #endregion
 
@@ -38,8 +38,9 @@ namespace Lilo_et_Stitch.View
         /// Constructor of the window
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public WindowTransformStitch()
-        {     
+        public WindowTransformStitch(Manager manager)
+        {
+            this.manager = manager;
             InitializeComponent();
             ResetPalette_Click(null, null);
         }
@@ -54,7 +55,7 @@ namespace Lilo_et_Stitch.View
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             //checking if the image has been transformed
-            if (Manager != null)
+            if (manager != null)
             {
                 //Creating the dialog object
                 System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -70,7 +71,7 @@ namespace Lilo_et_Stitch.View
 
                     if (path != "")
                     {
-                        Manager.ExportPDF(path);
+                        manager.ExportPDF(path);
                         System.Windows.MessageBox.Show("Exporté avec sucès!");
                     }
 
@@ -92,7 +93,7 @@ namespace Lilo_et_Stitch.View
         /// <author>Antoine SAKKALIS</author>
         private void PublishBtn_Click(object sender, RoutedEventArgs e)
         {
-            WindowAddPattern addPage = new WindowAddPattern(Manager);
+            WindowAddPattern addPage = new WindowAddPattern(manager);
             addPage.ShowDialog();
         }
 
@@ -118,12 +119,11 @@ namespace Lilo_et_Stitch.View
                 string cheminFichierSource = openFileDialog.FileName;
                     
                 //Import it to the model
-                if (Manager == null) this.Manager = new Manager();
-                Manager.Import(cheminFichierSource);
+                manager.Import(cheminFichierSource);
                 //done importing
 
                 //Load the bitmapImage
-                BitmapImage bitmap = Manager.LoadBitmapImage();
+                BitmapImage bitmap = manager.LoadBitmapImage();
                 imagePrev.Source = bitmap;
 
 
@@ -212,10 +212,10 @@ namespace Lilo_et_Stitch.View
                     encoder.Save(stream);
                     bitmap = new Bitmap(stream);
                 }
-                if (this.Manager == null) this.Manager = new Manager();
+                if (this.manager == null) this.manager = new Manager();
 
                 //Start the transformation of the image
-                GeneratedImage generatedImage = Manager.TransformImage((int)ChangeStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
+                GeneratedImage generatedImage = manager.TransformImage((int)ChangeStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
 
                 //Clear the list so we don't stack all colors
                 usedColorList.Children.Clear(); 
@@ -311,8 +311,8 @@ namespace Lilo_et_Stitch.View
             {
                 try
                 {
-                    Manager.UpdatePalette(openFileDialog.FileName);
-                    NbColorsSlider.Maximum = NbColorsSlider.Value = Manager.GetPalette().Count();
+                    manager.UpdatePalette(openFileDialog.FileName);
+                    NbColorsSlider.Maximum = NbColorsSlider.Value = manager.GetPalette().Count();
                 }
 
                 catch (Exception ex)
@@ -334,8 +334,8 @@ namespace Lilo_et_Stitch.View
         {
             try
             {
-                Manager.ResetPalette();
-                NbColorsSlider.Maximum = NbColorsSlider.Value = Manager.GetPalette().Count();
+                manager.ResetPalette();
+                NbColorsSlider.Maximum = NbColorsSlider.Value = manager.GetPalette().Count();
             }
 
             catch (Exception ex)
