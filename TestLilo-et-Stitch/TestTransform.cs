@@ -24,6 +24,7 @@ namespace TestLilo_et_Stitch
         private GeneratedImage? generatedImage;
         private int stepForTests = 4;
         private int maxColorForTests = 454;
+        private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(255, 0, 0);
         #endregion
 
 
@@ -37,9 +38,9 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void TestMakeGrid()
         {
-            //the size of the image to test is 800 by 800
+            //the size of the image to test is 8 by 3
 
-            Assert.Equal(25600, generatedImage.Cases.Count);
+            Assert.Equal(2, generatedImage.Cases.Count);
         }
 
 
@@ -92,7 +93,7 @@ namespace TestLilo_et_Stitch
             this.creator = new ManagerCreator();
             creator.ManagerWithImage();
             creator.ManagerWithNewPalette();
-            generatedImage = this.creator.ManagerWithGeneratedImage(this.stepForTests, this.maxColorForTests, System.Windows.Media.Color.FromRgb(255, 0, 0));
+            generatedImage = this.creator.ManagerWithGeneratedImage(this.stepForTests, this.maxColorForTests,gridColor);
         }
 
 
@@ -105,7 +106,8 @@ namespace TestLilo_et_Stitch
         {
             Assert.NotNull(generatedImage);
         }
-        /*
+        
+
         /// <summary>
         /// Test function FillPixel, the coordonates of the pixels in the case number 3
         /// </summary>
@@ -113,30 +115,29 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void TestFillPixel()
         {
-            bool test = true;
-            transImg.Step = 5;
-            transImg.MakeGrid();// create the case
-            transImg.FillPixels(); //create the pixels
-            List<Pixel>PixelC3 = new List<Pixel>(); //list pixel of the case number 3
-            int step = transImg.Step;
-            
-            PixelC3 = transImg.Cases[2].Pixels; //we test the third case
-            
-            foreach (Pixel p in PixelC3) //we check if the coordinate of Pixel in this case are okay
+            bool testSuccess = true;
+
+            foreach(Case c in generatedImage.Cases)
             {
-                Coordinate coord = new Coordinate(0,0);
-                if( (p.Coord.X < Nbstep(step,2)) || (p.Coord.X > Nbstep(step,3))) //check x
+                //Testing if the grid was correctly drown
+                for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, generatedImage.Width); i++) //Foreach pixel of the case's line
                 {
-                    test = false;
+                    //Checking if it has the expected color
+                    System.Drawing.Color colorPixel = generatedImage.Bitmap.GetPixel(i, c.Coord1.Y);
+                    if (!(colorPixel.R == gridColor.R && colorPixel.G == gridColor.G && colorPixel.B == gridColor.B)) testSuccess = false;
                 }
-                if ( (p.Coord.Y <0 ) || (p.Coord.Y > step)) //check y
+
+                for (int j = Math.Max(c.Coord1.Y, 0); j < Math.Min(c.Coord2.Y, generatedImage.Height); j++) //Foreach pixel of the case's column
                 {
-                    test = false;
+                    //Checking if it has the expected color
+                    System.Drawing.Color colorPixel = generatedImage.Bitmap.GetPixel(c.Coord1.X, j);
+                    if (!(colorPixel.R == gridColor.R && colorPixel.G == gridColor.G && colorPixel.B == gridColor.B)) testSuccess = false;
                 }
-                Assert.True(test);
             }
+            Assert.True(testSuccess);
         }
 
+        /*
         
         /// <summary>
         /// Give the result of the number of step

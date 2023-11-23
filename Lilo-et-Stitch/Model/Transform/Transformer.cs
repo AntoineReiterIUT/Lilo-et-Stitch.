@@ -61,8 +61,7 @@ namespace Lilo_et_Stitch.Model.Transform
             foreach (Case c in cases)
             {            
                 CaseAverage(c, bitNewImage);
-               
-                    ToDMC(c);
+                ToDMC(c);
          
             }
             RebuildImage(cases,bitNewImage, newImage);
