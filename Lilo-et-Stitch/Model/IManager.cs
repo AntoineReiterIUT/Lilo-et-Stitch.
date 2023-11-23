@@ -77,7 +77,7 @@ namespace Lilo_et_Stitch.Model
         /// Renvoie une liste de 6 images avec leur ID, nom et aperçu.
         /// </summary>
         /// <returns></returns>
-        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages();
+        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page);
 
         /// <summary>
         /// 

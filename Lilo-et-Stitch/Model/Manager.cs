@@ -103,16 +103,12 @@ namespace Lilo_et_Stitch.Model
             return daoColorPalette.GetPalette();
         }
 
-        public List<GeneratedImage> GetImages(int page) { 
-            throw new NotImplementedException();
-        }
-
         public void Publish(string name)
         {
             throw new NotImplementedException();
         }
 
-        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages()
+        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
         {
             throw new NotImplementedException();
         }
