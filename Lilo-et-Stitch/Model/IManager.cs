@@ -13,7 +13,7 @@ namespace Lilo_et_Stitch.Model
     /// <summary>
     /// Iterface that will be used as a link between the view and the model.
     /// </summary>
-    interface IManager
+    public interface IManager
     {
 
         /// <summary>
