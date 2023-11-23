@@ -126,14 +126,18 @@ namespace Lilo_et_Stitch.View
 
                 //Initialization step with img
                 int stepIni = 35;
-                 
-                //Calculate the step
-                int i = (int)bitmap.Height / stepIni;
-                int y = (int)bitmap.Width / stepIni;
-                i = (i + y) / 2;
-                ChangeStepSlider.Minimum = i;
-                ChangeStepSlider.Maximum = i*3;
-                ChangeStepSlider.Value = i*2;
+                
+                if(bitmap.Width > stepIni && bitmap.Height > 35)
+                {
+                    //Calculate the step
+                    int i = (int)bitmap.Height / stepIni;
+                    int y = (int)bitmap.Width / stepIni;
+                    i = (i + y) / 2;
+                    ChangeStepSlider.Minimum = i;
+                    ChangeStepSlider.Maximum = i * 3;
+                    ChangeStepSlider.Value = i * 2;
+                }
+                
 
             }
             catch (Exception ex)
