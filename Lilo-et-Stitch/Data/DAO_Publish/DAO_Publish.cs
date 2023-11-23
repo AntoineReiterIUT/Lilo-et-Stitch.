@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using static System.Net.WebRequestMethods;
 using Aspose.Pdf.Operators;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Lilo_et_Stitch.Data.DAO_Publish
 {
@@ -56,6 +57,12 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
 
                 //Sending the PDF:
                 SendPDF(pathPdf,name);
+
+                //Sending the palette:
+                SendPalette(pathPalette, name);
+
+                //Sending the image
+                SendImage(transformedImage, name);
             }
             catch (HttpRequestException ex)
             {
@@ -87,6 +94,12 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         }
 
 
+        /// <summary>
+        /// Will send the PDF with the name through the API
+        /// </summary>
+        /// <param name="path">Path to the PDF file</param>
+        /// <param name="name">Name of the pattern</param>
+        /// <author>Maxime LAFFAYE</author>
         private async void SendPDF(string path,string name)
         {
             try
@@ -104,6 +117,69 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
                 Console.WriteLine(ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// Will send the Palette (csv) with the name through the API
+        /// </summary>
+        /// <param name="path">Path to the CSV file</param>
+        /// <param name="name">Name of the pattern</param>
+        /// <author>Maxime LAFFAYE</author>
+        private async void SendPalette(string path,string name)
+        {
+            try
+            {
+                //CSV into bytes
+                byte[] csvContent = System.IO.File.ReadAllBytes(path);
+
+                //And now sending it
+                string endPoint = string.Format($"{address}/AddCSV?name={name}");
+                await client.PostAsJsonAsync(endPoint, csvContent);
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Will send the transformed image with the name through the API
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="name"></param>
+        private async void SendImage(BitmapImage image,string name)
+        {
+            try
+            {
+                //Image into bytes
+                byte[] imageContent;
+
+                //Encoding it
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+
+                    encoder.Frames.Add(BitmapFrame.Create(image));
+                    encoder.Save(stream);
+
+                    //Into an array
+                    imageContent = stream.ToArray();
+                }
+
+                //And now sending it
+                string endPoint = string.Format($"{address}/AddIMG?name={name}");
+                await client.PostAsJsonAsync(endPoint, imageContent);
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         #endregion
     }
 }
