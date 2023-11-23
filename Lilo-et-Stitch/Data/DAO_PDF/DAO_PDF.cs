@@ -56,12 +56,6 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public Dictionary<Color, string> CatalogString { get => catalogString; set => catalogString = value; }
-
-        /// <summary>
-        /// Property : Read or edit the path of the PDF
-        /// </summary>
-        public string Path { get => path; set => path = value; }
-
         #endregion
 
 
@@ -83,7 +77,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// <author>Antoine SAKKALIS</author>
         public void ExportPDF(string path, GeneratedImage generatedImage)
         {
-            this.Path = path;
+            this.path = path;
             this.generatedImage = generatedImage;
 
             GenerateCatalog();
@@ -198,7 +192,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// <authors>Antoine REITER - Mattis GALOPPIN - Maxime LAFFAYE - Antoine SAKKALIS</authors>
         public void WriteInPDF()
         {
-            string dataDir = Path;
+            string dataDir = path;
 
             //Initialize document object and properties
             Document document = new Document();
@@ -299,6 +293,14 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
             }
         }
 
+        /// <summary>
+        /// Gets the path of where to save the PDF
+        /// </summary>
+        /// <returns>Maxime LAFFAYE</returns>
+        public string GetPath()
+        {
+            return this.path;
+        }
 
         /// <summary>
         /// Create the first page of the PDF

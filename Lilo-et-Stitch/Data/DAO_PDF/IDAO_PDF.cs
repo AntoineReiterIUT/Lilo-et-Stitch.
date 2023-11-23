@@ -16,5 +16,13 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// <param name="generatedImage">The generated image to export</param>
         /// <param name="imageStitch">The image stitch to export</param>
         void ExportPDF(string path, GeneratedImage generatedImage);
+
+
+        /// <summary>
+        /// Get the path of the pdf
+        /// </summary>
+        /// <author>Maxime LAFFAYE</author>
+        /// <returns>The path of the pdf</returns>
+        public string GetPath();
     }
 }
