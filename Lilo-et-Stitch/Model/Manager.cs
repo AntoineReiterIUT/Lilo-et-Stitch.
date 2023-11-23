@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Lilo_et_Stitch.Data.DAO_Publish;
 
 namespace Lilo_et_Stitch.Model
 {
@@ -20,7 +21,9 @@ namespace Lilo_et_Stitch.Model
         private ImageStitch imageStitch = new ImageStitch();
         private GeneratedImage? generatedImage;
         private IDAOColorPalette daoColorPalette = new DAOColorPalette();
+        private IDAO_PDF ?daoPDF;
         private IDAOImage daoImage = new DAOImage();
+        private IDAO_Publish daoPublish = new DAO_Publish();
         #endregion
 
 
@@ -47,14 +50,13 @@ namespace Lilo_et_Stitch.Model
         {
             if (generatedImage != null)
             {
-                IDAO_PDF daoPDF = new DAO_PDF();
+                daoPDF = new DAO_PDF();
                 daoPDF.ExportPDF(path, generatedImage);
             }
             else
             {
                 throw new Exception("Transformez une image avant d'exporter");
             }
-
         }
 
 
@@ -104,6 +106,11 @@ namespace Lilo_et_Stitch.Model
         }
 
         
+        public void Publish(string name)
+        {
+            daoPublish.CheckIfExist(name);
+            daoPublish.Publish(name, generatedImage.Step, generatedImage.MaxColors, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
+        }
 
         #endregion
     }
