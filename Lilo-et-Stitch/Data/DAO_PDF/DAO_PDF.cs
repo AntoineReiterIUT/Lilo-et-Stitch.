@@ -38,6 +38,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
 
 
         #region properties
+
         /// <summary>
         /// Property : read or edit the catalog
         /// </summary>
@@ -72,6 +73,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
             CatalogString = new Dictionary<Color, string>();
             catalogLegend = new Dictionary<Color, string>();
         }
+
 
         /// <author>Antoine SAKKALIS</author>
         public void ExportPDF(string path, GeneratedImage generatedImage)
@@ -215,7 +217,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
                 table.ColumnWidths = "15 15 15";
 
                 //Changing the color of the borders
-                table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
+                table.DefaultCellBorder = new BorderInfo(BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(generatedImage.GridColor.R/255, generatedImage.GridColor.G/255, generatedImage.GridColor.B / 255));
 
                 //Calculating the amount of cells and rows
                 int nbCol = Math.Max((int)Math.Ceiling((double)generatedImage.Width / generatedImage.Step), 0);
