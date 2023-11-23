@@ -37,9 +37,9 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void TestMakeGrid()
         {
-            //the size of the image to test is 800 by 800
+            //the size of the image to test is 8 by 3
 
-            Assert.Equal(25600, generatedImage.Cases.Count);
+            Assert.Equal(2, generatedImage.Cases.Count);
         }
 
 
@@ -153,28 +153,6 @@ namespace TestLilo_et_Stitch
         }
         */
 
-        /*
-        /// <summary>
-        /// Testing if the Symbols of the PDF are generated properly.
-        /// </summary>
-        /// <author>Maxime LAFFAYE</author>
-        [Fact]
-        public void testSymbols()
-        {
-            bool equalResult = true;
-
-            int countSymbols = 0;
-            foreach (string catalogSymbol in pDFforTesting.CatalogString.Values)
-            {
-                if (catalogSymbol != pDFforTesting.Symbols[countSymbols]) equalResult = false;
-                countSymbols++;
-            }
-
-            //Checking if the symbols are assigned correctly
-            Assert.True(equalResult);
-
-        }
-        */
         #endregion
 
     }
