@@ -66,5 +66,31 @@ namespace Lilo_et_Stitch.Model
         /// <param name="path">Path to save the file</param>
         /// <author>Maxime LAFFAYE</author>
         public void ExportPDF(string path);
+
+        /// <summary>
+        /// Publication (vérifie si il existe...)
+        /// </summary>
+        /// <param name="name"></param>
+        public void Publish(string name);
+
+        /// <summary>
+        /// Renvoie une liste de 6 images avec leur ID, nom et aperçu.
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>step,colorMax,colorGrid(hex)</returns>
+        public List<int> GetParameters(int id);
+
+        /// <summary>
+        /// Télécharge le fichier
+        /// </summary>
+        /// <param name="patternName">Nom du pattern à dl</param>
+        /// <param name="path">emplacement (dans ordinateur utilisateur)</param>
+        public void GetPattern(string patternName,string path);
     }
 }
