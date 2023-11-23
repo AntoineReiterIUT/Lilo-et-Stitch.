@@ -37,6 +37,7 @@ namespace Lilo_et_Stitch.Model.Transform
             newImage.Width = imageStitch.Width;
             newImage.Height = imageStitch.Height;
             newImage.Step = step;
+            newImage.MaxColors = colorMax;
             newImage.GridColor = gridColor;
 
 
