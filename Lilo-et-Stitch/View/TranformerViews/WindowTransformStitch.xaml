@@ -81,7 +81,7 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="8" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <Grid Width="100" Height="50">
-                <Button Name="PublishBtn" Content="Publier" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Name="PublishBtn" Click="PublishBtn_Click" Content="Publier" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 

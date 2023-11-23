@@ -15,6 +15,8 @@ using Microsoft.Win32;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using Color = System.Windows.Media.Color;
+using Lilo_et_Stitch.View.PatternsViewer;
+using Lilo_et_Stitch.View.TranformerViews;
 
 namespace Lilo_et_Stitch.View
 {
@@ -87,10 +89,11 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <author></author>
+        /// <author>Antoine SAKKALIS</author>
         private void PublishBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            WindowAddPattern addPage = new WindowAddPattern(Manager);
+            addPage.ShowDialog();
         }
 
 
