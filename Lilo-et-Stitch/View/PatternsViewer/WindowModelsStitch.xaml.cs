@@ -62,59 +62,60 @@ namespace Lilo_et_Stitch.View
         /// <author>Antoine SAKKALIS</author>
         private async void ImageLoader()
         {
-            try { 
-            images = manager.GetImages(page);
-
-            if (images.Count == 0)
+            try
             {
-                MessageBox.Show("Il n'y a pas de patrons à afficher sur cette page");
-                page--;
-            }
-            else
-            {
-                //Clear the grid
-                test.Items.Clear();
+                images = await manager.GetImages(page);
 
-                //Display all the patterns
-                int row = 0;
-                int column = 0;
-                foreach (int id in images.Keys) //foreach id of the pattern
+                if (images.Count == 0)
                 {
-                    foreach (string name in images[id].Keys) //foreach name of the pattern per id
+                    MessageBox.Show("Il n'y a pas de patrons à afficher sur cette page");
+                    page--;
+                }
+                else
+                {
+                    //Clear the grid
+                    test.Items.Clear();
+
+                    //Display all the patterns
+                    int row = 0;
+                    int column = 0;
+                    foreach (int id in images.Keys) //foreach id of the pattern
                     {
-                        //Create a new TemplateUserModel
-                        TemplateUserModel pattern = new TemplateUserModel();
-                        //Set the properties of the TemplateUserModel
-                        pattern.PatternButton.Click += PatternsBtn_Click;
-                        pattern.PatternButton.Content = id;
-                        pattern.PatternImage.Source = images[id][name];
-                        if (name.Length > 30) //if the name is too long, we cut it
+                        foreach (string name in images[id].Keys) //foreach name of the pattern per id
                         {
-                            pattern.PatternName.Text = name.Substring(0, 30) + "...";
-                        }
-                        else
-                        {
-                            pattern.PatternName.Text = name;
-                        }
+                            //Create a new TemplateUserModel
+                            TemplateUserModel pattern = new TemplateUserModel();
+                            //Set the properties of the TemplateUserModel
+                            pattern.PatternButton.Click += PatternsBtn_Click;
+                            pattern.PatternButton.Content = id;
+                            pattern.PatternImage.Source = images[id][name];
+                            if (name.Length > 30) //if the name is too long, we cut it
+                            {
+                                pattern.PatternName.Text = name.Substring(0, 30) + "...";
+                            }
+                            else
+                            {
+                                pattern.PatternName.Text = name;
+                            }
 
-                        //Set different row and column for each TemplateUserModel
-                        Grid.SetRow(pattern, row);
-                        Grid.SetColumn(pattern, column);
+                            //Set different row and column for each TemplateUserModel
+                            Grid.SetRow(pattern, row);
+                            Grid.SetColumn(pattern, column);
 
-                        test.Items.Add(pattern);
+                            test.Items.Add(pattern);
 
-                        //Update row and column for the next iteration
-                        column++;
-                        if (column >= 3)  //display in 3 columns
-                        {
-                            column = 0;
-                            row++;
+                            //Update row and column for the next iteration
+                            column++;
+                            if (column >= 3)  //display in 3 columns
+                            {
+                                column = 0;
+                                row++;
+                            }
                         }
                     }
+                    //Update the page number
+                    numPage.Text = (page + 1).ToString();
                 }
-                //Update the page number
-                numPage.Text = (page + 1).ToString();
-            }
             }
             catch (Exception e)
             {
@@ -200,11 +201,11 @@ namespace Lilo_et_Stitch.View
             try
             {
                 LabelName.Content = images[selectedId].Keys.First();
-                Parameters settings = manager.GetSettings(selectedId).Result;
+                Parameters settings = await manager.GetSettings(selectedId);
                 LabelStep.Content = $"Taille des cases : {settings.Step}";
-                LabelMaxColors.Content = $"Couleurs utilisées : {settings.Maxcolor}";
-                LabelColorGrid.Content = $"Couleur grille : {settings.Colorgrid}";
-                RectangleColorGrid.Fill = new System.Windows.Media.SolidColorBrush(settings.Colorgrid);
+                LabelMaxColors.Content = $"Couleurs utilisées : {settings.NbColor}";
+                LabelColorGrid.Content = $"Couleur grille : {settings.GridColor}";
+                RectangleColorGrid.Fill = new System.Windows.Media.SolidColorBrush(settings.ColorGridMedia);
             }
             catch (Exception e)
             {

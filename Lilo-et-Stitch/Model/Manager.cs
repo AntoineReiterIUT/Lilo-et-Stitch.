@@ -77,7 +77,6 @@ namespace Lilo_et_Stitch.Model
         }
 
 
-        //C ICI
         ///<author>Maxime LAFFAYE</author>
         public async Task<Dictionary<int, Dictionary<string, BitmapImage>>> GetImages(int page)
         {
