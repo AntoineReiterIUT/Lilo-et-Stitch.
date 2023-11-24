@@ -10,7 +10,7 @@
         Icon="../Images/logo.png"
         Title="StitchModels" Height="450" Width="800">
     <Viewbox>
-        <Grid Height="450" Width="830">
+        <Grid Height="460" Width="880">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -19,12 +19,24 @@
 
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="90*"/>
+                <RowDefinition Height="90*"/>
+                <RowDefinition Height="45*"/>
             </Grid.RowDefinitions>
 
-            <ItemsControl Grid.RowSpan="2" Grid.ColumnSpan="3" ItemsSource="{Binding Patterns}">
+            <StackPanel VerticalAlignment="top" Grid.ColumnSpan="4" Grid.RowSpan="1">
+                <Menu DockPanel.Dock="Top" Height="54">
+
+                    <Image Source="../Images/logo.png" Mouse.MouseDown="MenuItem_Click"/>
+
+                    <MenuItem Header="Menu" Height="38" Width="51" FontSize="15" Click="HomeButton_Click" IsHitTestVisible="False"/>
+                </Menu>
+            </StackPanel>
+
+
+
+            <ItemsControl Grid.Row="1" x:Name="test" Grid.RowSpan="2" Grid.ColumnSpan="3" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid>
@@ -47,21 +59,28 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <Button Style="{StaticResource MenuButton}" Width="30" FontSize="30" Grid.Column="2" Grid.Row="3" Margin="0,0,50,0" BorderThickness="0" Content="&lt;" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_PreviousClick" Foreground="Black"/>
-            <Label Foreground="White" Grid.Column="2" Content="&lt;" FontSize="30" HorizontalAlignment="Center" Margin="0,0,50,8" Grid.Row="2" VerticalAlignment="Center" IsHitTestVisible="False"/>
+            <Button Style="{StaticResource MenuButton}" Width="30" FontSize="30" Grid.Column="2" Grid.Row="3" Margin="52,0,0,0" BorderThickness="0" Content="&lt;" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_PreviousClick" Foreground="Black"/>
+            <Label Foreground="White" Grid.Column="2" Content="&lt;" FontSize="30" HorizontalAlignment="Left" Margin="52,13,0,0" Grid.Row="3" VerticalAlignment="Top" IsHitTestVisible="False"/>
 
 
-            <Button Style="{StaticResource MenuButton}" Width="30" FontSize="30" Grid.Column="2" Grid.Row="3" Margin="50,0,0,0" BorderThickness="0" Content=">" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_NextClick" Foreground="Black"/>
-            <Label Foreground="White" Grid.Column="2" Content=">" FontSize="30" HorizontalAlignment="Center" Margin="50,0,0,8" Grid.Row="2" VerticalAlignment="Center" IsHitTestVisible="False"/>
+            <Button Style="{StaticResource MenuButton}" Width="30" FontSize="30" Grid.Column="2" Grid.Row="3" Margin="102,0,0,0" BorderThickness="0" Content=">" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_NextClick" Foreground="Black"/>
+            <Label Foreground="White" Grid.Column="2" Content=">" FontSize="30" HorizontalAlignment="Left" Margin="102,13,0,0" Grid.Row="3" VerticalAlignment="Top" IsHitTestVisible="False"/>
 
-            <Label Grid.Column="1" Content="Page : " HorizontalAlignment="Left" Margin="113,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
-            <TextBlock x:Name="numPage" Grid.Column="1" HorizontalAlignment="Left" Margin="158,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="1" VerticalAlignment="Center" Width="24" Height="15"/>
+            <Label FontSize="20" Content="Page : " HorizontalAlignment="Left" Margin="10,24,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+            <TextBox BorderBrush="Transparent" x:Name="numPage" FontSize="20" HorizontalAlignment="Left" Margin="71,28,0,0" Grid.Row="3" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="36" TextChanged="NumPage_TextChanged" Height="28"/>
 
 
-            <Rectangle Grid.Column="3" HorizontalAlignment="Left" Stretch="UniformToFill" Margin="24,0,0,0" Grid.RowSpan="3" Stroke="Black" VerticalAlignment="Top" Width="1" Height="450"/>
-            <patterns:TemplateUserModel x:Name="Pattern1_Copy" Grid.Column="3" Grid.Row="0" Margin="33,10,10,170" Grid.RowSpan="2" />
-            
-            <Button Style="{StaticResource TrsfrmAppButton}" Grid.Column="3" Content="Télécharger" HorizontalAlignment="Left" Height="41" Margin="60,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="189"/>
+
+            <Rectangle Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Stretch="UniformToFill" Margin="24,0,0,0" Grid.RowSpan="4" Stroke="Black" VerticalAlignment="Top" Width="1" Height="450"/>
+            <Rectangle Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" HorizontalAlignment="Left" Stretch="UniformToFill" Margin="0,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="900" Height="1"/>
+            <Image x:Name="SelectedPattern" Grid.Column="3" Grid.Row="1" Margin="39,3,14,2" />
+
+            <Button Style="{StaticResource TrsfrmAppButton}" FontSize="20" Grid.Column="3" Content="Télécharger" HorizontalAlignment="Left" Height="49" Grid.Row="3" VerticalAlignment="Center" Width="205" Margin="56,0,0,0"/>
+            <Label Grid.Column="3" x:Name="LabelName" HorizontalAlignment="Left" FontSize="25" Margin="39,20,14,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Grid.Column="3" FontSize="15" x:Name="LabelStep" HorizontalAlignment="Left"  Margin="39,60,14,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Grid.Column="3" FontSize="15" x:Name="LabelMaxColors" HorizontalAlignment="Left"  Margin="39,80,14,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Grid.Column="3" FontSize="15" x:Name="LabelColorGrid" HorizontalAlignment="Left"  Margin="60,110,14,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Rectangle Grid.Column="3" x:Name="RectangleColorGrid" HorizontalAlignment="Left"  Margin="39,115,14,0" Grid.Row="2" Height="20" Width="20" VerticalAlignment="Top"/>
         </Grid>
     </Viewbox>
 </Window>
