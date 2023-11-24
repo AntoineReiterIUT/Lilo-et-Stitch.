@@ -62,13 +62,11 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
             }
         }
 
-        public async Task<Parameters> returnParameters(int ID_Param)
+       public Parameters GetParameters(Task<Parameters> param )
         {
-            await GetParameters(ID_Param);
-            return a ;
+            return param.Result;
         }
   
-
 
         
     }
