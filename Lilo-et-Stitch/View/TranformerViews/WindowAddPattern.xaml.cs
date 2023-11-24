@@ -44,12 +44,12 @@ namespace Lilo_et_Stitch.View.TranformerViews
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AjouterButton_Click(object sender, RoutedEventArgs e)
+        private async void AjouterButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                manager.Publish(PatternName.Text);
-                MessageBox.Show("Le pattern a bien été ajouté");
+                await manager.Publish(PatternName.Text);
+                MessageBox.Show("Le patron a bien été ajouté");
                 this.Close();
             }
             catch (Exception ex)
