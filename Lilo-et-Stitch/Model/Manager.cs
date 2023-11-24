@@ -76,10 +76,12 @@ namespace Lilo_et_Stitch.Model
             return daoImage.LoadBitmapImage();
         }
 
-        ///<author>Maxime LAFFAYE</author>>
-        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
+
+        //C ICI
+        ///<author>Maxime LAFFAYE</author>
+        public async Task<Dictionary<int, Dictionary<string, BitmapImage>>> GetImages(int page)
         {
-            return dao_Getdata.GetImages(page);           
+            return await dao_Getdata.GetImages(page);           
         }
 
         ///<author>Maxime LAFFAYE</author>>
@@ -126,7 +128,7 @@ namespace Lilo_et_Stitch.Model
             try
             {
                 await daoPublish.CheckIfExist(name);
-                daoPublish.Publish(name, generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
+                await daoPublish.Publish(name, generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
 
             }
             catch (Exception ex)
@@ -140,7 +142,7 @@ namespace Lilo_et_Stitch.Model
         public async Task<Parameters> GetSettings(int id)
         {
             DAO_GetParameters dao_GetParameters = new DAO_GetParameters();
-            return dao_GetParameters.GetParameters(id).Result;
+            return await dao_GetParameters.GetParameters(id);
         }
 
         ///<author>Maxime LAFFAYE</author>>
