@@ -1,4 +1,5 @@
 ﻿using Lilo_et_Stitch.Model;
+using Lilo_et_Stitch.View.PatternsViewer;
 using System;
 using System.Collections.Generic;
 using System.Linq;

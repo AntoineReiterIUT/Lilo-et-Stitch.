@@ -1,16 +1,13 @@
 ﻿using Lilo_et_Stitch.Data.DAO_GetParameters;
 using Lilo_et_Stitch.Model;
-using Lilo_et_Stitch.View.PatternsViewer;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace Lilo_et_Stitch.View
+namespace Lilo_et_Stitch.View.PatternsViewer
 {
     /// <summary>
     /// Interaction logic for WindowModelsStitch
@@ -18,13 +15,11 @@ namespace Lilo_et_Stitch.View
     public partial class WindowModelsStitch : Window
     {
         #region attributes
-
         private int page = 0;
         private Manager manager;
         private TemplateUserModel patterns = new();
         Dictionary<int, Dictionary<string, BitmapImage>> images;
         private int selectedId = -1;
-
         #endregion
 
         #region operations
@@ -170,7 +165,7 @@ namespace Lilo_et_Stitch.View
 
 
         /// <summary>
-        /// This function will be called when the "HomeBtn" is clicked.
+        /// This function will be called when the "HomeBtn" is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -179,7 +174,7 @@ namespace Lilo_et_Stitch.View
         {
             WindowMenuStitch stitchMenu = new();
             stitchMenu.Show(); //Display new page 
-            this.Close(); //Close the firt one
+            this.Close(); //Close the first one
         }
 
         /// <summary>
@@ -187,8 +182,11 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         private void PatternsBtn_Click(object sender, RoutedEventArgs e)
         {
+            //Set the selectedId by the id of the selected pattern button
             selectedId = (int)((Button)sender).Content;
+            //Display the selected pattern
             SelectedPattern.Source = images[selectedId].Values.First();
+            //Display the settings of the selected pattern
             Settings();
         }
 
@@ -200,11 +198,13 @@ namespace Lilo_et_Stitch.View
         {
             try
             {
-                LabelName.Content = images[selectedId].Keys.First();
-                Parameters settings = await manager.GetSettings(selectedId);
+                //Display the settings of the selected pattern
+                LabelName.Text = images[selectedId].Keys.First();
+                Parameters settings = await manager.GetSettings(selectedId); //Get the settings of the selected pattern
                 LabelStep.Content = $"Taille des cases : {settings.Step}";
                 LabelMaxColors.Content = $"Couleurs utilisées : {settings.NbColor}";
                 LabelColorGrid.Content = $"Couleur grille : {settings.GridColor}";
+                //apply the color of the grid to the rectangle
                 RectangleColorGrid.Fill = new System.Windows.Media.SolidColorBrush(settings.ColorGridMedia);
             }
             catch (Exception e)
@@ -231,6 +231,7 @@ namespace Lilo_et_Stitch.View
             //    MessageBox.Show("Veuillez sélectionner un patron");
             //}
         }
+
         #endregion
 
     }
