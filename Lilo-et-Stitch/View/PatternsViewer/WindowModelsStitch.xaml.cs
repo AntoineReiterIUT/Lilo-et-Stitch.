@@ -60,8 +60,9 @@ namespace Lilo_et_Stitch.View
         /// This function will be called when the "PatternsButton" is clicked
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
-        private void ImageLoader()
+        private async void ImageLoader()
         {
+            try { 
             images = manager.GetImages(page);
 
             if (images.Count == 0)
@@ -113,6 +114,11 @@ namespace Lilo_et_Stitch.View
                 }
                 //Update the page number
                 numPage.Text = (page + 1).ToString();
+            }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -191,12 +197,19 @@ namespace Lilo_et_Stitch.View
         /// <author>Antoine SAKKALIS</author>
         private async void Settings()
         {
-            LabelName.Content = images[selectedId].Keys.First();
-            Parameters settings = manager.GetSettings(selectedId).Result;
-            LabelStep.Content = $"Taille des cases : {settings.Step}";
-            LabelMaxColors.Content = $"Couleurs utilisées : {settings.Maxcolor}";
-            LabelColorGrid.Content = $"Couleur grille : {settings.Colorgrid}";
-            RectangleColorGrid.Fill = new System.Windows.Media.SolidColorBrush(settings.Colorgrid);
+            try
+            {
+                LabelName.Content = images[selectedId].Keys.First();
+                Parameters settings = manager.GetSettings(selectedId).Result;
+                LabelStep.Content = $"Taille des cases : {settings.Step}";
+                LabelMaxColors.Content = $"Couleurs utilisées : {settings.Maxcolor}";
+                LabelColorGrid.Content = $"Couleur grille : {settings.Colorgrid}";
+                RectangleColorGrid.Fill = new System.Windows.Media.SolidColorBrush(settings.Colorgrid);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         /// <summary>
