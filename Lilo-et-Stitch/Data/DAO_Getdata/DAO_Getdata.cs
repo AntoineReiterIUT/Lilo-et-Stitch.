@@ -19,7 +19,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         #region attributes
         private HttpClient client = new HttpClient();
         private string address = "https://localhost:7199/GetData";
-        private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
+        //private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
         #endregion
 
 
@@ -31,8 +31,9 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         /// <param name="page">Page number</param>
         /// <exception cref="Exception">If something happens with the request</exception>
         /// <author>Antoine REITER</author>
-        public async Task sendPage(int page)
-        {          
+        public async Task<Dictionary<int, Dictionary<string, BitmapImage>>> sendPage(int page)
+        {
+            Dictionary<int, Dictionary<string, BitmapImage>> dico;
             try
             {
                 // API endpoint
@@ -48,12 +49,13 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
                 List<Imageinfo> imageList = JsonConvert.DeserializeObject<List<Imageinfo>>(jsonContent);
 
                 // Converting into a dictionnary
-                ConvertToImageDictionary(imageList);
+                dico = ConvertToImageDictionary(imageList);
             }
             catch (Exception ex)
             {
                 throw new Exception("Erreur : " + ex.Message);
             }
+            return dico;
         }
 
 
@@ -63,7 +65,8 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         /// <param name="imageList"></param>
         private Dictionary<int, Dictionary<string, BitmapImage>> ConvertToImageDictionary(List<Imageinfo> imageList)
         {
-            dico.Clear();
+            Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
+           // dico.Clear();
 
             // For each image within the list of images
             foreach (var imageInfo in imageList)
@@ -93,10 +96,9 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         }
 
 
-        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
+        public async Task<Dictionary<int, Dictionary<string, BitmapImage>>> GetImages(int page)
         {
-            sendPage(page);
-            return dico;
+            return await sendPage(page);
         }
         
         
