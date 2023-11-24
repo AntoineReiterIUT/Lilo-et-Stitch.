@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using static System.Net.WebRequestMethods;
 using Aspose.Pdf.Operators;
 using SixLabors.ImageSharp.PixelFormats;
+using System.Net;
 
 namespace Lilo_et_Stitch.Data.DAO_Publish
 {
@@ -33,18 +34,37 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         {
             try
             {
-                string endPoint = string.Format($"{address}/CheckIfExist?name={name}");
+                //API endpoint
+                string endPoint = $"{address}/CheckIfExist?name={name}";
+
+                //GetRequest and await it's response
                 HttpResponseMessage response = await client.GetAsync(endPoint);
+
+
+                //if it didn't succeed
+                if (!response.IsSuccessStatusCode)
+                {
+                    // If it's a Bad Request
+                    if (response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        throw new FormatException($"Un patron à déjà ce nom ! {name}");
+                    }
+                    else // for anything else
+                    {
+                        throw new FormatException($"Code non attendu: {response.StatusCode}");
+                    }
+                }
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException ex) // for network issues
             {
                 throw new FormatException("Une erreur HTTP s'est produite, veuillez vous connecter à internet.");
-            }catch
-            {
-                throw new FormatException($"Un patron contient déjà ce nom : {name}");
             }
-
+            catch (Exception ex) // anything else
+            {
+                throw new FormatException($"{ex.Message}");
+            }
         }
+
 
 
         public async Task Publish(string name, int step, int maxColors, Color gridColor, string pathPdf, string pathPalette, BitmapImage transformedImage)
