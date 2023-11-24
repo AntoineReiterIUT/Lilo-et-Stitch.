@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Lilo_et_Stitch.Data.DAO_Publish;
+using Lilo_et_Stitch.Data.DAO_Getdata;
 
 namespace Lilo_et_Stitch.Model
 {
@@ -70,6 +71,17 @@ namespace Lilo_et_Stitch.Model
         public BitmapImage LoadBitmapImage()
         {
             return daoImage.LoadBitmapImage();
+        }
+
+        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
+        {
+            DAO_Getdata a = new DAO_Getdata();
+
+            Dictionary<int, Dictionary<string, BitmapImage>> result;
+            
+            result = a.getdico(page);
+            
+            return result;
         }
 
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
