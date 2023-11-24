@@ -10,30 +10,44 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
 {
     public class Parameters
     {
-        private string nom;
+        private int id;
         private int step;
         private int maxcolor;
-        private Color colorgrid;
+        private string colorgrid = "";
+        private string palettePath = "";
 
-        public string Nom
+        private Color colorGridMedia;
+
+
+        public int Id
         {
-            get { return nom; }
-            set { nom = value; }
+            get { return id; }
+            set { id = value; }
         }
         public int Step 
         { 
           get { return step; }
           set { step = value; }
         }
-        public int Maxcolor 
+        public int NbColor 
         {
             get { return maxcolor; }
             set { maxcolor = value; } 
         }
-        public Color Colorgrid 
+        public string GridColor 
         { 
             get { return colorgrid; }
-            set { colorgrid = value; }
+            set { colorgrid = value ; }
         }
+
+        public string ColorPalette { get => palettePath; set => palettePath = value; }
+
+        public Color ColorGridMedia
+        {
+            get { return colorGridMedia;}
+            set {  colorGridMedia = value ; }
+        }
+
+        
     }
 }

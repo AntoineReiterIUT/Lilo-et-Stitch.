@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using Lilo_et_Stitch.Data.DAO_Getdata;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace Lilo_et_Stitch.Data.DAO_GetParameters
 {
@@ -19,14 +20,13 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
     {
         private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
         private HttpClient client = new HttpClient();
-        private string address = "https://localhost:7199/User";
-        private Parameters a = new Parameters();
+        private string address = "https://localhost:7199/GetData";
         public async Task<Parameters> GetParameters(int ID_Param)
         {
             try
             {
                 // Spécifiez l'URL de l'API pour recevoir les images
-                string endPoint = $"{address}/GetParameters?={ID_Param}";
+                string endPoint = $"{address}/GetSettings?Id={ID_Param}";
 
                 // Effectuez la requête GET pour obtenir les images
                 HttpResponseMessage response = await client.GetAsync(endPoint);
@@ -38,14 +38,14 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
                     string jsonContent = await response.Content.ReadAsStringAsync();
 
                     // Désérialisez le JSON en une liste d'objets ImageInfo
-                    Parameters ParamList = JsonConvert.DeserializeObject<Parameters>(jsonContent);
+                    Parameters settings = JsonConvert.DeserializeObject<Parameters>(jsonContent);
+
+                    //Changing the string to a System.Windows.Media.Color
+                    settings.ColorGridMedia = (Color)ColorConverter.ConvertFromString("#" + settings.GridColor);
 
                     // Convertissez la liste d'images en un dictionnaire
-                    a =  ParamList;
+                    return settings;
 
-                    // Utilisez le dictionnaire d'images comme nécessaire
-
-                    return a;
                 }
                 else
                 {
