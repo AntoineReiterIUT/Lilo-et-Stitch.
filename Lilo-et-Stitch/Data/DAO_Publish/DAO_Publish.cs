@@ -24,7 +24,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
     {
         #region attributes
         private HttpClient client = new HttpClient();
-        private string address = "https://localhost:7199/User";
+        private string address = "https://localhost:7199/SendData";
         #endregion
 
 
@@ -46,23 +46,23 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
 
         }
 
+
         public async Task Publish(string name, int step, int maxColors, Color gridColor, string pathPdf, string pathPalette, BitmapImage transformedImage)
         {
-
             try
             {// Will execute all the requests we need to publish a pattern
 
                 //Sending the parameters:
                 SendParameters(name, step, maxColors, gridColor);
 
+                //Sending the image
+                SendImage(transformedImage, name);
+
                 //Sending the PDF:
                 SendPDF(pathPdf,name);
 
                 //Sending the palette:
-                SendPalette(pathPalette, name);
-
-                //Sending the image
-                SendImage(transformedImage, name);
+                SendPalette(pathPalette, name);    
             }
             catch (HttpRequestException ex)
             {
@@ -86,7 +86,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         private async void SendParameters(string name, int step, int maxColors, Color gridColor)
         {
             //Removing # at the start of the HEX color
-            string newColor = gridColor.ToString().Substring(1);
+            string newColor = gridColor.ToString().Substring(3);
 
             //And now sending them
             string endPoint = string.Format($"{address}/SendParameters?name={name}&step={step}&maxColors={maxColors}&gridColor={newColor}");
@@ -150,6 +150,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         /// </summary>
         /// <param name="image"></param>
         /// <param name="name"></param>
+        /// <author>Maxime LAFFAYE</author>
         private async void SendImage(BitmapImage image,string name)
         {
             try
