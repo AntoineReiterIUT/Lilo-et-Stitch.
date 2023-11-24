@@ -21,7 +21,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
 
         private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
         private HttpClient client = new HttpClient();
-        private string address = "https://localhost:7199/User";
+        private string address = "https://localhost:7199/GetData";
 
         #endregion
 
@@ -32,38 +32,26 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         {          
             try
             {
-                // Spécifiez l'URL de l'API pour recevoir les images
+                // API endpoint
                 string endPoint = $"{address}/GetImages?page={page}";
 
-                // Effectuez la requête GET pour obtenir les images
+                // Getting the images
                 HttpResponseMessage response = await client.GetAsync(endPoint);
 
-                // Vérifiez si la requête a réussi (code de statut 200 OK)
-                if (response.IsSuccessStatusCode)
-                {
-                    // Lisez le contenu JSON de la réponse
-                    string jsonContent = await response.Content.ReadAsStringAsync();
 
-                    // Désérialisez le JSON en une liste d'objets ImageInfo
-                    List<Imageinfo> imageList = JsonConvert.DeserializeObject<List<Imageinfo>>(jsonContent);
+                // Reading the json
+                string jsonContent = await response.Content.ReadAsStringAsync();
 
-                    // Convertissez la liste d'images en un dictionnaire
-                    ConvertToImageDictionary(imageList);
+                // Deserializing the json into a list of ImageInfo
+                List<Imageinfo> imageList = JsonConvert.DeserializeObject<List<Imageinfo>>(jsonContent);
 
-                    // Utilisez le dictionnaire d'images comme nécessaire
-                }
-                else
-                {
-                    // Gérez les erreurs si la requête n'a pas réussi
-                    Console.WriteLine("Erreur lors de la récupération des images. Code de statut : " + response.StatusCode);
-                    throw new NotImplementedException(); // Ou lancez une exception appropriée selon vos besoins
-                }
+                // Converting into a dictionnary
+                ConvertToImageDictionary(imageList);
+
             }
             catch (Exception ex)
             {
-                // Gérez les exceptions
-                Console.WriteLine("Erreur : " + ex.Message);
-                throw new NotImplementedException();  // Ou lancez une exception appropriée selon vos besoins
+                throw new Exception("Erreur : " + ex.Message);
             }
         }
 
@@ -73,13 +61,13 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
             foreach (var imageInfo in imageList)
             {
                 // Vérifiez si le dictionnaire externe pour cet ID existe déjà
-                if (!dico.ContainsKey(imageInfo.ID))
+                if (!dico.ContainsKey(imageInfo.Id))
                 {
-                    dico[imageInfo.ID] = new Dictionary<string, BitmapImage>();
+                    dico[imageInfo.Id] = new Dictionary<string, BitmapImage>();
                 }
 
                 // Créez un MemoryStream à partir des bytes de l'image
-                using (MemoryStream ms = new MemoryStream(imageInfo.ImageBytes))
+                using (MemoryStream ms = new MemoryStream(imageInfo.Bytes))
                 {
                     // Créez un objet BitmapImage à partir du MemoryStream
                     BitmapImage bitmapImage = new BitmapImage();
@@ -89,7 +77,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
                     bitmapImage.EndInit();
 
                     // Ajoutez l'image au dictionnaire interne avec le nom comme clé
-                    dico[imageInfo.ID][imageInfo.Name] = bitmapImage;
+                    dico[imageInfo.Id][imageInfo.Name] = bitmapImage;
                 }
             }
         }
