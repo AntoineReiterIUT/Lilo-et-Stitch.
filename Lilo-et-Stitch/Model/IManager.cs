@@ -73,11 +73,11 @@ namespace Lilo_et_Stitch.Model
         public void ExportPDF(string path);
 
         /// <summary>
-        /// Publication (vérifie si il existe...)
+        /// Publish the pattern to the database
         /// </summary>
         /// <param name="name">The name of the pattern to save</param>
         /// <author>Antoine SAKKALIS</author>
-        public void Publish(string name);
+        public Task Publish(string name);
 
         /// <summary>
         /// Get the dictionary of up to 6 patterns
