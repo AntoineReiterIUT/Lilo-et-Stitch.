@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 using static Lilo_et_Stitch.Data.DAO_Getdata.DAO_Getdata;
 using System.Windows.Media.Imaging;
 using System.IO;
+using Lilo_et_Stitch.Data.DAO_Getdata;
 
 namespace Lilo_et_Stitch.Data.DAO_GetParameters
 {
+    /*
     public class DAO_GetParameters :IDAO_GetParameters
     {
         private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
@@ -56,7 +58,7 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
             }
         }
 
-        private void ConvertToImageDictionary(List<ImageInfo> imageList)
+        private void ConvertToImageDictionary(List<Imageinfo> imageList)
         {
             // Parcourez chaque objet ImageInfo dans la liste
             foreach (var imageInfo in imageList)
@@ -92,4 +94,5 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
             public byte[] colorgrid { get; set; }
         }
     }
+    */
 }

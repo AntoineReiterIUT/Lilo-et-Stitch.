@@ -58,8 +58,9 @@ namespace Lilo_et_Stitch.Model
             {
                 throw new Exception("Transformez une image avant d'exporter");
             }
-            daoPublish.Publish("TestPalette", generatedImage.Step, generatedImage.MaxColors, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);      
-       
+          //daoPublish.Publish("maxime", generatedImage.Step, generatedImage.MaxColors, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
+
+            Dictionary<int, Dictionary<string, BitmapImage>> test = GetImages(0);
         }
 
 
