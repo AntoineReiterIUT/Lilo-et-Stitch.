@@ -31,5 +31,11 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// <returns>List of all the colors in the palette with their names</returns>
         Dictionary<string, Color> GetPalette();
 
+        /// <summary>
+        /// Get the path of where the palette is saved
+        /// </summary>
+        /// <returns>The path of where the palette is saved</returns>
+        /// <author>Maxime LAFFAYE</author>
+        public string GetPath();
     }
 }

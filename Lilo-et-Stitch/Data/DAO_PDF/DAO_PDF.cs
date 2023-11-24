@@ -56,7 +56,6 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public Dictionary<Color, string> CatalogString { get => catalogString; set => catalogString = value; }
-
         #endregion
 
 
@@ -294,6 +293,14 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
             }
         }
 
+        /// <summary>
+        /// Gets the path of where to save the PDF
+        /// </summary>
+        /// <returns>Maxime LAFFAYE</returns>
+        public string GetPath()
+        {
+            return this.path;
+        }
 
         /// <summary>
         /// Create the first page of the PDF

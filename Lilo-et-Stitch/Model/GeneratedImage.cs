@@ -20,6 +20,7 @@ namespace Lilo_et_Stitch.Model
         private Dictionary<string, Color> usedColor;
         private Color gridColor;
         private int step;
+        private int maxColors;
         private List<Case> cases;
         private int width;
         private int height;
@@ -82,6 +83,11 @@ namespace Lilo_et_Stitch.Model
         /// Property : Read or edit the bitmap (System.Drawing)
         /// </summary>
         public Bitmap Bitmap { get => bitmap; set => bitmap = value; }
+
+        /// <summary>
+        /// Property : Read or edit the max amount of colors used
+        /// </summary>
+        public int MaxColors { get => maxColors; set => maxColors = value; }
         #endregion
 
 

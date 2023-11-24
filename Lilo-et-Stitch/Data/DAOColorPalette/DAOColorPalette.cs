@@ -16,6 +16,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
     {
         #region attributes
         private Dictionary<string, Color> palette;
+        private string path;
         #endregion
 
         #region operations
@@ -34,6 +35,8 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// <author>Antoine SAKKALIS</author>
         public void ChangePalette(string csvPath)
         {
+            this.path = csvPath;
+
             //Read the file
             FileInfo fileInfo = new FileInfo(csvPath);
 
@@ -83,6 +86,11 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         public Dictionary<string, Color> GetPalette()
         {
             return palette;
+        }
+
+        public string GetPath()
+        {
+            return this.path;
         }
 
 

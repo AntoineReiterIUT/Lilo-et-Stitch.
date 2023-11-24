@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Lilo_et_Stitch.Data.DAO_Publish;
+using Lilo_et_Stitch.Data.DAO_Getdata;
 
 namespace Lilo_et_Stitch.Model
 {
@@ -20,7 +22,10 @@ namespace Lilo_et_Stitch.Model
         private ImageStitch imageStitch = new ImageStitch();
         private GeneratedImage? generatedImage;
         private IDAOColorPalette daoColorPalette = new DAOColorPalette();
+        private IDAO_PDF ?daoPDF;
         private IDAOImage daoImage = new DAOImage();
+        private IDAO_Publish daoPublish = new DAO_Publish();
+        DAO_Getdata dao_Getdata = new DAO_Getdata();
         #endregion
 
 
@@ -43,30 +48,41 @@ namespace Lilo_et_Stitch.Model
 
 
         #region operations
+        
         public void ExportPDF(string path)
         {
             if (generatedImage != null)
             {
-                IDAO_PDF daoPDF = new DAO_PDF();
+                daoPDF = new DAO_PDF();
                 daoPDF.ExportPDF(path, generatedImage);
             }
             else
             {
                 throw new Exception("Transformez une image avant d'exporter");
             }
-
+            //daoPublish.Publish("maximeee", generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
+            //Dictionary<int, Dictionary<string, BitmapImage>> test = GetImages(0);
         }
 
 
         public void Import(string path)
         {
             daoImage.Save(path);
+            
         }
+
 
         public BitmapImage LoadBitmapImage()
         {
             return daoImage.LoadBitmapImage();
         }
+
+
+        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
+        {
+            return dao_Getdata.GetImages(page);           
+        }
+
 
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
@@ -87,6 +103,7 @@ namespace Lilo_et_Stitch.Model
             return generatedImage;
         }
 
+
         public void UpdatePalette(string path)
         {
             daoColorPalette.ChangePalette(path);
@@ -102,21 +119,19 @@ namespace Lilo_et_Stitch.Model
         {
             return daoColorPalette.GetPalette();
         }
-
+        
         public void Publish(string name)
         {
-            throw new NotImplementedException();
+            daoPublish.CheckIfExist(name);
+            daoPublish.Publish(name, generatedImage.Step, generatedImage.MaxColors, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
         }
 
-        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
+
+        public List<string> GetParameters(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List<int> GetParameters(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public void GetPattern(string patternName, string path)
         {
