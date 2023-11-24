@@ -25,6 +25,7 @@ namespace Lilo_et_Stitch.Model
         private IDAO_PDF ?daoPDF;
         private IDAOImage daoImage = new DAOImage();
         private IDAO_Publish daoPublish = new DAO_Publish();
+        DAO_Getdata dao_Getdata = new DAO_Getdata();
         #endregion
 
 
@@ -58,15 +59,15 @@ namespace Lilo_et_Stitch.Model
             {
                 throw new Exception("Transformez une image avant d'exporter");
             }
-          //daoPublish.Publish("maxime", generatedImage.Step, generatedImage.MaxColors, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
-
-            Dictionary<int, Dictionary<string, BitmapImage>> test = GetImages(0);
+            //daoPublish.Publish("maximeee", generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
+            //Dictionary<int, Dictionary<string, BitmapImage>> test = GetImages(0);
         }
 
 
         public void Import(string path)
         {
             daoImage.Save(path);
+            
         }
 
         public BitmapImage LoadBitmapImage()
@@ -76,13 +77,7 @@ namespace Lilo_et_Stitch.Model
 
         public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
         {
-            DAO_Getdata a = new DAO_Getdata();
-
-            Dictionary<int, Dictionary<string, BitmapImage>> result;
-            
-            result = a.getdico(page);
-            
-            return result;
+            return dao_Getdata.GetImages(page);           
         }
 
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
