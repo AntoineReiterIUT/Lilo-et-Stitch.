@@ -29,7 +29,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
 
         #region operations
         public async void sendPage(int page)
-        {
+        {          
             try
             {
                 // Spécifiez l'URL de l'API pour recevoir les images
@@ -45,7 +45,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
                     string jsonContent = await response.Content.ReadAsStringAsync();
 
                     // Désérialisez le JSON en une liste d'objets ImageInfo
-                    List<ImageInfo> imageList = JsonConvert.DeserializeObject<List<ImageInfo>>(jsonContent);
+                    List<Imageinfo> imageList = JsonConvert.DeserializeObject<List<Imageinfo>>(jsonContent);
 
                     // Convertissez la liste d'images en un dictionnaire
                     ConvertToImageDictionary(imageList);
@@ -67,7 +67,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
             }
         }
 
-        private void ConvertToImageDictionary(List<ImageInfo> imageList)
+        private void ConvertToImageDictionary(List<Imageinfo> imageList)
         {
             // Parcourez chaque objet ImageInfo dans la liste
             foreach (var imageInfo in imageList)
@@ -100,13 +100,8 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
             sendPage(page);
             return dico;
         }
-        // Classe pour désérialiser le JSON
-        public class ImageInfo
-        {
-            public int ID { get; set; }
-            public string Name { get; set; }
-            public byte[] ImageBytes { get; set; }
-        }
+        
+        
         #endregion
     }
 }
