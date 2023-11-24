@@ -103,7 +103,25 @@ namespace Lilo_et_Stitch.Model
             return daoColorPalette.GetPalette();
         }
 
-        
+        public void Publish(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<int> GetParameters(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetPattern(string patternName, string path)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }
