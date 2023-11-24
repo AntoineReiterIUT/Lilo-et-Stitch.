@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         WindowState="Maximized"
         mc:Ignorable="d"
-        Icon="Images/logo.png"
+        Icon="../Images/logo.png"
         Title="Fenêtre de transformation" MinHeight="500" MinWidth="800">
 
     <Grid>
@@ -37,12 +37,12 @@
         <StackPanel Grid.ColumnSpan="11">
             <Menu DockPanel.Dock="Top" Height="51">
 
-                <Image Source="Images/logo.png" Mouse.MouseDown="MenuItem_Click"/>
+                <Image Source="../Images/logo.png" Mouse.MouseDown="MenuItem_Click"/>
 
                 <MenuItem Header="_Fichier" Height="50" Width="77" FontSize="20" >
                     <MenuItem Header="_Menu principal" Click="MenuItem_Click" >
                         <MenuItem.Icon>
-                            <Image Source="Images/homeIcon.png" />
+                            <Image Source="../Images/homeIcon.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
@@ -51,7 +51,7 @@
                     <Separator />
                     <MenuItem Header="_Quitter" Click="Exit_Click" >
                         <MenuItem.Icon>
-                            <Image Source="Images/exit.png"  />
+                            <Image Source="../Images/exit.png"  />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -81,7 +81,7 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="8" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <Grid Width="100" Height="50">
-                <Button Name="PublishBtn" Content="Publier" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Name="PublishBtn" Click="PublishBtn_Click" Content="Publier" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 

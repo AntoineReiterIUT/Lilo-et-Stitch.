@@ -19,7 +19,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#d45585" TargetName="Border"/>
+                            <Setter Property="Background" Value="#A0d45585" TargetName="Border"/>
 
 
                         </Trigger>
