@@ -17,18 +17,21 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
     public class DAO_Getdata : IDAO_Getdata
     {
         #region attributes
-
-
-        private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
         private HttpClient client = new HttpClient();
         private string address = "https://localhost:7199/GetData";
-
+        private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
         #endregion
 
 
 
         #region operations
-        public async void sendPage(int page)
+        /// <summary>
+        /// This method will fill the dictionnary with images
+        /// </summary>
+        /// <param name="page">Page number</param>
+        /// <exception cref="Exception">If something happens with the request</exception>
+        /// <author>Antoine REITER</author>
+        public async Task sendPage(int page)
         {          
             try
             {
@@ -37,8 +40,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
 
                 // Getting the images
                 HttpResponseMessage response = await client.GetAsync(endPoint);
-
-
+            
                 // Reading the json
                 string jsonContent = await response.Content.ReadAsStringAsync();
 
@@ -47,7 +49,6 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
 
                 // Converting into a dictionnary
                 ConvertToImageDictionary(imageList);
-
             }
             catch (Exception ex)
             {
@@ -55,35 +56,44 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
             }
         }
 
-        private void ConvertToImageDictionary(List<Imageinfo> imageList)
+
+        /// <summary>
+        /// Create a dictionnary that contains a dictionnary : ex IdParams : nameOfPattern , image as a bitmapImage (basically a page)
+        /// </summary>
+        /// <param name="imageList"></param>
+        private Dictionary<int, Dictionary<string, BitmapImage>> ConvertToImageDictionary(List<Imageinfo> imageList)
         {
-            // Parcourez chaque objet ImageInfo dans la liste
+            dico.Clear();
+
+            // For each image within the list of images
             foreach (var imageInfo in imageList)
             {
-                // Vérifiez si le dictionnaire externe pour cet ID existe déjà
+                // Checking if the dictionnary contains the key or not
                 if (!dico.ContainsKey(imageInfo.Id_params))
                 {
                     dico[imageInfo.Id_params] = new Dictionary<string, BitmapImage>();
                 }
 
-                // Créez un MemoryStream à partir des bytes de l'image
+                // Creating the stream with the array of bytes
                 using (MemoryStream ms = new MemoryStream(imageInfo.Bytes))
                 {
-                    // Créez un objet BitmapImage à partir du MemoryStream
+                    // And now creating the bitmapImage
                     BitmapImage bitmapImage = new BitmapImage();
                     bitmapImage.BeginInit();
                     bitmapImage.StreamSource = ms;
                     bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                     bitmapImage.EndInit();
 
-                    // Ajoutez l'image au dictionnaire interne avec le nom comme clé
-                    dico[imageInfo.Id][imageInfo.Name] = bitmapImage;
+                    // adding to the dictionnary
+                    dico[imageInfo.Id_params][imageInfo.Name] = bitmapImage;
                 }
             }
+            //Returning the dictionnary
+            return dico;
         }
 
 
-        public Dictionary<int, Dictionary<string, BitmapImage>> getdico(int page)
+        public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
         {
             sendPage(page);
             return dico;
