@@ -61,9 +61,9 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
             foreach (var imageInfo in imageList)
             {
                 // Vérifiez si le dictionnaire externe pour cet ID existe déjà
-                if (!dico.ContainsKey(imageInfo.Id))
+                if (!dico.ContainsKey(imageInfo.Id_params))
                 {
-                    dico[imageInfo.Id] = new Dictionary<string, BitmapImage>();
+                    dico[imageInfo.Id_params] = new Dictionary<string, BitmapImage>();
                 }
 
                 // Créez un MemoryStream à partir des bytes de l'image
