@@ -1,4 +1,5 @@
-﻿using Lilo_et_Stitch.Model;
+﻿using Lilo_et_Stitch.Data.DAO_GetParameters;
+using Lilo_et_Stitch.Model;
 using Lilo_et_Stitch.View.PatternsViewer;
 using System;
 using System.Collections.Generic;
@@ -181,20 +182,21 @@ namespace Lilo_et_Stitch.View
         {
             selectedId = (int)((Button)sender).Content;
             SelectedPattern.Source = images[selectedId].Values.First();
-            Parameters();
+            Settings();
         }
 
         /// <summary>
         /// This function will be called when the "Parameters" is clicked to display the parameters of the selected pattern
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
-        private void Parameters()
+        private async void Settings()
         {
             LabelName.Content = images[selectedId].Keys.First();
-            LabelStep.Content = "Taille des cases : 12";
-            LabelMaxColors.Content = "Couleurs utilisées : 454";
-            LabelColorGrid.Content = "Couleur grille : #F326D2";
-            RectangleColorGrid.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(243, 38, 210));
+            Parameters settings = manager.GetSettings(selectedId).Result;
+            LabelStep.Content = $"Taille des cases : {settings.Step}";
+            LabelMaxColors.Content = $"Couleurs utilisées : {settings.Maxcolor}";
+            LabelColorGrid.Content = $"Couleur grille : {settings.Colorgrid}";
+            RectangleColorGrid.Fill = new System.Windows.Media.SolidColorBrush(settings.Colorgrid);
         }
 
         /// <summary>
