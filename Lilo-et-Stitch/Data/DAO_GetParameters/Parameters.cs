@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace Lilo_et_Stitch.Data.DAO_GetParameters
 {
@@ -13,7 +13,7 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
         private string nom;
         private int step;
         private int maxcolor;
-        private string colorgrid;
+        private Color colorgrid;
 
         public string Nom
         {
@@ -30,10 +30,10 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
             get { return maxcolor; }
             set { maxcolor = value; } 
         }
-        public string Colorgrid 
+        public Color Colorgrid 
         { 
             get { return colorgrid; }
-            set { colorgrid = "FF"+value; }
+            set { colorgrid = value; }
         }
     }
 }
