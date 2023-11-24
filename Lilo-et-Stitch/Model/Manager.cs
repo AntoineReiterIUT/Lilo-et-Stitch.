@@ -60,8 +60,6 @@ namespace Lilo_et_Stitch.Model
             {
                 throw new Exception("Transformez une image avant d'exporter");
             }
-            //daoPublish.Publish("maximeee", generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
-            //Dictionary<int, Dictionary<string, BitmapImage>> test = GetImages(0);
         }
 
 
@@ -123,7 +121,7 @@ namespace Lilo_et_Stitch.Model
         public void Publish(string name)
         {
             daoPublish.CheckIfExist(name);
-            daoPublish.Publish(name, generatedImage.Step, generatedImage.MaxColors, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
+            daoPublish.Publish(name, generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
         }
 
 
@@ -134,6 +132,11 @@ namespace Lilo_et_Stitch.Model
 
 
         public void GetPattern(string patternName, string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<int> IManager.GetParameters(int id)
         {
             throw new NotImplementedException();
         }

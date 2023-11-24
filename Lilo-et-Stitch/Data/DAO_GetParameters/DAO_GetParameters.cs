@@ -66,9 +66,11 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
         {
             return param.Result;
         }
-  
 
-        
+        void IDAO_GetParameters.GetParameters(int ID)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }
