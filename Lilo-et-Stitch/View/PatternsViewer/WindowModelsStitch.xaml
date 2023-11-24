@@ -75,7 +75,7 @@
             <Rectangle Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" HorizontalAlignment="Left" Stretch="UniformToFill" Margin="0,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="900" Height="1"/>
             <Image x:Name="SelectedPattern" Grid.Column="3" Grid.Row="1" Margin="39,3,14,2" />
 
-            <Button Style="{StaticResource TrsfrmAppButton}" FontSize="20" Grid.Column="3" Content="Télécharger" HorizontalAlignment="Left" Height="49" Grid.Row="3" VerticalAlignment="Center" Width="205" Margin="56,0,0,0"/>
+            <Button Style="{StaticResource TrsfrmAppButton}" FontSize="20" Grid.Column="3" Content="Télécharger" HorizontalAlignment="Left" Height="49" Grid.Row="3" VerticalAlignment="Center" Width="205" Margin="56,0,0,0" Click="Button_DownloadClick"/>
             <Label Grid.Column="3" x:Name="LabelName" HorizontalAlignment="Left" FontSize="25" Margin="39,20,14,0" Grid.Row="2" VerticalAlignment="Top"/>
             <Label Grid.Column="3" FontSize="15" x:Name="LabelStep" HorizontalAlignment="Left"  Margin="39,60,14,0" Grid.Row="2" VerticalAlignment="Top"/>
             <Label Grid.Column="3" FontSize="15" x:Name="LabelMaxColors" HorizontalAlignment="Left"  Margin="39,80,14,0" Grid.Row="2" VerticalAlignment="Top"/>
