@@ -117,11 +117,21 @@ namespace Lilo_et_Stitch.Model
         {
             return daoColorPalette.GetPalette();
         }
-        
-        public void Publish(string name)
+
+
+        public async Task Publish(string name)
         {
-            daoPublish.CheckIfExist(name);
-            daoPublish.Publish(name, generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
+            try
+            {
+                await daoPublish.CheckIfExist(name);
+                daoPublish.Publish(name, generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
+
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception as needed
+                throw new Exception($"{ex.Message}");
+            }
         }
 
 
@@ -140,6 +150,8 @@ namespace Lilo_et_Stitch.Model
         {
             throw new NotImplementedException();
         }
+
+        
 
         #endregion
     }

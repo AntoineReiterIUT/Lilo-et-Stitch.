@@ -71,7 +71,7 @@ namespace Lilo_et_Stitch.Model
         /// Publication (vérifie si il existe...)
         /// </summary>
         /// <param name="name"></param>
-        public void Publish(string name);
+        public Task Publish(string name);
 
         /// <summary>
         /// Renvoie une liste de 6 images avec leur ID, nom et aperçu.
