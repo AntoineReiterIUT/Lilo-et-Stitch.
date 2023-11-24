@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Lilo_et_Stitch.Data.DAO_Publish;
 using Lilo_et_Stitch.Data.DAO_Getdata;
+using Lilo_et_Stitch.Data.DAO_GetParameters;
 
 namespace Lilo_et_Stitch.Model
 {
@@ -49,6 +50,7 @@ namespace Lilo_et_Stitch.Model
 
         #region operations
         
+        ///<author>Maxime LAFFAYE</author>>
         public void ExportPDF(string path)
         {
             if (generatedImage != null)
@@ -62,26 +64,25 @@ namespace Lilo_et_Stitch.Model
             }
         }
 
-
+        ///<author>Maxime LAFFAYE</author>>
         public void Import(string path)
         {
             daoImage.Save(path);
-            
         }
 
-
+        ///<author>Maxime LAFFAYE</author>>
         public BitmapImage LoadBitmapImage()
         {
             return daoImage.LoadBitmapImage();
         }
 
-
+        ///<author>Maxime LAFFAYE</author>>
         public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page)
         {
             return dao_Getdata.GetImages(page);           
         }
 
-
+        ///<author>Maxime LAFFAYE</author>>
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
             //Load the image before transforming
@@ -101,42 +102,40 @@ namespace Lilo_et_Stitch.Model
             return generatedImage;
         }
 
-
+        ///<author>Maxime LAFFAYE</author>>
         public void UpdatePalette(string path)
         {
             daoColorPalette.ChangePalette(path);
         }
 
+        ///<author>Antoine SAKKALIS</author>>
         public void ResetPalette()
         {
             daoColorPalette.ResetPalette();
         }
 
-
+        ///<author>Antoine SAKKALIS</author>>
         public Dictionary<string, System.Windows.Media.Color> GetPalette()
         {
             return daoColorPalette.GetPalette();
         }
-        
-        public void Publish(string name)
+
+        ///<author>Maxime LAFFAYE</author>>
+        public async void Publish(string name)
         {
             daoPublish.CheckIfExist(name);
             daoPublish.Publish(name, generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
         }
 
-
-        public List<string> GetParameters(int id)
+        ///<author>Maxime LAFFAYE</author>>
+        public async Task<Parameters> GetSettings(int id)
         {
-            throw new NotImplementedException();
+            DAO_GetParameters dao_GetParameters = new DAO_GetParameters();
+            return dao_GetParameters.GetParameters(id).Result;
         }
 
-
+        ///<author>Maxime LAFFAYE</author>>
         public void GetPattern(string patternName, string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<int> IManager.GetParameters(int id)
         {
             throw new NotImplementedException();
         }

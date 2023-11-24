@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Media.Imaging;
+using Lilo_et_Stitch.Data.DAO_GetParameters;
 
 namespace Lilo_et_Stitch.Model
 {
     /// <summary>
-    /// Iterface that will be used as a link between the view and the model.
+    /// Interface that will be used as a link between the view and the model.
     /// </summary>
     public interface IManager
     {
@@ -20,6 +21,7 @@ namespace Lilo_et_Stitch.Model
         /// Import the path of the image to the model
         /// </summary>
         /// <param name="path">Path to the image</param>
+        /// <author>Antoine SAKKALIS</author>
         public void Import(string path);
 
 
@@ -34,18 +36,21 @@ namespace Lilo_et_Stitch.Model
         /// <summary>
         /// Will reset the palette to it's original form
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public void ResetPalette();
 
         /// <summary>
         /// Gives the list of all the colors in the palette
         /// </summary>
-        /// <returns>The Dictionnary of all color names and their values</returns>
+        /// <returns>The dictionary of all color names and their values</returns>
+        /// <author>Antoine SAKKALIS</author>
         public Dictionary<string, System.Windows.Media.Color> GetPalette();
 
         /// <summary>
         /// Will update the palette with the given path
         /// </summary>
         /// <param name="path">Path to the new palette</param>
+        /// <author>Antoine SAKKALIS</author>
         public void UpdatePalette(string path);
 
 
@@ -70,27 +75,31 @@ namespace Lilo_et_Stitch.Model
         /// <summary>
         /// Publication (vérifie si il existe...)
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the pattern to save</param>
+        /// <author>Antoine SAKKALIS</author>
         public void Publish(string name);
 
         /// <summary>
-        /// Renvoie une liste de 6 images avec leur ID, nom et aperçu.
+        /// Get the dictionary of up to 6 patterns
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A dictionary with the id, the name and the image itself</returns>
+        /// <author>Antoine SAKKALIS</author>
         public Dictionary<int, Dictionary<string, BitmapImage>> GetImages(int page);
 
         /// <summary>
-        /// 
+        /// Get the parameters of the pattern
         /// </summary>
         /// <param name="id"></param>
         /// <returns>step,colorMax,colorGrid(hex)</returns>
-        public List<int> GetParameters(int id);
+        /// <author>Antoine SAKKALIS</author>
+        public Task<Parameters> GetSettings(int id);
 
         /// <summary>
-        /// Télécharge le fichier
+        /// Download the pattern from the database
         /// </summary>
-        /// <param name="patternName">Nom du pattern à dl</param>
-        /// <param name="path">emplacement (dans ordinateur utilisateur)</param>
+        /// <param name="patternName">The name of the pattern to download</param>
+        /// <param name="path">The path where the folder with the files will be saved</param>
+        /// <author>Antoine SAKKALIS</author>
         public void GetPattern(string patternName,string path);
     }
 }
