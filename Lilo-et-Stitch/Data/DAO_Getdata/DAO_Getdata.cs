@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace Lilo_et_Stitch.Data.DAO_Getdata
 {
 
-    internal class DAO_Getdata : IDAO_Getdata
+    public class DAO_Getdata : IDAO_Getdata
     {
         #region attributes
 
@@ -33,7 +33,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
             try
             {
                 // Spécifiez l'URL de l'API pour recevoir les images
-                string endPoint = $"{address}/sendimage/{page}";
+                string endPoint = $"{address}/GetImages?page={page}";
 
                 // Effectuez la requête GET pour obtenir les images
                 HttpResponseMessage response = await client.GetAsync(endPoint);
@@ -48,7 +48,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
                     List<ImageInfo> imageList = JsonConvert.DeserializeObject<List<ImageInfo>>(jsonContent);
 
                     // Convertissez la liste d'images en un dictionnaire
-                    ConvertToImageDictionary(page, imageList);
+                    ConvertToImageDictionary(imageList);
 
                     // Utilisez le dictionnaire d'images comme nécessaire
                 }
@@ -67,7 +67,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
             }
         }
 
-        private void ConvertToImageDictionary(int page, List<ImageInfo> imageList)
+        private void ConvertToImageDictionary(List<ImageInfo> imageList)
         {
             // Parcourez chaque objet ImageInfo dans la liste
             foreach (var imageInfo in imageList)
