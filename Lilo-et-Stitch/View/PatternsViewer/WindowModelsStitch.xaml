@@ -1,10 +1,9 @@
-﻿<Window x:Class="Lilo_et_Stitch.View.WindowModelsStitch"
+﻿<Window x:Class="Lilo_et_Stitch.View.PatternsViewer.WindowModelsStitch"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Lilo_et_Stitch.View" 
-        xmlns:patterns="clr-namespace:Lilo_et_Stitch.View.PatternsViewer"
+        xmlns:patterns="clr-namespace:Lilo_et_Stitch.View.PatternsViewer"        
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Icon="../Images/logo.png"
@@ -54,7 +53,9 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <patterns:TemplateUserModel />
+                        <patterns:TemplateUserModel/>
+                        
+        
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -76,7 +77,10 @@
             <Image x:Name="SelectedPattern" Grid.Column="3" Grid.Row="1" Margin="39,3,14,2" />
 
             <Button Style="{StaticResource TrsfrmAppButton}" FontSize="20" Grid.Column="3" Content="Télécharger" HorizontalAlignment="Left" Height="49" Grid.Row="3" VerticalAlignment="Center" Width="205" Margin="56,0,0,0" Click="Button_DownloadClick"/>
-            <Label Grid.Column="3" x:Name="LabelName" HorizontalAlignment="Left" FontSize="25" Margin="39,20,14,0" Grid.Row="2" VerticalAlignment="Top"/>
+            
+            <Viewbox Grid.Column="3" Grid.Row="2" VerticalAlignment="Top" Margin="30,5,5,0" MaxHeight="60">
+                <TextBlock TextWrapping="Wrap" x:Name="LabelName" HorizontalAlignment="Left" FontSize="25" VerticalAlignment="Top"/>
+            </Viewbox>
             <Label Grid.Column="3" FontSize="15" x:Name="LabelStep" HorizontalAlignment="Left"  Margin="39,60,14,0" Grid.Row="2" VerticalAlignment="Top"/>
             <Label Grid.Column="3" FontSize="15" x:Name="LabelMaxColors" HorizontalAlignment="Left"  Margin="39,80,14,0" Grid.Row="2" VerticalAlignment="Top"/>
             <Label Grid.Column="3" FontSize="15" x:Name="LabelColorGrid" HorizontalAlignment="Left"  Margin="60,110,14,0" Grid.Row="2" VerticalAlignment="Top"/>

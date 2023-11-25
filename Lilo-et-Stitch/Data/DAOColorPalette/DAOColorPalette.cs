@@ -32,6 +32,8 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         }
 
 
+        /// <exception cref="Exception">Exception thrown if the color Palette is invalid</exception>
+        /// <exception cref="FormatException">Exception thrown if the color Palette data (csv) format is invalid</exception>
         /// <author>Antoine SAKKALIS</author>
         public void ChangePalette(string csvPath)
         {
@@ -88,20 +90,23 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             return palette;
         }
 
+        /// <author>Antoine SAKKALIS</author>
         public string GetPath()
         {
             return this.path;
         }
 
-
+        /// <exception cref="Exception">Exception thrown if the backup color Palette is invalid (modified app files)</exception>
         ///<author>Antoine SAKKALIS</author>
         public void ResetPalette()
         {
             try
             {
+                //Get the path of the backup color palette
                 var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                 var file = Path.Combine(projectFolder, @"../Data/DMCBackup/DMCcolors.csv");
 
+                //Change the palette to the backup palette
                 ChangePalette(file.ToString());
             }
             catch
