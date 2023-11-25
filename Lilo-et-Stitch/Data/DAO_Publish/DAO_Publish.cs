@@ -47,7 +47,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
                     // If it's a Bad Request
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        throw new FormatException($"Un patron à déjà ce nom ! {name}");
+                        throw new FormatException($"Un patron a déjà ce nom ! {name}");
                     }
                     else // for anything else
                     {
