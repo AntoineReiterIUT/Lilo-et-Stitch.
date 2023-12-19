@@ -29,6 +29,24 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         #endregion
 
 
+        #region constructor
+        /// <summary>
+        /// Constructor of the DAO, will handle the certificate
+        /// </summary>
+        public DAO_Publish()
+        {
+            var spHandler = new HttpClientHandler();
+            {
+                spHandler.ServerCertificateCustomValidationCallback = (sender, ClientCertificateOption, chain, SslPolicyErrors) =>
+                {
+                    return true;
+                };
+                this.client = new HttpClient(spHandler);
+            }
+        }
+        #endregion
+
+
         #region operations
         public async Task CheckIfExist(string name)
         {

@@ -23,6 +23,23 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         #endregion
 
 
+        #region constructors
+        /// <summary>
+        /// Constructor of the DAO, will handle the certificate
+        /// </summary>
+        public DAO_Getdata()
+        {
+            var spHandler = new HttpClientHandler();
+            {
+                spHandler.ServerCertificateCustomValidationCallback = (sender, ClientCertificateOption, chain, SslPolicyErrors) =>
+                {
+                    return true;
+                };
+                this.client = new HttpClient(spHandler);
+            }
+        }
+        #endregion
+
 
         #region operations
         /// <summary>
@@ -100,8 +117,6 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         {
             return await sendPage(page);
         }
-        
-        
         #endregion
     }
 }

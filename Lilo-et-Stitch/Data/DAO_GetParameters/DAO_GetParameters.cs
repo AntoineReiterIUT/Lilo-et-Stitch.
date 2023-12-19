@@ -18,9 +18,31 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
     
     public class DAO_GetParameters :IDAO_GetParameters
     {
+        #region attributes
         private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
         private HttpClient client = new HttpClient();
         private string address = "https://localhost:7199/GetData";
+        #endregion
+
+        #region constructors
+        /// <summary>
+        /// Constructor of the DAO, will handle the certificate
+        /// </summary>
+        public DAO_GetParameters()
+        {
+            var spHandler = new HttpClientHandler();
+            {
+                spHandler.ServerCertificateCustomValidationCallback = (sender, ClientCertificateOption, chain, SslPolicyErrors) =>
+                {
+                    return true;
+                };
+                this.client = new HttpClient(spHandler);
+            }
+        }
+        #endregion
+
+
+        #region operations
         public async Task<Parameters> GetParameters(int ID_Param)
         {
             try
@@ -71,6 +93,8 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
-    
+
 }
