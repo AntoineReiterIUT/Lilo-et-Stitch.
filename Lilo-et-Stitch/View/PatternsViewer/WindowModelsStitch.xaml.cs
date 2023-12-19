@@ -37,6 +37,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
             this.manager = manager;
             InitializeComponent();
             ImageLoader();
+            Download.Visibility = Visibility.Collapsed;
         }
 
 
@@ -187,6 +188,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         {
             //Set the selectedId by the id of the selected pattern button
             selectedId = (int)((System.Windows.Controls.Button)sender).Content;
+            Download.Visibility = Visibility.Visible;
             //Display the selected pattern
             SelectedPattern.Source = images[selectedId].Values.First();
             //Display the settings of the selected pattern
