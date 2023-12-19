@@ -157,10 +157,10 @@ namespace Lilo_et_Stitch.Model
             return await dao_GetParameters.GetParameters(id);
         }
 
-        ///<author>Maxime LAFFAYE</author>>
+        ///<author>Maxime LAFFAYE</author>
         public void GetPattern(string patternName, string path)
         {
-            throw new NotImplementedException();
+            dao_Getdata.SavePattern(patternName, path);
         }
 
         #endregion

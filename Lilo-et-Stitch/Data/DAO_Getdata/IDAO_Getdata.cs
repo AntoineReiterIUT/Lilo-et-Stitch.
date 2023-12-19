@@ -20,5 +20,14 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         /// <author>Maxime LAFFAYE</author>
         public Task<Dictionary<int, Dictionary<string, BitmapImage>>> GetImages(int page);
 
+
+        /// <summary>
+        /// This method will get the PDF from the api and save it locally 
+        /// </summary>
+        /// <param name="patternName">Name of the pattern</param>
+        /// <param name="path">Save path of the rebuilt pdf</param>
+        /// <returns>Nothing</returns>
+        /// <author>Maxime LAFFAYE</author>
+        public Task SavePattern(string patternName, string path);
     }
 }

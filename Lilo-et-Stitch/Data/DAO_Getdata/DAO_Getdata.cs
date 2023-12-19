@@ -96,6 +96,35 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         }
 
 
+        public async Task SavePattern(string patternName, string path)
+        {
+            try
+            {
+                // API endpoint
+                string endPoint = $"{address}/GetPDF?name={patternName}";
+
+                // Getting the PDF
+                HttpResponseMessage response = await client.GetAsync(endPoint);
+
+                // Reading the json
+                string jsonContent = await response.Content.ReadAsStringAsync();
+
+                // Deserializing the json into a list of bytes
+                byte[] pdfAsByt = JsonConvert.DeserializeObject<byte[]>(jsonContent);
+
+                //Rebuilding the file
+                if (pdfAsByt != null)
+                {
+                    // Building the path & rebuilding the file
+                    File.WriteAllBytesAsync(path, pdfAsByt);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur : " + ex.Message);
+            }
+        }
+
         public async Task<Dictionary<int, Dictionary<string, BitmapImage>>> GetImages(int page)
         {
             return await sendPage(page);
