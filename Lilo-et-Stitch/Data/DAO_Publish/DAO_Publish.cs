@@ -34,6 +34,12 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         {
             try
             {
+                char[] invalidChars = { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
+                //Checking if it doesn't contain weird caracters (can't be used to create a directory)
+                bool containsInvalidChars = name.Any(c => invalidChars.Contains(c));
+
+                if(containsInvalidChars)throw new FormatException("Les caractères spéciaux sont interdits!");
+
                 //API endpoint
                 string endPoint = $"{address}/CheckIfExist?name={name}";
 
