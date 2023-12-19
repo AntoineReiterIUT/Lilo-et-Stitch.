@@ -1,11 +1,14 @@
 ﻿using Lilo_et_Stitch.Data.DAO_GetParameters;
 using Lilo_et_Stitch.Model;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+
 
 namespace Lilo_et_Stitch.View.PatternsViewer
 {
@@ -63,7 +66,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
 
                 if (images.Count == 0)
                 {
-                    MessageBox.Show("Il n'y a pas de patrons à afficher sur cette page");
+                    System.Windows.MessageBox.Show("Il n'y a pas de patrons à afficher sur cette page");
                     page--;
                 }
                 else
@@ -114,7 +117,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                System.Windows.MessageBox.Show(e.Message);
             }
         }
 
@@ -183,7 +186,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         private void PatternsBtn_Click(object sender, RoutedEventArgs e)
         {
             //Set the selectedId by the id of the selected pattern button
-            selectedId = (int)((Button)sender).Content;
+            selectedId = (int)((System.Windows.Controls.Button)sender).Content;
             //Display the selected pattern
             SelectedPattern.Source = images[selectedId].Values.First();
             //Display the settings of the selected pattern
@@ -209,7 +212,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                System.Windows.MessageBox.Show(e.Message);
             }
         }
 
@@ -221,15 +224,33 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void Button_DownloadClick(object sender, RoutedEventArgs e)
         {
-            //if (selectedId != -1)
-            //{
-            //    manager.Import(selectedId);
-            //    MessageBox.Show("Le patron a bien été importé");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Veuillez sélectionner un patron");
-            //}
+            if (manager != null)
+            {
+                //Creating the dialog object
+                System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+
+                saveFileDialog.Filter = "Fichier PDF (*.pdf) |*.pdf";
+
+                try
+                {
+                    // Show the dialog and wait for the user to select a file
+                    DialogResult result = saveFileDialog.ShowDialog();
+
+                    string path = saveFileDialog.FileName;
+
+                    if (path != "")
+                    {
+                        manager.GetPattern(LabelName.Text, path);
+                        System.Windows.MessageBox.Show("Téléchargé avec succès!");
+                    }
+
+                }
+                catch (Exception excepiton)
+                {
+                    System.Windows.MessageBox.Show(excepiton.Message);
+                }
+
+            }
         }
 
         #endregion
