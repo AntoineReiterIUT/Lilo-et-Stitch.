@@ -41,16 +41,18 @@ namespace Lilo_et_Stitch.Model.Transform
             newImage.Step = step;
             newImage.GridColor = gridColor;
 
-            //Creating the case, AKA the new pixels of our new image
+            //Create the grid
             MakeGrid(newImage.Cases, step, imageStitch.Height, imageStitch.Width);
+            //Then fill the pixels of the new image
             FillPixels(newImage.Cases, imageStitch, colorMax);
 
+            //Return the new image
             return newImage;
         }
 
 
         /// <summary>
-        /// Will loop through all cases and get the average + the code DMC if necessary (if the opacity isn't 0)
+        /// Will fill the pixels of the new image
         /// </summary>
         /// <param name="cases">List of cases</param>
         /// <param name="img">The ImageStitch</param>
@@ -59,11 +61,15 @@ namespace Lilo_et_Stitch.Model.Transform
         public void FillPixels(List<Case> cases, ImageStitch img, int colorMax)
         {
             Bitmap bitNewImage = new Bitmap(img.Image);
+
+            //For each case, calculate the average color
             foreach (Case c in cases)
                 CaseAverage(c, bitNewImage, colorMax);
 
+            //Then, select the most used colors to have the best result with less colors
             UpdateColorsToUse(colors, colorMax);
 
+            //for each case, transform the color to the closest DMC color
             foreach (Case c in cases)
             {
                 c.TransformedColor = colorTool.ToDMC(c.BaseColor, colorsToUse);
@@ -75,6 +81,7 @@ namespace Lilo_et_Stitch.Model.Transform
                 newImage.UsedColor[closestDMCColorCode] = c.TransformedColor;
             }
 
+            //Rebuild the image
             RebuildImage(cases, bitNewImage, newImage);
 
             //Stocking as a bitmap and as an image
@@ -94,13 +101,16 @@ namespace Lilo_et_Stitch.Model.Transform
             int pixelCount = 0;
             int sumR = 0, sumG = 0, sumB = 0, sumOpacity = 0;
 
+            //for each pixel of the case
             for (int i = caseToCheck.Coord1.X; i < caseToCheck.Coord2.X; i++)
             {
                 for (int j = caseToCheck.Coord1.Y; j < caseToCheck.Coord2.Y; j++)
                 {
+                    //Get the color of the pixel
                     System.Drawing.Color DrawingColor = bitMap.GetPixel(i, j);
                     System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(DrawingColor.A, DrawingColor.R, DrawingColor.G, DrawingColor.B);
 
+                    //Add the color to the sum
                     sumR += color.R;
                     sumG += color.G;
                     sumB += color.B;
@@ -108,6 +118,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
                     pixelCount++;
 
+                    //If the color is almost visible, add it to the list of colors
                     if (color.A >= 200)
                     {
                         if (colors.ContainsKey(color))
@@ -118,52 +129,34 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
             }
 
-            CalculateAverageAndSetBaseColor(caseToCheck, sumR, sumG, sumB, sumOpacity, pixelCount);
+            //Calculate the average color of the case
+            caseToCheck.BaseColor = colorTool.CalculateAverageColor(caseToCheck, sumR, sumG, sumB, sumOpacity, pixelCount);
         }
 
 
         /// <summary>
-        /// Calculates the average color of a case
+        /// Updates the list of colors to use
         /// </summary>
-        /// <param name="colors">Dictionnary of colors used and their number</param>
+        /// <param name="colors">Dictionary of colors used and their number of occurrences</param>
         /// <param name="maxColors">Maximum number of colors to be used</param>
         /// <author>Antoine SAKKALIS</author>
         private void UpdateColorsToUse(Dictionary<System.Windows.Media.Color, int> colors, int maxColors)
         {
-            var sortedColors = colors.OrderByDescending(pair => pair.Value);
+            //Sort the colors by the number of times they are used and put them in an array
+            System.Windows.Media.Color[] sortedColors = colors
+                .OrderByDescending(x => x.Value)
+                .Select(x => x.Key)
+                .ToArray();
 
-            foreach (var colorPair in sortedColors)
+            //Add the colors to the list of colors to use
+            foreach (System.Windows.Media.Color color in sortedColors)
             {
-                System.Windows.Media.Color color = colorPair.Key;
-
+                //If the color is not already in the list and the list is not full, add it
                 if (colorsToUse.Count < maxColors && !colorsToUse.Contains(colorTool.ToDMC(color, colorPalette.Values.ToList())))
                 {
                     colorsToUse.Add(colorTool.ToDMC(color, colorPalette.Values.ToList()));
                 }
             }
-        }
-
-
-
-        /// <summary>
-        /// Calculates the average color of a case
-        /// </summary>
-        /// <param name="caseToCheck"></param>
-        /// <param name="sumR">The sum of red</param>
-        /// <param name="sumG">The sum of green</param>
-        /// <param name="sumB">The sum of blue</param>
-        /// <param name="sumOpacity">The sum of opacity</param>
-        /// <param name="pixelCount">The number of pixels in that case</param>
-        /// <author>Antoine SAKKALIS</author>
-        private void CalculateAverageAndSetBaseColor(Case caseToCheck, int sumR, int sumG, int sumB, int sumOpacity, int pixelCount)
-        {
-            int avgR = sumR / pixelCount;
-            int avgG = sumG / pixelCount;
-            int avgB = sumB / pixelCount;
-            int avgOpacity = sumOpacity / pixelCount;
-
-            //Set the average color as the base color of the case
-            caseToCheck.BaseColor = System.Windows.Media.Color.FromArgb((byte)avgOpacity, (byte)avgR, (byte)avgG, (byte)avgB);
         }
 
 
