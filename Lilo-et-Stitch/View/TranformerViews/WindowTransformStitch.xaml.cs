@@ -136,9 +136,9 @@ namespace Lilo_et_Stitch.View
                     int i = (int)bitmap.Height / stepIni;
                     int y = (int)bitmap.Width / stepIni;
                     i = (i + y) / 2;
-                    ChangeStepSlider.Minimum = i;
-                    ChangeStepSlider.Maximum = i * 3;
-                    ChangeStepSlider.Value = i * 2;
+                    NbStepSlider.Minimum = i;
+                    NbStepSlider.Maximum = i * 3;
+                    NbStepSlider.Value = i * 2;
                 }
                 
 
@@ -188,7 +188,7 @@ namespace Lilo_et_Stitch.View
         ///<authors>Mattis GALOPPIN</authors>
         private void changeStepValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ChangeStepText.Text = ChangeStepSlider.Value.ToString(); 
+            NbStepText.Text = NbStepSlider.Value.ToString(); 
         }
 
 
@@ -215,7 +215,7 @@ namespace Lilo_et_Stitch.View
                 if (this.manager == null) this.manager = new Manager();
 
                 //Start the transformation of the image
-                GeneratedImage generatedImage = manager.TransformImage((int)ChangeStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
+                GeneratedImage generatedImage = manager.TransformImage((int)NbStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
 
                 //Clear the list so we don't stack all colors
                 usedColorList.Children.Clear(); 
@@ -245,20 +245,16 @@ namespace Lilo_et_Stitch.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <authors>Mattis GALOPPIN</authors>
-        private void OnTextBoxKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        /// <authors>Antoine SAKKALIS</authors>
+        private void OnTextBoxKeyUpStep(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) //If enter is pressed
+            if (int.TryParse(NbStepText.Text, out int newValue))
             {
-            
-            try   //Try to give a new value to the slider
-                {
-                    ChangeStepSlider.Value = int.Parse(ChangeStepText.Text);
-                }
-            catch {}
+                //If parsing is successful, update the slider value
+                
+                NbStepSlider.Value = newValue;
             }
         }
-
 
         /// <summary>
         /// Give a manual value to the slider
@@ -268,13 +264,10 @@ namespace Lilo_et_Stitch.View
         /// <author>Antoine SAKKALIS</author>
         private void OnTextBoxKeyUpColor(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (int.TryParse(NumberOfColors.Text, out int newValue))
             {
-                try   //Try to give a new value to the slider
-                {
-                    NbColorsSlider.Value = int.Parse(NumberOfColors.Text);
-                }
-                catch { }
+                //If parsing is successful, update the slider value
+                NbColorsSlider.Value = newValue;
             }
         }
 

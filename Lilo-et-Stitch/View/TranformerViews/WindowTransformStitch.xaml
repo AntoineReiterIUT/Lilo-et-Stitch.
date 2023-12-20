@@ -87,9 +87,9 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="3">
             <Grid>
-                <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="30" RenderTransformOrigin="-0.297,0.271" Margin="74,34,4,0" KeyUp="OnTextBoxKeyUp" />
-                <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="4" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
-                <Label Name="ChangeStepTitle" Content="Taille cases :" Margin="11,28,44,12" />
+                <TextBox Name="NbStepText" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="30" RenderTransformOrigin="-0.297,0.271" Margin="74,34,4,0" KeyUp="OnTextBoxKeyUpStep" />
+                <Slider Name="NbStepSlider" TickFrequency="1"  Minimum="4" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
+                <Label Name="NbStepTitle" Content="Taille cases :" Margin="11,28,44,12" />
             </Grid>
         </Viewbox>
 
