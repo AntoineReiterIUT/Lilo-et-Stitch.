@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows.Media;
 
 namespace Lilo_et_Stitch.Model.Transform
 {
-    ///<summary>
-    ///This class will handle all the transformation process for the image
-    ///</summary>
+    /// <summary>
+    /// This class will handle all the transformation process for the image
+    /// </summary>
     public class Transformer
     {
         #region attributes
@@ -17,19 +18,20 @@ namespace Lilo_et_Stitch.Model.Transform
         private Dictionary<System.Windows.Media.Color, System.Windows.Media.Color> colorMatches = new Dictionary<System.Windows.Media.Color, System.Windows.Media.Color>();
         private Dictionary<string, System.Windows.Media.Color> colorPalette;
         private GeneratedImage newImage = new GeneratedImage();
+        Dictionary<System.Windows.Media.Color, int> colors = new Dictionary<System.Windows.Media.Color, int>();
 
         #endregion
 
         #region operations
 
-        ///<summary>
-        ///Transforms the image and rebuilds the new image
-        ///</summary>
-        ///<param name="step">Step for each "case/pixel"</param>
-        ///<param name="colorMax">Max amount of color to be used</param>
-        ///<param name="gridColor">Color of the grid</param>
-        ///<returns>The image that was just generated</returns>
-        ///<author>Maxime LAFFAYE</author>
+        /// <summary>
+        /// Transforms the image and rebuilds the new image
+        /// </summary>
+        /// <param name="step">Step for each "case/pixel"</param>
+        /// <param name="colorMax">Max amount of color to be used</param>
+        /// <param name="gridColor">Color of the grid</param>
+        /// <returns>The image that was just generated</returns>
+        /// <author>Maxime LAFFAYE</author>
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor, ImageStitch imageStitch, Dictionary<string, System.Windows.Media.Color> colorPalette)
         {
             this.colorPalette = colorPalette;
@@ -46,20 +48,21 @@ namespace Lilo_et_Stitch.Model.Transform
             return newImage;
         }
 
-        ///<summary>
-        ///Will loop through all cases and get the average + the code DMC if necessary (if the opacity isn't 0)
-        ///</summary>
-        ///<param name="cases">List of cases</param>
-        ///<param name="img">The ImageStitch</param>
-        ///<param name="generatedImage">The newly generated image</param>
-        ///<author>Maxime LAFFAYE</author>
+
+        /// <summary>
+        /// Will loop through all cases and get the average + the code DMC if necessary (if the opacity isn't 0)
+        /// </summary>
+        /// <param name="cases">List of cases</param>
+        /// <param name="img">The ImageStitch</param>
+        /// <param name="generatedImage">The newly generated image</param>
+        /// <author>Maxime LAFFAYE</author>
         public void FillPixels(List<Case> cases, ImageStitch img, int colorMax)
         {
             Bitmap bitNewImage = new Bitmap(img.Image);
             foreach (Case c in cases)
-                CaseAverage(c, bitNewImage);
-            
-            ColorAverage(cases, colorMax);
+                CaseAverage(c, bitNewImage, colorMax);
+
+            UpdateColorsToUse(colors, colorMax);
 
             foreach (Case c in cases)
                 c.TransformedColor = ToDMC(c.BaseColor, true);
@@ -71,38 +74,69 @@ namespace Lilo_et_Stitch.Model.Transform
             newImage.Bitmap = bitNewImage;
         }
 
-        ///<summary>
-        ///Calculates the average color of a case
-        ///</summary>
-        ///<param name="cases">List of cases</param>
-        ///<param name="maxColors">Maximum number of colors to be used</param>
-        ///<author>Antoine SAKKALIS</author>
-        public void ColorAverage(List<Case> cases, int maxColors)
-        {
-            Dictionary<System.Windows.Media.Color, int> colors = new Dictionary<System.Windows.Media.Color, int>();
 
-            //Count the frequency of each color
-            foreach (Case c in cases)
+        /// <summary>
+        /// Will find the avg color of the case given (using each pixel's color)
+        /// </summary>
+        /// <param name="caseToCheck">The case to calculate the average from</param>
+        /// <param name="bitMap">The bitmap to get the colors from</param>
+        /// <author>Maxime LAFFAYE</author>
+        public void CaseAverage(Case caseToCheck, Bitmap bitMap, int maxColors)
+        {
+            int pixelCount = 0;
+            int sumR = 0, sumG = 0, sumB = 0, sumOpacity = 0;
+
+            //Loop through all pixels of the case
+            for (int i = caseToCheck.Coord1.X; i < caseToCheck.Coord2.X; i++)
             {
-                if (c.BaseColor.A >= 200)
-                    if (colors.ContainsKey(c.BaseColor))
-                        colors[c.BaseColor] = colors[c.BaseColor] + 1;
-                    else
-                        colors.Add(c.BaseColor, 1);
+                for (int j = caseToCheck.Coord1.Y; j < caseToCheck.Coord2.Y; j++)
+                {
+                    //Get the color of the pixel
+                    System.Drawing.Color colorPixel = bitMap.GetPixel(i, j);
+                    System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(colorPixel.A, colorPixel.R, colorPixel.G, colorPixel.B);
+
+                    //Add the color to the sum
+                    sumR += color.R;
+                    sumG += color.G;
+                    sumB += color.B;
+                    sumOpacity += color.A;
+
+                    pixelCount++;
+
+                    //If the opacity is high enough, add the color to the colors dictionary
+                    if (color.A >= 200)
+                    {
+                        if (colors.ContainsKey(color))
+                            colors[color] = colors[color] + 1;
+                        else
+                            colors.Add(color, 1);
+                    }
+                }
             }
 
-            //Sort colors by frequency in descending order
+            CalculateAverageAndSetBaseColor(caseToCheck, sumR, sumG, sumB, sumOpacity, pixelCount);
+        }
+
+
+        /// <summary>
+        /// Calculates the average color of a case
+        /// </summary>
+        /// <param name="colors">Dictionnary of colors used and their number</param>
+        /// <param name="maxColors">Maximum number of colors to be used</param>
+        /// <author>Antoine SAKKALIS</author>
+        private void UpdateColorsToUse(Dictionary<System.Windows.Media.Color, int> colors, int maxColors)
+        {
             var sortedColors = colors.OrderByDescending(pair => pair.Value);
 
             List<System.Windows.Media.Color> colorCandidate = new List<System.Windows.Media.Color>();
 
-            //Take the top maxColors colors
+            //Get the most used colors
             foreach (var color in sortedColors)
             {
                 colorCandidate.Add(color.Key);
             }
 
-            //Use the colorsToUse list as needed
+            //Get the most used colors that are not already in the colorsToUse list
             foreach (System.Windows.Media.Color color in colorCandidate)
             {
                 if (colorsToUse.Count < maxColors && !colorsToUse.Contains(ToDMC(color, false)))
@@ -112,91 +146,36 @@ namespace Lilo_et_Stitch.Model.Transform
             }
         }
 
-        ///<summary>
-        ///Will draw the new pixels on the bitmap
-        ///</summary>
-        ///<param name="cases">List of cases (AKA the new pixels of the generated image)</param>
-        ///<param name="img">New bitMap image that is being built</param>
-        ///<param name="generatedImage">The newly generated image</param>
-        ///<author>Maxime LAFFAYE</author>
-        private void RebuildImage(List<Case> cases, Bitmap img, GeneratedImage generatedImage)
+        /// <summary>
+        /// Calculates the average color of a case
+        /// </summary>
+        /// <param name="caseToCheck"></param>
+        /// <param name="sumR">The sum of red</param>
+        /// <param name="sumG">The sum of green</param>
+        /// <param name="sumB">The sum of blue</param>
+        /// <param name="sumOpacity">The sum of opacity</param>
+        /// <param name="pixelCount">The number of pixels in that case</param>
+        /// <author>Antoine SAKKALIS</author>
+        private void CalculateAverageAndSetBaseColor(Case caseToCheck, int sumR, int sumG, int sumB, int sumOpacity, int pixelCount)
         {
-            foreach (Case c in cases)
-            {
-                //the pixels/cases
-                for (int i = c.Coord1.X; i < c.Coord2.X; i++) //Foreach pixel of the case's line
-                {
-                    for (int j = c.Coord1.Y; j < c.Coord2.Y; j++) //Foreach pixel of the case's column
-                    {
-                        img.SetPixel(i, j, Color.FromArgb(c.BaseColor.A, c.TransformedColor.R, c.TransformedColor.G, c.TransformedColor.B));
-                    }
-                }
+            int avgR = sumR / pixelCount;
+            int avgG = sumG / pixelCount;
+            int avgB = sumB / pixelCount;
+            int avgOpacity = sumOpacity / pixelCount;
 
-                //Creation of the grid (using the color from the parameters)
-                for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, img.Width); i++) //Foreach pixel of the case's line
-                {
-                    //Draw the top line
-                    img.SetPixel(i, c.Coord1.Y, Color.FromArgb(generatedImage.GridColor.A, generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
-                }
-
-                for (int j = Math.Max(c.Coord1.Y, 0); j < Math.Min(c.Coord2.Y, img.Height); j++) //Foreach pixel of the case's column
-                {
-                    //Draw the left line
-                    img.SetPixel(c.Coord1.X, j, Color.FromArgb(generatedImage.GridColor.A, generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
-                }
-            }
-        }
-
-        ///<summary>
-        ///Will find the avg color of the case given (using each pixel's color)
-        ///</summary>
-        ///<param name="caseToCheck">The case to calculate the average from</param>
-        ///<param name="bitMap">The bitmap to get the colors from</param>
-        ///<author>Maxime LAFFAYE</author>
-        public void CaseAverage(Case caseToCheck, Bitmap bitMap)
-        {
-            int sumR = 0;
-            int sumG = 0;
-            int sumB = 0;
-            int sumOpacity = 0;
-
-            int avgR;
-            int avgG;
-            int avgB;
-            int avgOpacity;
-
-            //Average the colors and opacity of the cases
-            int pixelCount = 0;
-            for (int i = caseToCheck.Coord1.X; i < caseToCheck.Coord2.X; i++)
-            {
-                for (int j = caseToCheck.Coord1.Y; j < caseToCheck.Coord2.Y; j++)
-                {
-                    Color color = bitMap.GetPixel(i, j);
-                    sumR += color.R;
-                    sumG += color.G;
-                    sumB += color.B;
-                    sumOpacity += color.A;
-
-                    pixelCount++;
-                }
-            }
-            avgR = sumR / pixelCount;
-            avgG = sumG / pixelCount;
-            avgB = sumB / pixelCount;
-            avgOpacity = sumOpacity / pixelCount;
-
-            //Adds it to the case.BaseColor
+            //Set the average color as the base color of the case
             caseToCheck.BaseColor = System.Windows.Media.Color.FromArgb((byte)avgOpacity, (byte)avgR, (byte)avgG, (byte)avgB);
         }
 
-        ///<summary>
-        ///Generates a box grid
-        ///</summary>
-        ///<param name="cases">List of cases</param>
-        ///<param name="step">The step of the image (the higher it is, the lower the amount of cases will be)</param>
-        ///<param name="height">Height of the image</param>
-        ///<param name="width">Width of the image</param>
-        ///<author>Mattis GALOPPIN - Maxime LAFFAYE</author>
+
+        /// <summary>
+        /// Generates a box grid
+        /// </summary>
+        /// <param name="cases">List of cases</param>
+        /// <param name="step">The step of the image (the higher it is, the lower the amount of cases will be)</param>
+        /// <param name="height">Height of the image</param>
+        /// <param name="width">Width of the image</param>
+        /// <author>Mattis GALOPPIN - Maxime LAFFAYE</author>
         public void MakeGrid(List<Case> cases, int step, int height, int width)
         {
             for (int y = 0; y < height; y += step) //for each line
@@ -216,13 +195,13 @@ namespace Lilo_et_Stitch.Model.Transform
             }
         }
 
-        ///<summary>
-        ///Change a RGB color into an existing DMC color from the color of a case
-        ///</summary>
-        ///<param name="colorCase">Case to calculate the DMC color</param>
-        ///<param name="useColorsToUse">Flag to determine whether to use a restricted set of colors</param>
-        ///<returns>The closest DMC color</returns>
-        ///<author>Antoine SAKKALIS</author>
+        /// <summary>
+        /// Change a RGB color into an existing DMC color from the color of a case
+        /// </summary>
+        /// <param name="colorCase">Case to calculate the DMC color</param>
+        /// <param name="useColorsToUse">Flag to determine whether to use a restricted set of colors</param>
+        /// <returns>The closest DMC color</returns>
+        /// <author>Antoine SAKKALIS</author>
         public System.Windows.Media.Color ToDMC(System.Windows.Media.Color colorCase, bool useColorsToUse)
         {
             int bestDistance = 766;
@@ -286,6 +265,42 @@ namespace Lilo_et_Stitch.Model.Transform
             newImage.UsedColor[closestDMCColorCode] = closestDMCColor;
 
             return closestDMCColor;
+        }
+
+
+        /// <summary>
+        /// Will draw the new pixels on the bitmap
+        /// </summary>
+        /// <param name="cases">List of cases (AKA the new pixels of the generated image)</param>
+        /// <param name="img">New bitMap image that is being built</param>
+        /// <param name="generatedImage">The newly generated image</param>
+        /// <author>Maxime LAFFAYE</author>
+        private void RebuildImage(List<Case> cases, Bitmap img, GeneratedImage generatedImage)
+        {
+            foreach (Case c in cases)
+            {
+                //the pixels/cases
+                for (int i = c.Coord1.X; i < c.Coord2.X; i++) //Foreach pixel of the case's line
+                {
+                    for (int j = c.Coord1.Y; j < c.Coord2.Y; j++) //Foreach pixel of the case's column
+                    {
+                        img.SetPixel(i, j, System.Drawing.Color.FromArgb(c.BaseColor.A, c.TransformedColor.R, c.TransformedColor.G, c.TransformedColor.B));
+                    }
+                }
+
+                //Creation of the grid (using the color from the parameters)
+                for (int i = Math.Max(c.Coord1.X, 0); i < Math.Min(c.Coord2.X, img.Width); i++) //Foreach pixel of the case's line
+                {
+                    //Draw the top line
+                    img.SetPixel(i, c.Coord1.Y, System.Drawing.Color.FromArgb(generatedImage.GridColor.A, generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
+                }
+
+                for (int j = Math.Max(c.Coord1.Y, 0); j < Math.Min(c.Coord2.Y, img.Height); j++) //Foreach pixel of the case's column
+                {
+                    //Draw the left line
+                    img.SetPixel(c.Coord1.X, j, System.Drawing.Color.FromArgb(generatedImage.GridColor.A, generatedImage.GridColor.R, generatedImage.GridColor.G, generatedImage.GridColor.B));
+                }
+            }
         }
 
         #endregion
