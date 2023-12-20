@@ -18,7 +18,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         /// <param name="page"></param>
         /// <returns>A dictionnary that contains a dictionnary : ex IdParams : nameOfPattern , image as a bitmapImage (AKA a page)</returns>
         /// <author>Maxime LAFFAYE</author>
-        public Task<Dictionary<int, Dictionary<string, BitmapImage>>> GetImages(int page);
+        public Task<(int, Dictionary<int, Dictionary<string, BitmapImage>>)> GetImages(int page, string? patternName);
 
 
         /// <summary>

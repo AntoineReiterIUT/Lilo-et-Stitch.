@@ -29,33 +29,43 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         /// This method will fill the dictionnary with images
         /// </summary>
         /// <param name="page">Page number</param>
+        /// <param name="patternName">Name of the patterns to look for</param>
         /// <exception cref="Exception">If something happens with the request</exception>
-        /// <author>Antoine REITER</author>
-        public async Task<Dictionary<int, Dictionary<string, BitmapImage>>> sendPage(int page)
+        /// <author>Antoine REITER - Maxime LAFFAYE</author>
+        public async Task<(int, Dictionary<int, Dictionary<string, BitmapImage>>)> sendPage(int page,string patternName)
         {
             Dictionary<int, Dictionary<string, BitmapImage>> dico;
+            int nbPages = 0;
             try
             {
-                // API endpoint
-                string endPoint = $"{address}/GetImages?page={page}";
+                //API endpoints
+                string endPointImages = $"{address}/GetImgBySearch";
 
-                // Getting the images
-                HttpResponseMessage response = await client.GetAsync(endPoint);
+                if (patternName == "") endPointImages += $"?page={page}";
+                else endPointImages += $"?name={patternName}&page={page}";
+
+                string endPointNbPages = $"{address}/GetNumberPage?word={patternName}";
+
+                //Getting the responses
+                HttpResponseMessage responseImg = await client.GetAsync(endPointImages);
+                HttpResponseMessage responseNbPages = await client.GetAsync(endPointNbPages);
             
-                // Reading the json
-                string jsonContent = await response.Content.ReadAsStringAsync();
+                //Reading the json
+                string jsonContentImg = await responseImg.Content.ReadAsStringAsync();
+                string nbPageResult = await responseNbPages.Content.ReadAsStringAsync();
 
-                // Deserializing the json into a list of ImageInfo
-                List<Imageinfo> imageList = JsonConvert.DeserializeObject<List<Imageinfo>>(jsonContent);
+                //Deserializing the json into a list of ImageInfo
+                List<Imageinfo> imageList = JsonConvert.DeserializeObject<List<Imageinfo>>(jsonContentImg);
+                nbPages = JsonConvert.DeserializeObject<int>(nbPageResult);
 
-                // Converting into a dictionnary
+                //Converting into a dictionnary
                 dico = ConvertToImageDictionary(imageList);
             }
             catch (Exception ex)
             {
                 throw new Exception("Erreur : " + ex.Message);
             }
-            return dico;
+            return (nbPages,dico);
         }
 
 
@@ -98,39 +108,45 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
 
         public async Task SavePattern(string patternName, string path)
         {
-            try
-            {
-                // API endpoint
-                string endPoint = $"{address}/GetPDF?name={patternName}";
-
-                // Getting the PDF
-                HttpResponseMessage response = await client.GetAsync(endPoint);
-
-                // Reading the json
-                string jsonContent = await response.Content.ReadAsStringAsync();
-
-                // Deserializing the json into a list of bytes
-                byte[] pdfAsByt = JsonConvert.DeserializeObject<byte[]>(jsonContent);
-
-                //Rebuilding the file
-                if (pdfAsByt != null)
+                try
                 {
-                    // Building the path & rebuilding the file
-                    File.WriteAllBytesAsync(path, pdfAsByt);
+                    // API endpoint
+                    string endPoint = $"{address}/GetPDF?name={patternName}";
+
+
+                    // Getting the PDF
+                    HttpResponseMessage response = await client.GetAsync(endPoint);
+
+                    // Reading the json
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserializing the json into a list of bytes
+                    byte[] pdfAsByt = JsonConvert.DeserializeObject<byte[]>(jsonContent);
+
+                    //Rebuilding the file
+                    if (pdfAsByt != null)
+                    {
+                        // Building the path & rebuilding the file
+                        File.WriteAllBytesAsync(path, pdfAsByt);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur : " + ex.Message);
-            }
+                catch (Exception ex)
+                {
+                    throw new Exception("Erreur : " + ex.Message);
+                }
+        }
+           
+        
+
+
+        public async Task<(int, Dictionary<int, Dictionary<string, BitmapImage>>)> GetImages(int page, string? patternName)
+        {
+            return await sendPage(page,patternName);
         }
 
-        public async Task<Dictionary<int, Dictionary<string, BitmapImage>>> GetImages(int page)
-        {
-            return await sendPage(page);
-        }
-        
-        
+
+
+
         #endregion
     }
 }

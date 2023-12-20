@@ -1,12 +1,12 @@
 ﻿using Lilo_et_Stitch.Data.DAO_GetParameters;
 using Lilo_et_Stitch.Model;
-using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 
@@ -19,13 +19,16 @@ namespace Lilo_et_Stitch.View.PatternsViewer
     {
         #region attributes
         private int page = 0;
+        private int maxPage = 0;
         private Manager manager;
         private TemplateUserModel patterns = new();
         Dictionary<int, Dictionary<string, BitmapImage>> images;
         private int selectedId = -1;
+        private string patternSearchName = "";
         #endregion
 
         #region operations
+
 
         /// <summary>
         /// Constructor of the class WindowModelsStitch
@@ -36,22 +39,9 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         {
             this.manager = manager;
             InitializeComponent();
+
             ImageLoader();
-            Download.Visibility = Visibility.Collapsed;
-        }
 
-
-        /// <summary>
-        /// This function will be called when the "HomeButton" is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <author>Antoine SAKKALIS</author>
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
-        {
-            WindowMenuStitch stitchMenu = new WindowMenuStitch();
-            stitchMenu.Show();
-            Close();
         }
 
 
@@ -63,17 +53,20 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         {
             try
             {
-                images = await manager.GetImages(page);
+                (int, Dictionary<int, Dictionary<string, BitmapImage>>) imageData = await manager.GetImages(page, patternSearchName);
+                maxPage = imageData.Item1;
+
+                textMaxPages.Content = "/ " + maxPage.ToString();
+                images = imageData.Item2;
 
                 if (images.Count == 0)
                 {
-                    System.Windows.MessageBox.Show("Il n'y a pas de patrons à afficher sur cette page");
-                    page--;
+                    System.Windows.MessageBox.Show("Aucun patron trouvé...");
                 }
                 else
                 {
                     //Clear the grid
-                    test.Items.Clear();
+                    controlModels.Items.Clear();
 
                     //Display all the patterns
                     int row = 0;
@@ -101,7 +94,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                             Grid.SetRow(pattern, row);
                             Grid.SetColumn(pattern, column);
 
-                            test.Items.Add(pattern);
+                            controlModels.Items.Add(pattern);
 
                             //Update row and column for the next iteration
                             column++;
@@ -113,7 +106,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                         }
                     }
                     //Update the page number
-                    numPage.Text = (page + 1).ToString();
+                    textNumPage.Text = (page + 1).ToString();
                 }
             }
             catch (Exception e)
@@ -124,79 +117,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
 
 
         /// <summary>
-        /// This function will be called when the "NumPage" is changed to set manually the page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NumPage_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //if (int.TryParse(numPage.Text, out int newPage))
-            //{
-            //    page = newPage;
-            //    if (newPage > 0)
-            //    {
-            //        ImageLoader();
-            //    }
-            //}
-        }
-
-
-        /// <summary>
-        /// This function will be called when the "NextButton" is clicked (to change page)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_NextClick(object sender, RoutedEventArgs e)
-        {
-            page++;
-            ImageLoader();
-        }
-
-
-        /// <summary>
-        /// This function will be called when the "PreviousButton" is clicked (to change page)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_PreviousClick(object sender, RoutedEventArgs e)
-        {
-            if (page > 0)
-            {
-                page--;
-                ImageLoader();
-            }
-        }
-
-
-        /// <summary>
-        /// This function will be called when the "HomeBtn" is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <authors>Mattis GALOPPIN</authors>
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            WindowMenuStitch stitchMenu = new();
-            stitchMenu.Show(); //Display new page 
-            this.Close(); //Close the first one
-        }
-
-        /// <summary>
-        /// This function will be called when the "PatternsBtn" is clicked to display the selected pattern
-        /// </summary>
-        private void PatternsBtn_Click(object sender, RoutedEventArgs e)
-        {
-            //Set the selectedId by the id of the selected pattern button
-            selectedId = (int)((System.Windows.Controls.Button)sender).Content;
-            Download.Visibility = Visibility.Visible;
-            //Display the selected pattern
-            SelectedPattern.Source = images[selectedId].Values.First();
-            //Display the settings of the selected pattern
-            Settings();
-        }
-
-        /// <summary>
-        /// This function will be called when the "Parameters" is clicked to display the parameters of the selected pattern
+        /// Will display the settings of the selected pattern
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
         private async void Settings()
@@ -217,6 +138,118 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                 System.Windows.MessageBox.Show(e.Message);
             }
         }
+
+        #endregion
+
+        #region events
+
+        /// <summary>
+        /// This function will be called when the "HomeButton" is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowMenuStitch stitchMenu = new WindowMenuStitch();
+            stitchMenu.Show();
+            Close();
+        }
+
+
+        /// <summary>
+        /// This function will be called when the "FirstButton" is clicked to go to the first page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void Button_FirstClick(object sender, RoutedEventArgs e)
+        {
+            page = 0;
+            ImageLoader();
+        }
+
+
+        /// <summary>
+        /// This function will be called when the "NextButton" is clicked to go to the next page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void Button_NextClick(object sender, RoutedEventArgs e)
+        {
+            if (page < maxPage - 1)
+            {
+                page++;
+                ImageLoader();
+            }
+        }
+
+
+        /// <summary>
+        /// This function will be called when the "PreviousButton" is clicked to go back to the previous page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void Button_PreviousClick(object sender, RoutedEventArgs e)
+        {
+            if (page > 0)
+            {
+                page--;
+                ImageLoader();
+            }
+        }
+
+
+        /// <summary>
+        /// This function will be called when the the "LastButton" is clicked to go to the last page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void Button_LastClick(object sender, RoutedEventArgs e)
+        {
+            page = maxPage - 1;
+            ImageLoader();
+        }
+
+
+        /// <summary>
+        /// This function will be called when the "HomeBtn" is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <authors>Mattis GALOPPIN</authors>
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            WindowMenuStitch stitchMenu = new();
+            stitchMenu.Show(); //Display new page 
+            this.Close(); //Close the first one
+        }
+
+
+        /// <summary>
+        /// This function will be called when the "PatternsBtn" is clicked to display the selected pattern
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine Sakkalis</author>
+        private void PatternsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Set the selectedId by the id of the selected pattern button
+            selectedId = (int)((System.Windows.Controls.Button)sender).Content;
+
+            //Display the selected pattern
+            SelectedPattern.Source = images[selectedId].Values.First();
+
+            //Display the download button
+            buttonDownload.Visibility = Visibility.Visible;
+
+            //Display the settings of the selected pattern
+            Settings();
+        }
+
 
         /// <summary>
         /// This function will be called when the "Download" is clicked to download the selected pattern
@@ -255,7 +288,83 @@ namespace Lilo_et_Stitch.View.PatternsViewer
             }
         }
 
-        #endregion
 
+        /// <summary>
+        /// This function will remove the placeholder of the searchbox when we click on it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void textSearch_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            this.textSearch.Text = "";
+            this.textSearch.Foreground = new SolidColorBrush(Colors.Black);
+        }
+
+        /// <summary>
+        /// This function will be directly called when we write in the search bar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void textSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            //If the user press enter
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                //Search the pattern
+                patternSearchName = textSearch.Text;
+                //Display the first page
+                page = 0;
+                ImageLoader();
+            }
+        }
+
+
+        /// <summary>
+        /// This function will be called when we edit the page number directly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void textNumPage_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                //If the user press enter
+                try
+                {
+                    //Get the page number
+                    int numPage = int.Parse(textNumPage.Text);
+
+                    //If the page number is correct
+                    if (numPage > 0 && numPage <= maxPage)
+                    {
+                        //Display the page
+                        page = numPage - 1;
+                        ImageLoader();
+                    }
+                    else if (numPage > maxPage)
+                    {
+                        //Display the first page
+                        page = maxPage - 1;
+                        ImageLoader();
+                    }
+                    else
+                    {
+                        //Display the first page
+                        page = 0;
+                        ImageLoader();
+                    }
+                }
+                catch (Exception)
+                {
+                    textNumPage.Text = (page + 1).ToString();
+                    System.Windows.MessageBox.Show("Veuillez entrer un nombre");
+                }
+            }
+        }
+
+        #endregion
     }
 }
