@@ -66,10 +66,10 @@
             <Button Style="{StaticResource MenuButton}" Width="30" FontSize="30" Grid.Column="2" Grid.Row="4" Margin="52,0,0,0" BorderThickness="0" Content="&lt;" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_PreviousClick" Foreground="Black" Height="40"/>
             <Label Foreground="White" Grid.Column="2" Content="&lt;" FontSize="30" HorizontalAlignment="Left" Margin="52,153,0,0" Grid.Row="3" VerticalAlignment="Top" IsHitTestVisible="False" Height="42" Width="31" Grid.RowSpan="2"/>
 
-            <Button Style="{StaticResource MenuButton}" Content="«" Width="30" FontSize="30" Grid.Column="2" Grid.Row="4" Margin="12,0,0,0" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_NextClick" Foreground="Black" Height="40"/>
+            <Button Style="{StaticResource MenuButton}" Content="«" Width="30" FontSize="30" Grid.Column="2" Grid.Row="4" Margin="12,0,0,0" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_FirstClick" Foreground="Black" Height="40"/>
             <Label Foreground="White" Grid.Column="2" Content="«" FontSize="30" HorizontalAlignment="Left" Margin="12,154,0,0" Grid.Row="3" VerticalAlignment="Top" IsHitTestVisible="False" Height="39" Width="31" Grid.RowSpan="2"/>
 
-            <Button Style="{StaticResource MenuButton}" Content="»" Width="30" FontSize="30" Grid.Column="2" Grid.Row="4" Margin="142,0,0,0" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_NextClick" Foreground="Black" Height="40"/>
+            <Button Style="{StaticResource MenuButton}" Content="»" Width="30" FontSize="30" Grid.Column="2" Grid.Row="4" Margin="142,0,0,0" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_LastClick" Foreground="Black" Height="40"/>
             <Label Foreground="White" Grid.Column="2" Content="»" FontSize="30" HorizontalAlignment="Left" Margin="142,154,0,0" Grid.Row="3" VerticalAlignment="Top" IsHitTestVisible="False" Height="39" Width="31" Grid.RowSpan="2"/>
 
             <Button Style="{StaticResource MenuButton}" Width="30" FontSize="30" Grid.Column="2" Grid.Row="4" Margin="102,0,0,0" BorderThickness="0" Content=">" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_NextClick" Foreground="Black" Height="40"/>
