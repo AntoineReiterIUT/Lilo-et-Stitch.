@@ -81,8 +81,7 @@ namespace Lilo_et_Stitch.Model
         ///<author>Maxime LAFFAYE</author>
         public async Task<(int, Dictionary<int, Dictionary<string, BitmapImage>>)> GetImages(int page, string? patternName)
         {
-            //return await dao_Getdata.GetImages(page);
-            throw new NotImplementedException();
+            return await dao_Getdata.GetImages(page,patternName);
         }
 
         ///<author>Maxime LAFFAYE</author>>
