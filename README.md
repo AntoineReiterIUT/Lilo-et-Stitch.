@@ -14,21 +14,26 @@
 - [x] gestion du nombre de couleurs maximum
 - [x] palette basée sur les couleurs de la marque DMC
 - [ ] prise en compte des couleurs possédées (en bonus)
-- [ ] sauvegarde du projet terminé sur le serveur
-- [ ] ouverture d’un projet depuis le serveur
+- [x] sauvegarde du projet terminé sur le serveur
+- [x] ouverture d’un patron depuis le serveur
 - [ ] signaler un projet sur le serveur (en bonus)
 - [ ] modérer les projets sur le serveur (en bonus)
 - [x] export du patron et de sa légende au format PDF
 
-
+**Lien vers le serveur :** https://github.com/dept-info-iut-dijon/Lilo_Et_Stitch_SERVEUR
 ## Page d'acceuil
 <p align="center">
-  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134507319/0216827e-6e62-422d-8fa5-3706cd67d93b" alt="Page d'acceuil" width="100%">
+  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134507319/0216827e-6e62-422d-8fa5-3706cd67d93b" alt="La page d'acceuil" width="100%">
 </p>
 
 ## Page de transformation
 <p align="center">
-  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134507319/5eb61970-68dd-491f-9cab-0fdceab02b76" width="100%">
+  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134507319/5eb61970-68dd-491f-9cab-0fdceab02b76" alt="La page de transformation" width="100%">
+</p>
+
+## Page de consultation des patrons de conception
+<p align="center">
+  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134505521/8847676c-8235-4035-9902-d499877460bf" alt="Exemple de remplissage de la page de consultation des patrons" width="100%">
 </p>
 
 *Ce projet a été réalisé dans un cadre pédagogique. A ce titre, il n'a pas vocation à être utilisé en dehors de ce cadre. Les différents éléments utilisés dans ce projet appartiennent à leurs propriétaires respectifs.*
