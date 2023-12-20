@@ -15,10 +15,10 @@ namespace Lilo_et_Stitch.Model.Transform
         #region attributes
 
         private List<System.Windows.Media.Color> colorsToUse = new List<System.Windows.Media.Color>();
-        private Dictionary<System.Windows.Media.Color, System.Windows.Media.Color> colorMatches = new Dictionary<System.Windows.Media.Color, System.Windows.Media.Color>();
         private Dictionary<string, System.Windows.Media.Color> colorPalette;
         private GeneratedImage newImage = new GeneratedImage();
-        Dictionary<System.Windows.Media.Color, int> colors = new Dictionary<System.Windows.Media.Color, int>();
+        private Dictionary<System.Windows.Media.Color, int> colors = new Dictionary<System.Windows.Media.Color, int>();
+        ColorTool colorTool = new ColorTool();
 
         #endregion
 
@@ -65,7 +65,15 @@ namespace Lilo_et_Stitch.Model.Transform
             UpdateColorsToUse(colors, colorMax);
 
             foreach (Case c in cases)
-                c.TransformedColor = ToDMC(c.BaseColor, true);
+            {
+                c.TransformedColor = colorTool.ToDMC(c.BaseColor, colorsToUse);
+
+                //Get the DMC color code using the closest DMC color RGB value
+                string closestDMCColorCode = colorPalette.FirstOrDefault(x => x.Value == c.TransformedColor).Key;
+
+                //Register the used DMC color RGB value
+                newImage.UsedColor[closestDMCColorCode] = c.TransformedColor;
+            }
 
             RebuildImage(cases, bitNewImage, newImage);
 
@@ -86,16 +94,13 @@ namespace Lilo_et_Stitch.Model.Transform
             int pixelCount = 0;
             int sumR = 0, sumG = 0, sumB = 0, sumOpacity = 0;
 
-            //Loop through all pixels of the case
             for (int i = caseToCheck.Coord1.X; i < caseToCheck.Coord2.X; i++)
             {
                 for (int j = caseToCheck.Coord1.Y; j < caseToCheck.Coord2.Y; j++)
                 {
-                    //Get the color of the pixel
-                    System.Drawing.Color colorPixel = bitMap.GetPixel(i, j);
-                    System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(colorPixel.A, colorPixel.R, colorPixel.G, colorPixel.B);
+                    System.Drawing.Color DrawingColor = bitMap.GetPixel(i, j);
+                    System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(DrawingColor.A, DrawingColor.R, DrawingColor.G, DrawingColor.B);
 
-                    //Add the color to the sum
                     sumR += color.R;
                     sumG += color.G;
                     sumB += color.B;
@@ -103,7 +108,6 @@ namespace Lilo_et_Stitch.Model.Transform
 
                     pixelCount++;
 
-                    //If the opacity is high enough, add the color to the colors dictionary
                     if (color.A >= 200)
                     {
                         if (colors.ContainsKey(color))
@@ -128,23 +132,18 @@ namespace Lilo_et_Stitch.Model.Transform
         {
             var sortedColors = colors.OrderByDescending(pair => pair.Value);
 
-            List<System.Windows.Media.Color> colorCandidate = new List<System.Windows.Media.Color>();
-
-            //Get the most used colors
-            foreach (var color in sortedColors)
+            foreach (var colorPair in sortedColors)
             {
-                colorCandidate.Add(color.Key);
-            }
+                System.Windows.Media.Color color = colorPair.Key;
 
-            //Get the most used colors that are not already in the colorsToUse list
-            foreach (System.Windows.Media.Color color in colorCandidate)
-            {
-                if (colorsToUse.Count < maxColors && !colorsToUse.Contains(ToDMC(color, false)))
+                if (colorsToUse.Count < maxColors && !colorsToUse.Contains(colorTool.ToDMC(color, colorPalette.Values.ToList())))
                 {
-                    colorsToUse.Add(ToDMC(color, false));
+                    colorsToUse.Add(colorTool.ToDMC(color, colorPalette.Values.ToList()));
                 }
             }
         }
+
+
 
         /// <summary>
         /// Calculates the average color of a case
@@ -193,78 +192,6 @@ namespace Lilo_et_Stitch.Model.Transform
                     cases.Add(case1);
                 }
             }
-        }
-
-        /// <summary>
-        /// Change a RGB color into an existing DMC color from the color of a case
-        /// </summary>
-        /// <param name="colorCase">Case to calculate the DMC color</param>
-        /// <param name="useColorsToUse">Flag to determine whether to use a restricted set of colors</param>
-        /// <returns>The closest DMC color</returns>
-        /// <author>Antoine SAKKALIS</author>
-        public System.Windows.Media.Color ToDMC(System.Windows.Media.Color colorCase, bool useColorsToUse)
-        {
-            int bestDistance = 766;
-            System.Windows.Media.Color closestDMCColor = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
-
-            if (useColorsToUse)
-            {
-                closestDMCColor = colorsToUse[0];
-            }
-
-            if (colorMatches.ContainsKey(colorCase))
-            {
-                //If the color is already in the dictionary, use the mapped DMC color RGB value
-                closestDMCColor = colorMatches[colorCase];
-            }
-            else
-            {
-                foreach (string code in colorPalette.Keys)
-                {
-                    if (useColorsToUse)
-                    {
-                        if (colorsToUse.Contains(colorPalette[code]))
-                        {
-                            //Calculate the color distance
-                            System.Windows.Media.Color colorDMC = colorPalette[code];
-                            int distance = Math.Abs(colorDMC.R - colorCase.R)
-                                + Math.Abs(colorDMC.G - colorCase.G)
-                                + Math.Abs(colorDMC.B - colorCase.B);
-
-                            if (distance < bestDistance) //If the distance is better than the previous one, use this color
-                            {
-                                bestDistance = distance;
-                                closestDMCColor = colorDMC;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //Calculate the color distance
-                        System.Windows.Media.Color colorDMC = colorPalette[code];
-                        int distance = Math.Abs(colorDMC.R - colorCase.R)
-                            + Math.Abs(colorDMC.G - colorCase.G)
-                            + Math.Abs(colorDMC.B - colorCase.B);
-
-                        if (distance < bestDistance) //If the distance is better than the previous one, use this color
-                        {
-                            bestDistance = distance;
-                            closestDMCColor = colorDMC;
-                        }
-                    }
-                }
-
-                //Store the closest DMC color RGB value in the colorMatches dictionary
-                colorMatches[colorCase] = closestDMCColor;
-            }
-
-            //Get the DMC color code using the closest DMC color RGB value
-            string closestDMCColorCode = colorPalette.FirstOrDefault(x => x.Value == closestDMCColor).Key;
-
-            //Register the used DMC color RGB value
-            newImage.UsedColor[closestDMCColorCode] = closestDMCColor;
-
-            return closestDMCColor;
         }
 
 
