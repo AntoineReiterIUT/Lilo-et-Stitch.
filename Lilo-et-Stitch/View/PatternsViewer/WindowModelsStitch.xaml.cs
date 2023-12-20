@@ -303,7 +303,40 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void textNumPage_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                //If the user press enter
+                try
+                {
+                    //Get the page number
+                    int numPage = int.Parse(textNumPage.Text);
 
+                    //If the page number is correct
+                    if (numPage > 0 && numPage <= maxPage)
+                    {
+                        //Display the page
+                        page = numPage - 1;
+                        ImageLoader();
+                    }
+                    else if (numPage > maxPage)
+                    {
+                        //Display the first page
+                        page = maxPage - 1;
+                        ImageLoader();
+                    }
+                    else
+                    {
+                        //Display the first page
+                        page = 0;
+                        ImageLoader();
+                    }
+                }
+                catch (Exception)
+                {
+                    textNumPage.Text = (page + 1).ToString();
+                    System.Windows.MessageBox.Show("Veuillez entrer un nombre");
+                }
+            }
         }
 
         #endregion
