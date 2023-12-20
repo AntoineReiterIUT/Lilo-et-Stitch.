@@ -49,6 +49,8 @@
                     <MenuItem Header="_Changer la palette" Click="ChangePalette_Click"/>
                     <MenuItem Header="_Réinitialiser la palette" Click="ResetPalette_Click" />
                     <Separator />
+                    <MenuItem Header="_/!\ Taille des cases manuel" Click="ManualCase_Click" />
+                    <Separator />
                     <MenuItem Header="_Quitter" Click="Exit_Click" >
                         <MenuItem.Icon>
                             <Image Source="../Images/exit.png"  />

@@ -169,7 +169,7 @@ namespace Lilo_et_Stitch.View
 
 
         /// <summary>
-        /// Uptdate the value of the slider in the Textbox
+        /// Update the value of the slider in the Textbox
         /// </summary>
         /// <param name="sender">object</param>
         /// <param name="e"></param>
@@ -181,7 +181,7 @@ namespace Lilo_et_Stitch.View
 
 
         /// <summary>
-        /// Will update the text of the slider whenever the slider is changed
+        /// Update the text of the slider whenever the slider is changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -200,8 +200,6 @@ namespace Lilo_et_Stitch.View
         /// <author>Maxime LAFFAYE</author>
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {            
-            //Create the bitmap
-            WriteableBitmap writeableBitmap;
             if (imagePrev.Source != null)
             {
                 Bitmap bitmap;
@@ -349,9 +347,24 @@ namespace Lilo_et_Stitch.View
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+
+        /// <summary>
+        /// This method will remove the limitations for the size of the cases 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void ManualCase_Click(object sender, RoutedEventArgs e)
+        {
+            NbStepSlider.Minimum = 1;
+            NbStepSlider.Maximum = NbStepSlider.Maximum * NbStepSlider.Maximum;
+        }
+
         #endregion
 
         #endregion
+
     }
 }
 
