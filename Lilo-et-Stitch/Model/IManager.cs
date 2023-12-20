@@ -84,7 +84,7 @@ namespace Lilo_et_Stitch.Model
         /// </summary>
         /// <returns>A dictionary with the id, the name and the image itself</returns>
         /// <author>Antoine SAKKALIS</author>
-        public Task<Dictionary<int, Dictionary<string, BitmapImage>>> GetImages(int page);
+        Task<(int, Dictionary<int, Dictionary<string, BitmapImage>>)> GetImages(int page,string? patternName);
 
         /// <summary>
         /// Get the parameters of the pattern
