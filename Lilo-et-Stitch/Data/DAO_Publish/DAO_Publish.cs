@@ -39,7 +39,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
                 bool containsInvalidChars = name.Any(c => invalidChars.Contains(c));
 
                 if(containsInvalidChars)throw new FormatException("Les caractères spéciaux sont interdits!");
-
+                if(name.Count() >41) throw new FormatException("Le nom doit avoir 40 caractères maximum!");
                 //API endpoint
                 string endPoint = $"{address}/CheckIfExist?name={name}";
 
@@ -63,7 +63,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
             }
             catch (HttpRequestException ex) // for network issues
             {
-                throw new FormatException("Une erreur HTTP s'est produite, veuillez vous connecter à internet.");
+                throw new FormatException("Veuillez vous connecter à internet!");
             }
             catch (Exception ex) // anything else
             {
