@@ -158,11 +158,24 @@ namespace Lilo_et_Stitch.View.PatternsViewer
 
 
         /// <summary>
-        /// This function will be called when the "NextButton" is clicked (to change page)
+        /// This function will be called when the "FirstButton" is clicked to go to the first page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <author>Antoine Sakkalis</author>
+        /// <author>Antoine SAKKALIS</author>
+        private void Button_FirstClick(object sender, RoutedEventArgs e)
+        {
+            page = 0;
+            ImageLoader();
+        }
+
+
+        /// <summary>
+        /// This function will be called when the "NextButton" is clicked to go to the next page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
         private void Button_NextClick(object sender, RoutedEventArgs e)
         {
             if (page < maxPage - 1)
@@ -174,11 +187,11 @@ namespace Lilo_et_Stitch.View.PatternsViewer
 
 
         /// <summary>
-        /// This function will be called when the "PreviousButton" is clicked (to change page)
+        /// This function will be called when the "PreviousButton" is clicked to go back to the previous page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <author>Antoine Sakkalis</author>
+        /// <author>Antoine SAKKALIS</author>
         private void Button_PreviousClick(object sender, RoutedEventArgs e)
         {
             if (page > 0)
@@ -186,6 +199,19 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                 page--;
                 ImageLoader();
             }
+        }
+
+
+        /// <summary>
+        /// This function will be called when the the "LastButton" is clicked to go to the last page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Antoine SAKKALIS</author>
+        private void Button_LastClick(object sender, RoutedEventArgs e)
+        {
+            page = maxPage - 1;
+            ImageLoader();
         }
 
 
@@ -303,7 +329,40 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void textNumPage_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                //If the user press enter
+                try
+                {
+                    //Get the page number
+                    int numPage = int.Parse(textNumPage.Text);
 
+                    //If the page number is correct
+                    if (numPage > 0 && numPage <= maxPage)
+                    {
+                        //Display the page
+                        page = numPage - 1;
+                        ImageLoader();
+                    }
+                    else if (numPage > maxPage)
+                    {
+                        //Display the first page
+                        page = maxPage - 1;
+                        ImageLoader();
+                    }
+                    else
+                    {
+                        //Display the first page
+                        page = 0;
+                        ImageLoader();
+                    }
+                }
+                catch (Exception)
+                {
+                    textNumPage.Text = (page + 1).ToString();
+                    System.Windows.MessageBox.Show("Veuillez entrer un nombre");
+                }
+            }
         }
 
         #endregion
