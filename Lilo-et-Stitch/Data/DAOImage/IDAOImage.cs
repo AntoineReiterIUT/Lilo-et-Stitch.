@@ -7,12 +7,11 @@ using System.Drawing;
 
 public interface IDAOImage
 {
-
     /// <summary>
     /// Save the image in the file
     /// </summary>
     /// <param name="path">Path to the image</param>
-    /// /// <author>Antoine SAKKALIS</author>
+    /// <author>Antoine SAKKALIS</author>
     public void Save(string path);
 
 

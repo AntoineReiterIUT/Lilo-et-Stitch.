@@ -24,12 +24,21 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
     public class DAO_Publish : IDAO_Publish
     {
         #region attributes
+
         private HttpClient client = new HttpClient();
         private string address = "https://localhost:7199/SendData";
+
         #endregion
 
 
         #region operations
+
+        /// <summary>
+        /// Will check if the name of the pattern doesn't exist already
+        /// </summary>
+        /// <param name="name">Name of the directory to be checked</param>
+        /// <returns>Result of the request</returns>
+        /// <author>Maxime LAFFAYE</author>
         public async Task CheckIfExist(string name)
         {
             try
@@ -72,11 +81,22 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         }
 
 
-
+        /// <summary>
+        /// Will publish the PDF
+        /// </summary>
+        /// <param name="name">Name of the pattern</param>
+        /// <param name="step">Step for the cases</param>
+        /// <param name="maxColors">Max amount of colors to be used</param>
+        /// <param name="gridColor">Color of the grid</param>
+        /// <param name="pathPdf">Path to the pdf</param>
+        /// <param name="pathPalette">Path to the used palette</param>
+        /// <param name="transformedImage">The transformedImage as a bitmapImage</param>
+        /// <returns>Result of the request</returns>
+        /// <author>Maxime LAFFAYE</author>
         public async Task Publish(string name, int step, int maxColors, Color gridColor, string pathPdf, string pathPalette, BitmapImage transformedImage)
         {
-            try
-            {// Will execute all the requests we need to publish a pattern
+            try // Will execute all the requests we need to publish a pattern
+            {
 
                 //Sending the parameters:
                 SendParameters(name, step, maxColors, gridColor);
@@ -104,10 +124,10 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         /// <summary>
         /// Will send the parameters through the API
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="step"></param>
-        /// <param name="maxColors"></param>
-        /// <param name="gridColor"></param>
+        /// <param name="name">Name of the pattern</param>
+        /// <param name="step">Step for the cases</param>
+        /// <param name="maxColors">Max amount of colors to be used</param>
+        /// <param name="gridColor">Color of the grid</param>
         /// <author>Maxime LAFFAYE</author>
         private async void SendParameters(string name, int step, int maxColors, Color gridColor)
         {
@@ -189,6 +209,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
                 {
                     BitmapEncoder encoder = new PngBitmapEncoder();
 
+                    //Adding the image to the encoder
                     encoder.Frames.Add(BitmapFrame.Create(image));
                     encoder.Save(stream);
 

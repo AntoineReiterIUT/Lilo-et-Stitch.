@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Lilo_et_Stitch.Data.DAO_PDF
 {
+    /// <summary>
+    /// Interface for the DAO_PDF class
+    /// </summary>
     interface IDAO_PDF
     {
         /// <summary>
@@ -14,15 +17,15 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// </summary>
         /// <param name="path">The saving path</param>
         /// <param name="generatedImage">The generated image to export</param>
-        /// <param name="imageStitch">The image stitch to export</param>
+        /// <author>Antoine SAKKALIS</author>
         void ExportPDF(string path, GeneratedImage generatedImage);
 
 
         /// <summary>
         /// Get the path of the pdf
         /// </summary>
-        /// <author>Maxime LAFFAYE</author>
         /// <returns>The path of the pdf</returns>
+        /// <author>Maxime LAFFAYE</author>
         public string GetPath();
     }
 }

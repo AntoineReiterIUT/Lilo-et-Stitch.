@@ -24,6 +24,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
     public class DAO_PDF : IDAO_PDF
     {
         #region attributes
+
         private string path;
         private Dictionary<Color, int> catalog;
 
@@ -56,10 +57,12 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public Dictionary<Color, string> CatalogString { get => catalogString; set => catalogString = value; }
+
         #endregion
 
 
         #region operations
+
         /// <summary>
         /// Constructor of the PDF
         /// </summary>
@@ -74,12 +77,19 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         }
 
 
+        /// <summary>
+        /// Export the generated image to a PDF file
+        /// </summary>
+        /// <param name="path">The saving path</param>
+        /// <param name="generatedImage">The generated image to export</param>
         /// <author>Antoine SAKKALIS</author>
         public void ExportPDF(string path, GeneratedImage generatedImage)
         {
+            //Initialization
             this.path = path;
             this.generatedImage = generatedImage;
 
+            //Make all the necessary operations to create the PDF
             GenerateCatalog();
             GenerateSymbols();
             WriteInPDF();
@@ -105,7 +115,7 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// Add the legend to the PDF
         /// </summary>
         /// <param name="document">The document to add the legend</param>
-        /// <author>Antoine REITER</author>
+        /// <author>Antoine REITER - Maxime LAFFAYE</author>
         private void AddLegend(Document document)
         {
             //Add a page to the document
@@ -296,7 +306,8 @@ namespace Lilo_et_Stitch.Data.DAO_PDF
         /// <summary>
         /// Gets the path of where to save the PDF
         /// </summary>
-        /// <returns>Maxime LAFFAYE</returns>
+        /// <returns>The path where the PDF was stored</returns>
+        /// <author>Maxime LAFFAYE</author>
         public string GetPath()
         {
             return this.path;

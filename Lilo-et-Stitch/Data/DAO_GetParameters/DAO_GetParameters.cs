@@ -15,62 +15,68 @@ using System.Windows.Media;
 
 namespace Lilo_et_Stitch.Data.DAO_GetParameters
 {
-    
+    /// <summary>
+    /// Get the parameters of the pattern
+    /// </summary>
     public class DAO_GetParameters :IDAO_GetParameters
     {
+        #region attributes
+
         private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
         private HttpClient client = new HttpClient();
         private string address = "https://localhost:7199/GetData";
-        public async Task<Parameters> GetParameters(int ID_Param)
+
+        #endregion
+
+        #region opertations
+
+        /// <summary>
+        /// Get the parameters from the pattern
+        /// </summary>
+        /// <param name="id_Param">The ID of the concerned pattern</param>
+        /// <returns>The settings of the pattern</returns>
+        /// <exception cref="Exception">If something unattended happens with the request</exception>
+        /// <author>Antoine REITER - Maxime LAFFAYE</author>
+        public async Task<Parameters> GetParameters(int id_Param)
         {
             try
             {
-                // Spécifiez l'URL de l'API pour recevoir les images
-                string endPoint = $"{address}/GetSettings?Id={ID_Param}";
+                //Creating the endpoint request to get the settings
+                string endPoint = $"{address}/GetSettings?Id={id_Param}";
 
-                // Effectuez la requête GET pour obtenir les images
+                //Receiving the response status of the request from the server
                 HttpResponseMessage response = await client.GetAsync(endPoint);
 
-                // Vérifiez si la requête a réussi (code de statut 200 OK)
+                //Verifying if the request was successful
                 if (response.IsSuccessStatusCode)
                 {
-                    // Lisez le contenu JSON de la réponse
+                    //Receiving the content of the response
                     string jsonContent = await response.Content.ReadAsStringAsync();
 
-                    // Désérialisez le JSON en une liste d'objets ImageInfo
+                    //Deserializing the json containing the settings
                     Parameters settings = JsonConvert.DeserializeObject<Parameters>(jsonContent);
 
-                    //Changing the string to a System.Windows.Media.Color
+                    //Convert the deserialized string to a color and store it in the settings
                     settings.ColorGridMedia = (Color)ColorConverter.ConvertFromString("#" + settings.GridColor);
 
-                    // Convertissez la liste d'images en un dictionnaire
+                    //Return the settings
                     return settings;
 
                 }
+                //If the request was not successful, throw an exception
                 else
                 {
-                    // Gérez les erreurs si la requête n'a pas réussi
-                    Console.WriteLine("Erreur lors de la récupération des images. Code de statut : " + response.StatusCode);
-                    throw new NotImplementedException(); // Ou lancez une exception appropriée selon vos besoins
+                    throw new Exception("Server error while getting the settings");
                 }
             }
-            catch (Exception ex)
+            
+            catch (Exception ex) 
             {
-                // Gérez les exceptions
-                Console.WriteLine("Erreur : " + ex.Message);
-                throw new NotImplementedException();  // Ou lancez une exception appropriée selon vos besoins
+                throw new Exception("Erreur : " + ex.Message);
             }
         }
 
-       public Parameters GetParameters(Task<Parameters> param )
-        {
-            return param.Result;
-        }
-
-        void IDAO_GetParameters.GetParameters(int ID)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
-    
+
 }

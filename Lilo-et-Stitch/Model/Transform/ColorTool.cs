@@ -34,7 +34,7 @@ namespace Lilo_et_Stitch.Model.Transform
                 closestDMCColor = colorMatches[colorCase];
             }
 
-            else //If the color is not in the dictionary, calculate the closest DMC color            {
+            else //If the color is not in the dictionary, calculate the closest DMC color
                 foreach (System.Windows.Media.Color color in ColorsToUse)
                 {
 

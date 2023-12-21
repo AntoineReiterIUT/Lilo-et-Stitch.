@@ -13,19 +13,20 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
     public interface IDAO_Getdata
     {
         /// <summary>
-        /// This method will return the images based on the given page number
+        /// This method will return the images based on the given page number and the pattern name
         /// </summary>
-        /// <param name="page"></param>
+        /// <param name="page">The page to return</param>
+        /// <param name="patternName">The name of the pattern to look for</param>
         /// <returns>A dictionnary that contains a dictionnary : ex IdParams : nameOfPattern , image as a bitmapImage (AKA a page)</returns>
         /// <author>Maxime LAFFAYE</author>
-        public Task<(int, Dictionary<int, Dictionary<string, BitmapImage>>)> GetImages(int page, string? patternName);
+        public Task<(int, Dictionary<int, Dictionary<string, BitmapImage>>)> GetImages(int page, string patternName);
 
 
         /// <summary>
         /// This method will get the PDF from the api and save it locally 
         /// </summary>
         /// <param name="patternName">Name of the pattern</param>
-        /// <param name="path">Save path of the rebuilt pdf</param>
+        /// <param name="path">Save path (with the name) of the rebuilt pdf</param>
         /// <returns>Nothing</returns>
         /// <author>Maxime LAFFAYE</author>
         public Task SavePattern(string patternName, string path);

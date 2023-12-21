@@ -19,6 +19,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         /// </summary>
         /// <param name="name">Name of the directory to be checked</param>
         /// <returns>Result of the request</returns>
+        /// <author>Maxime LAFFAYE</author>
         public Task CheckIfExist(string name);
 
 
@@ -33,6 +34,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         /// <param name="pathPalette">Path to the used palette</param>
         /// <param name="transformedImage">The transformedImage as a bitmapImage</param>
         /// <returns>Result of the request</returns>
+        /// <author>Maxime LAFFAYE</author>
         public Task Publish(string name, int step, int maxColors, System.Windows.Media.Color gridColor, string pathPdf, string pathPalette, BitmapImage transformedImage);
 
     }

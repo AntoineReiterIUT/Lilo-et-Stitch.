@@ -13,15 +13,18 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
     public class Imageinfo
     {
         #region attributes
+
         private int id;
         private string name;
         private string path;
         private int id_params;
         private byte[] bytes;
+
         #endregion
 
 
         #region operations
+
         /// <summary>
         /// Property : Read or edit the id of the image within the bdd
         /// </summary>

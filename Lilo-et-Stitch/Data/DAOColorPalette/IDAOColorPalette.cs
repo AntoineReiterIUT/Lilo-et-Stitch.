@@ -18,17 +18,23 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// Change the palette used to transform the image
         /// </summary>
         /// <param name="csvPath">Path to the selected csv file</param>
+        /// <exception cref="Exception">Exception thrown if the color Palette is invalid</exception>
+        /// <exception cref="FormatException">Exception thrown if the color Palette data (csv) format is invalid</exception>
+        /// <author>Antoine SAKKALIS</author>
         void ChangePalette(string csvPath);
 
         /// <summary>
         /// Reset the palette to the default DMC colors
         /// </summary>
+        /// <exception cref="Exception">Exception thrown if the backup color Palette is invalid (modified app files)</exception>
+        /// <author>Antoine SAKKALIS</author>
         void ResetPalette();
 
         /// <summary>
         /// Gives the list of all the colors in the palette
         /// </summary>
         /// <returns>List of all the colors in the palette with their names</returns>
+        /// <author>Antoine SAKKALIS</author>
         Dictionary<string, Color> GetPalette();
 
         /// <summary>

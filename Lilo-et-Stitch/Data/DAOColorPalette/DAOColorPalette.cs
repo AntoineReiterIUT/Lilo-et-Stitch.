@@ -15,9 +15,12 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
     public class DAOColorPalette : IDAOColorPalette
     {
         #region attributes
+
         private Dictionary<string, Color> palette;
         private string path;
+
         #endregion
+
 
         #region operations
 
@@ -27,11 +30,16 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// <author>Antoine SAKKALIS</author>
         public DAOColorPalette()
         {
+            //Initialize the palette
             palette = new Dictionary<string, Color>();
             ResetPalette();
         }
 
 
+        /// <summary>
+        /// Change the palette used to transform the image
+        /// </summary>
+        /// <param name="csvPath">Path to the selected csv file</param>
         /// <exception cref="Exception">Exception thrown if the color Palette is invalid</exception>
         /// <exception cref="FormatException">Exception thrown if the color Palette data (csv) format is invalid</exception>
         /// <author>Antoine SAKKALIS</author>
@@ -84,20 +92,31 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         }
 
 
+        /// <summary>
+        /// Gives the list of all the colors in the palette
+        /// </summary>
+        /// <returns>List of all the colors in the palette with their names</returns>
         /// <author>Antoine SAKKALIS</author>
         public Dictionary<string, Color> GetPalette()
         {
             return palette;
         }
 
-        /// <author>Antoine SAKKALIS</author>
+        /// <summary>
+        /// Get the path of where the palette is saved
+        /// </summary>
+        /// <returns>The path of where the palette is saved</returns>
+        /// <author>Maxime LAFFAYE</author>
         public string GetPath()
         {
             return this.path;
         }
 
+        /// <summary>
+        /// Reset the palette to the default DMC colors
+        /// </summary>
         /// <exception cref="Exception">Exception thrown if the backup color Palette is invalid (modified app files)</exception>
-        ///<author>Antoine SAKKALIS</author>
+        /// <author>Antoine SAKKALIS</author>
         public void ResetPalette()
         {
             try
@@ -111,7 +130,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             }
             catch
             {
-                throw new Exception("Une erreur s'est produite lors de la réinitialisation de la palette de couleur");
+                throw new Exception("La palette de couleur est soit introuvable soit invalide (l'application a été altérée)");
             }
         }
 

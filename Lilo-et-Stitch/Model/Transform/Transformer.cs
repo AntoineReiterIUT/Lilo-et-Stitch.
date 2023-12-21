@@ -110,17 +110,18 @@ namespace Lilo_et_Stitch.Model.Transform
                     System.Drawing.Color DrawingColor = bitMap.GetPixel(i, j);
                     System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(DrawingColor.A, DrawingColor.R, DrawingColor.G, DrawingColor.B);
 
-                    //Add the color to the sum
-                    sumR += color.R;
-                    sumG += color.G;
-                    sumB += color.B;
-                    sumOpacity += color.A;
-
-                    pixelCount++;
-
-                    //If the color is almost visible, add it to the list of colors
+                    //If the color is almost visible use it
                     if (color.A >= 200)
                     {
+                        //Add the color to the sum
+                        sumR += color.R;
+                        sumG += color.G;
+                        sumB += color.B;
+                        sumOpacity += color.A;
+
+                        pixelCount++;
+
+
                         if (colors.ContainsKey(color))
                             colors[color] = colors[color] + 1;
                         else
@@ -129,8 +130,13 @@ namespace Lilo_et_Stitch.Model.Transform
                 }
             }
 
-            //Calculate the average color of the case
-            caseToCheck.BaseColor = colorTool.CalculateAverageColor(caseToCheck, sumR, sumG, sumB, sumOpacity, pixelCount);
+            if (pixelCount == 0)
+                //If the case is empty, use the color of the previous case
+                caseToCheck.BaseColor = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
+
+            else
+                //Calculate the average color of the case
+                caseToCheck.BaseColor = colorTool.CalculateAverageColor(caseToCheck, sumR, sumG, sumB, sumOpacity, pixelCount);
         }
 
 
