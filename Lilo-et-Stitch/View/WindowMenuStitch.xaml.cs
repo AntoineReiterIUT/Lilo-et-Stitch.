@@ -26,7 +26,7 @@ namespace Lilo_et_Stitch.View
         #region attributes
         private WindowTransformStitch stitchTransform;
         private WindowModelsStitch stitchModels;
-        private Manager manager = new Manager();
+        private IManager manager = new Manager();
         #endregion
 
         #region operations

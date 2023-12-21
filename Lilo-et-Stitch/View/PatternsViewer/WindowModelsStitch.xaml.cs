@@ -20,7 +20,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         #region attributes
         private int page = 0;
         private int maxPage = 0;
-        private Manager manager;
+        private IManager manager;
         private TemplateUserModel patterns = new();
         Dictionary<int, Dictionary<string, BitmapImage>> images;
         private int selectedId = -1;
@@ -35,7 +35,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// </summary>
         /// <param name="manager">The used manager</param>
         /// <author>Antoine SAKKALIS</author>
-        public WindowModelsStitch(Manager manager)
+        public WindowModelsStitch(IManager manager)
         {
             this.manager = manager;
             InitializeComponent();

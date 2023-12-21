@@ -131,7 +131,7 @@ namespace Lilo_et_Stitch.Model.Transform
             }
 
             if (pixelCount == 0)
-                //If the case is empty, use the color of the previous case
+                //If the case is empty, use a blank one
                 caseToCheck.BaseColor = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
 
             else

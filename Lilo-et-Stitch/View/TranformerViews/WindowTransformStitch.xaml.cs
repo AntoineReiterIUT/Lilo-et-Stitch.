@@ -38,7 +38,7 @@ namespace Lilo_et_Stitch.View
         /// Constructor of the window
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public WindowTransformStitch(Manager manager)
+        public WindowTransformStitch(IManager manager)
         {
             this.manager = manager;
             InitializeComponent();
