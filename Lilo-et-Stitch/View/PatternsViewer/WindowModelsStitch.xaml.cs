@@ -307,13 +307,13 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <author>Antoine SAKKALIS</author>
-        private void textSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void textSearch_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            //If the user press enter
-            if (e.Key == System.Windows.Input.Key.Enter)
+            //If the user press enter or if the text is empty or if the text is at least 2 characters long do the search
+            if (e.Key == System.Windows.Input.Key.Enter | textSearch.Text.Length >= 2 | textSearch.Text.Length == 0)
             {
-                //Search the pattern
-                patternSearchName = textSearch.Text;
+            //Search the pattern with the pressed key
+            patternSearchName = textSearch.Text;
                 //Display the first page
                 page = 0;
                 ImageLoader();
