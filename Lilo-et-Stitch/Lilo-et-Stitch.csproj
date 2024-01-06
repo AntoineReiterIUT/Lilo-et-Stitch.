@@ -31,13 +31,19 @@
     <PackageReference Include="xunit.extensibility.core" Version="2.6.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="View\Images\homeIcon.png" />
-    <Resource Include="View\Images\logo.png" />
-  </ItemGroup>
+      <ItemGroup>
+        <Resource Include="View\Images\homeIcon.png" />
+        <Resource Include="View\Images\logo.png" />
+      </ItemGroup>
 
   <ItemGroup>
     <Resource Include="View\Images\exit.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\DMCbackup\DMCcolors.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

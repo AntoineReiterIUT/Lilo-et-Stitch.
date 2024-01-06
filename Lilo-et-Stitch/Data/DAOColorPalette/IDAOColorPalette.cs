@@ -33,7 +33,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// <summary>
         /// Gives the list of all the colors in the palette
         /// </summary>
-        /// <returns>List of all the colors in the palette with their names</returns>
+        /// <returns>Dictionary of all the colors in the palette with their names</returns>
         /// <author>Antoine SAKKALIS</author>
         Dictionary<string, Color> GetPalette();
 

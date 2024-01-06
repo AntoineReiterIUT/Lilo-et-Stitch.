@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace Lilo_et_Stitch.Data.DAOColorPalette
@@ -32,7 +33,6 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         {
             //Initialize the palette
             palette = new Dictionary<string, Color>();
-            ResetPalette();
         }
 
 
@@ -56,12 +56,14 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             }
             else //when the color file is not empty
             {
+                //We clear the palette
                 palette.Clear();
                 using (TextFieldParser sr = new TextFieldParser(csvPath))
                 {
+                    //While the file is not empty
                     while (!sr.EndOfData)
                     {
-                        //Read a line
+                        //Read a line by splitting values with a ';'
                         string line = sr.ReadLine();
                         string[] values = line.Split(';');
 
@@ -95,12 +97,13 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// <summary>
         /// Gives the list of all the colors in the palette
         /// </summary>
-        /// <returns>List of all the colors in the palette with their names</returns>
+        /// <returns>Dictionary of all the colors in the palette with their names</returns>
         /// <author>Antoine SAKKALIS</author>
         public Dictionary<string, Color> GetPalette()
         {
             return palette;
         }
+
 
         /// <summary>
         /// Get the path of where the palette is saved
@@ -112,6 +115,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             return this.path;
         }
 
+
         /// <summary>
         /// Reset the palette to the default DMC colors
         /// </summary>
@@ -122,15 +126,14 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             try
             {
                 //Get the path of the backup color palette
-                var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                var file = Path.Combine(projectFolder, @"../Data/DMCBackup/DMCcolors.csv");
+                string file = Path.Combine(Application.StartupPath, "Data", "DMCBackup", "DMCcolors.csv");
 
                 //Change the palette to the backup palette
                 ChangePalette(file.ToString());
             }
-            catch
+            catch (Exception e)
             {
-                throw new Exception("La palette de couleur est soit introuvable soit invalide (l'application a été altérée)");
+                throw new Exception("Erreur : La palette de couleur est soit introuvable soit invalide (l'application a été altérée) : " + e.Message);
             }
         }
 
