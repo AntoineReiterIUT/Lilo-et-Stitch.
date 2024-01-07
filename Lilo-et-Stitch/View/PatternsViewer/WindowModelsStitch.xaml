@@ -9,7 +9,9 @@
         mc:Ignorable="d"
         Icon="../Images/logo.png"
         Title="StitchModels" Height="450" Width="800">
+    
     <Viewbox Stretch="Fill">
+        
         <Grid Height="460" Width="880">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -26,9 +28,9 @@
                 <RowDefinition Height="26*"/>
             </Grid.RowDefinitions>
 
+            
             <StackPanel VerticalAlignment="Top" Grid.ColumnSpan="4" Grid.RowSpan="1" Height="35">
                 <Menu Height="35">
-
                     <Image Source="../Images/logo.png" Mouse.MouseDown="MenuItem_Click"/>
 
                     <MenuItem Header="Menu" FontSize="15" Click="HomeButton_Click" IsHitTestVisible="False"/>
@@ -47,18 +49,17 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+                            
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                        </Grid>
+                       </Grid>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <patterns:TemplateUserModel/>
-
-
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -80,8 +81,10 @@
             <TextBox x:Name="textNumPage" FontSize="20" HorizontalAlignment="Left" Margin="63,20,0,0" Grid.Row="4" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="18" KeyDown="textNumPage_KeyDown" Height="28"/>
             <Label x:Name="textMaxPages" Content="/ 1" FontSize="20" HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="4" VerticalAlignment="Top" Height="36" Width="34"/>
 
+            
             <Rectangle Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Stretch="UniformToFill" Margin="24,35,0,0" Grid.RowSpan="5" Stroke="Black" VerticalAlignment="Top" Width="1" Height="450"/>
             <Rectangle Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" HorizontalAlignment="Left" Stretch="UniformToFill" Margin="0,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="900" Height="1" />
+            
             <Image x:Name="SelectedPattern" Grid.Column="3" Grid.Row="1" Margin="39,3,14,2" Grid.RowSpan="2" />
 
             <Button Style="{StaticResource TrsfrmAppButton}" x:Name="buttonDownload" Visibility="Collapsed" FontSize="20" Grid.Column="3" Content="Télécharger" HorizontalAlignment="Left" Height="48" Grid.Row="4" VerticalAlignment="Center" Width="205" Margin="56,0,0,0" Click="Button_DownloadClick"/>
@@ -94,6 +97,8 @@
             <Label Grid.Column="3" FontSize="15" x:Name="LabelMaxColors" HorizontalAlignment="Left" Margin="39,80,0,0" Grid.Row="3" VerticalAlignment="Top" />
             <Label Grid.Column="3" FontSize="15" x:Name="LabelColorGrid" HorizontalAlignment="Left" Margin="60,110,0,0" Grid.Row="3" VerticalAlignment="Top" />
             <Rectangle Grid.Column="3" x:Name="RectangleColorGrid" HorizontalAlignment="Left" Margin="39,115,0,0" Grid.Row="3" Height="20" Width="20" VerticalAlignment="Top" />
+        
         </Grid>
+    
     </Viewbox>
 </Window>

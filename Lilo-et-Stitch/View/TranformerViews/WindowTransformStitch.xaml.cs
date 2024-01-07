@@ -26,9 +26,11 @@ namespace Lilo_et_Stitch.View
     public partial class WindowTransformStitch : Window
     {
         #region attributes
+
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(0,0,0);
         private IManager manager;
         private System.Drawing.Image editedImage;
+
         #endregion
 
 
@@ -37,11 +39,14 @@ namespace Lilo_et_Stitch.View
         /// <summary>
         /// Constructor of the window
         /// </summary>
+        /// <param name="manager">The manager used</param>
         /// <author>Maxime LAFFAYE</author>
         public WindowTransformStitch(IManager manager)
         {
             this.manager = manager;
             InitializeComponent();
+
+            //Reset the used palette
             ResetPalette_Click(null, null);
         }
 
@@ -93,6 +98,7 @@ namespace Lilo_et_Stitch.View
         /// <author>Antoine SAKKALIS</author>
         private void PublishBtn_Click(object sender, RoutedEventArgs e)
         {
+            //Displaying the publish window
             WindowAddPattern addPage = new WindowAddPattern(manager);
             addPage.ShowDialog();
         }
@@ -109,7 +115,8 @@ namespace Lilo_et_Stitch.View
             System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
 
             //Filter files to only display PNG / JPG / GIF / BMP files
-            openFileDialog.Filter = "Fichiers PNG (*.png)|*.png|Fichier JPG (*.jpg)|*.jpg|Fichier GIF (*.gif)|*.gif|Fichier BMP (*.bmp)|*.bmp";
+            openFileDialog.Filter = "Image Files(*.PNG;*.JPG;*.GIF;*.BMP)|*.PNG;*.JPG;*.GIF;*.BMP";
+
             try
             {
                 //Show the dialog and wait for the user to select a file
@@ -130,9 +137,9 @@ namespace Lilo_et_Stitch.View
                 //Initialization step with img
                 int stepIni = 35;
                 
-                if(bitmap.Width > stepIni && bitmap.Height > 35)
+                if(bitmap.Width > stepIni && bitmap.Height > 35) //Verify that the image is big enough
                 {
-                    //Calculate the step
+                    //Calculate a pertinent range for the size of the cases
                     int i = (int)bitmap.Height / stepIni;
                     int y = (int)bitmap.Width / stepIni;
                     i = (i + y) / 2;
@@ -146,23 +153,26 @@ namespace Lilo_et_Stitch.View
             catch (Exception ex)
             {
                 //Show a dialog box with the error message
-                System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectionné est soit incompatible, soit vous n'en avez pas selectionné");
+                System.Windows.MessageBox.Show("Erreur : le fichier selectionné est soit incompatible, soit vous n'en avez pas selectionné");
             }
         }
 
 
         /// <summary>
-        /// Will update the preview canva after opening the color picker dialog
+        /// Will update the preview canvas after opening the color picker dialog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <author>Maxime LAFFAYE</author>
         private void change_grid_color(object sender, RoutedEventArgs e)
         {
+            //Open the color picker dialog
             ColorDialog clrDiag = new ColorDialog();
-            if (clrDiag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (clrDiag.ShowDialog() == System.Windows.Forms.DialogResult.OK) //If the user clicked on OK
             {
+                //Change the grid color for the transformation
                 this.gridColor = System.Windows.Media.Color.FromArgb(clrDiag.Color.A, clrDiag.Color.R, clrDiag.Color.G, clrDiag.Color.B);
+                //Change the preview color
                 gridColorCanva.Background = new SolidColorBrush(gridColor);            
             }
         }
@@ -200,17 +210,16 @@ namespace Lilo_et_Stitch.View
         /// <author>Maxime LAFFAYE</author>
         private void TransformBtn_Click_1(object sender, RoutedEventArgs e)
         {            
-            if (imagePrev.Source != null)
+            if (imagePrev.Source != null) //If an image has been imported
             {
                 Bitmap bitmap;
-                using (var stream = new MemoryStream())
+                using (var stream = new MemoryStream()) //Convert the image to a bitmap
                 {
                     var encoder = new PngBitmapEncoder();
                     encoder.Frames.Add(BitmapFrame.Create((BitmapSource)imagePrev.Source));
                     encoder.Save(stream);
                     bitmap = new Bitmap(stream);
                 }
-                if (this.manager == null) this.manager = new Manager();
 
                 //Start the transformation of the image
                 GeneratedImage generatedImage = manager.TransformImage((int)NbStepSlider.Value, (int)NbColorsSlider.Value, gridColor);
@@ -249,7 +258,6 @@ namespace Lilo_et_Stitch.View
             if (int.TryParse(NbStepText.Text, out int newValue))
             {
                 //If parsing is successful, update the slider value
-                
                 NbStepSlider.Value = newValue;
             }
         }
@@ -271,6 +279,7 @@ namespace Lilo_et_Stitch.View
 
 
         #region ToolBar's events
+
         /// <summary>
         /// This function will be called when the "HomeBtn" is clicked.
         /// </summary>
@@ -279,17 +288,20 @@ namespace Lilo_et_Stitch.View
         /// <authors>Mattis GALOPPIN</authors>
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
+            //Display new page 
             WindowMenuStitch stitchMenu = new ();
-            stitchMenu.Show(); //Display new page 
-            this.Close(); //Close the firt one
+            stitchMenu.Show();
+
+            //Close the first one
+            this.Close(); 
         }
 
 
         /// <summary>
         /// Handles the palette click event, allowing the user to change the color palette by selecting a CSV file.
         /// </summary>
-        /// <param name="sender">The sender object that raised the event.</param>
-        /// <param name="e">The event arguments.</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         /// <author>Antoine SAKKALIS</author>
         private void ChangePalette_Click(object sender, RoutedEventArgs e)
         {
@@ -298,11 +310,13 @@ namespace Lilo_et_Stitch.View
             openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == true) //If the user clicked on OK
             {
                 try
                 {
+                    //Update the palette
                     manager.UpdatePalette(openFileDialog.FileName);
+                    //Update the slider to match the new palette
                     NbColorsSlider.Maximum = NbColorsSlider.Value = manager.GetPalette().Count();
                 }
 
@@ -325,7 +339,9 @@ namespace Lilo_et_Stitch.View
         {
             try
             {
+                //Reset the palette
                 manager.ResetPalette();
+                //Update the slider to match the new palette
                 NbColorsSlider.Maximum = NbColorsSlider.Value = manager.GetPalette().Count();
             }
 

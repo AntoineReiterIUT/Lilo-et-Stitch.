@@ -8,7 +8,9 @@
              d:DesignHeight="70" d:DesignWidth="250">
     
     <Grid>
+        
         <Canvas x:Name="colorDisplay" Background="Red" Margin="100,0,0,0" />
         <Label x:Name="colorDmc" Content="Code_DMC" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" RenderTransformOrigin="0.762,0.963" Width="71" Height="26" />
+    
     </Grid>
 </UserControl>

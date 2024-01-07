@@ -18,6 +18,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
     public partial class WindowModelsStitch : Window
     {
         #region attributes
+
         private int page = 0;
         private int maxPage = 0;
         private IManager manager;
@@ -25,10 +26,10 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         Dictionary<int, Dictionary<string, BitmapImage>> images;
         private int selectedId = -1;
         private string patternSearchName = "";
+
         #endregion
 
         #region operations
-
 
         /// <summary>
         /// Constructor of the class WindowModelsStitch
@@ -37,25 +38,28 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         public WindowModelsStitch(IManager manager)
         {
+            //Set the manager
             this.manager = manager;
             InitializeComponent();
 
+            //Display the first page
             ImageLoader();
-
         }
 
 
         /// <summary>
-        /// This function will be called when the "PatternsButton" is clicked
+        /// This method will display the patterns
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
         private async void ImageLoader()
         {
             try
             {
+                //Get the patterns
                 (int, Dictionary<int, Dictionary<string, BitmapImage>>) imageData = await manager.GetImages(page, patternSearchName);
                 maxPage = imageData.Item1;
 
+                //Update the max page number
                 textMaxPages.Content = "/ " + maxPage.ToString();
                 images = imageData.Item2;
 
@@ -63,7 +67,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                 {
                     System.Windows.MessageBox.Show("Aucun patron trouvé...");
                 }
-                else
+                else //if there is at least one pattern
                 {
                     //Clear the grid
                     controlModels.Items.Clear();
@@ -77,15 +81,17 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                         {
                             //Create a new TemplateUserModel
                             TemplateUserModel pattern = new TemplateUserModel();
+
                             //Set the properties of the TemplateUserModel
                             pattern.PatternButton.Click += PatternsBtn_Click;
                             pattern.PatternButton.Content = id;
                             pattern.PatternImage.Source = images[id][name];
+
                             if (name.Length > 30) //if the name is too long, we cut it
                             {
                                 pattern.PatternName.Text = name.Substring(0, 30) + "...";
                             }
-                            else
+                            else //if the name is not too long
                             {
                                 pattern.PatternName.Text = name;
                             }
@@ -94,6 +100,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                             Grid.SetRow(pattern, row);
                             Grid.SetColumn(pattern, column);
 
+                            //Add the TemplateUserModel to the grid
                             controlModels.Items.Add(pattern);
 
                             //Update row and column for the next iteration
@@ -111,7 +118,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
             }
             catch (Exception e)
             {
-                System.Windows.MessageBox.Show(e.Message);
+                System.Windows.MessageBox.Show("Erreur : " + e.Message);
             }
         }
 
@@ -124,18 +131,22 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         {
             try
             {
+                //Get the settings of the selected pattern
+                Parameters settings = await manager.GetSettings(selectedId);
+
+
                 //Display the settings of the selected pattern
                 LabelName.Text = images[selectedId].Keys.First();
-                Parameters settings = await manager.GetSettings(selectedId); //Get the settings of the selected pattern
                 LabelStep.Content = $"Taille des cases : {settings.Step}";
                 LabelMaxColors.Content = $"Couleurs utilisées : {settings.NbColor}";
                 LabelColorGrid.Content = $"Couleur grille : {settings.GridColor}";
+
                 //apply the color of the grid to the rectangle
                 RectangleColorGrid.Fill = new System.Windows.Media.SolidColorBrush(settings.ColorGridMedia);
             }
             catch (Exception e)
             {
-                System.Windows.MessageBox.Show(e.Message);
+                System.Windows.MessageBox.Show("Erreur : " + e.Message);
             }
         }
 
@@ -151,8 +162,10 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
+            //Display the main menu
             WindowMenuStitch stitchMenu = new WindowMenuStitch();
             stitchMenu.Show();
+            //Close the current window
             Close();
         }
 
@@ -165,6 +178,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void Button_FirstClick(object sender, RoutedEventArgs e)
         {
+            //Display the first page
             page = 0;
             ImageLoader();
         }
@@ -178,8 +192,9 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void Button_NextClick(object sender, RoutedEventArgs e)
         {
-            if (page < maxPage - 1)
+            if (page < maxPage - 1) //if we are not on the last page
             {
+                //Display the next page
                 page++;
                 ImageLoader();
             }
@@ -194,8 +209,9 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void Button_PreviousClick(object sender, RoutedEventArgs e)
         {
-            if (page > 0)
+            if (page > 0) //if we are not on the first page
             {
+                //Display the previous page
                 page--;
                 ImageLoader();
             }
@@ -210,6 +226,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void Button_LastClick(object sender, RoutedEventArgs e)
         {
+            //Display the last page
             page = maxPage - 1;
             ImageLoader();
         }
@@ -220,12 +237,14 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <authors>Mattis GALOPPIN</authors>
+        /// <authors>Antoine SAKKALIS</authors>
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
+            //Display the main menu
             WindowMenuStitch stitchMenu = new();
-            stitchMenu.Show(); //Display new page 
-            this.Close(); //Close the first one
+            stitchMenu.Show();
+            //Close the current window
+            this.Close();
         }
 
 
@@ -234,7 +253,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <author>Antoine Sakkalis</author>
+        /// <author>Antoine SAKKALIS</author>
         private void PatternsBtn_Click(object sender, RoutedEventArgs e)
         {
             //Set the selectedId by the id of the selected pattern button
@@ -259,32 +278,28 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void Button_DownloadClick(object sender, RoutedEventArgs e)
         {
-            if (manager != null)
+            //Creating the dialog object
+            System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+
+            saveFileDialog.Filter = "Fichier PDF (*.pdf) |*.pdf";
+
+            try
             {
-                //Creating the dialog object
-                System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+                //Show the dialog and wait for the user to select a file
+                DialogResult result = saveFileDialog.ShowDialog();
 
-                saveFileDialog.Filter = "Fichier PDF (*.pdf) |*.pdf";
+                string path = saveFileDialog.FileName;
 
-                try
+                if (path != "") //If the user selected a path to save the pattern
                 {
-                    // Show the dialog and wait for the user to select a file
-                    DialogResult result = saveFileDialog.ShowDialog();
-
-                    string path = saveFileDialog.FileName;
-
-                    if (path != "")
-                    {
-                        manager.GetPattern(LabelName.Text, path);
-                        System.Windows.MessageBox.Show("Téléchargé avec succès!");
-                    }
-
-                }
-                catch (Exception excepiton)
-                {
-                    System.Windows.MessageBox.Show(excepiton.Message);
+                    manager.GetPattern(LabelName.Text, path);
+                    System.Windows.MessageBox.Show("Téléchargé avec succès!");
                 }
 
+            }
+            catch (Exception excepiton)
+            {
+                System.Windows.MessageBox.Show("Erreur : " + excepiton.Message);
             }
         }
 
@@ -297,9 +312,11 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void textSearch_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
         {
+            //Remove the placeholder
             this.textSearch.Text = "";
             this.textSearch.Foreground = new SolidColorBrush(Colors.Black);
         }
+
 
         /// <summary>
         /// This function will be directly called when we write in the search bar
@@ -309,12 +326,12 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void textSearch_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            //If the user press enter or if the text is empty or if the text is at least 2 characters long do the search
+            //If the user press enter or if the text is at least 2 characters long or if the text is empty
             if (e.Key == System.Windows.Input.Key.Enter | textSearch.Text.Length >= 2 | textSearch.Text.Length == 0)
             {
-            //Search the pattern with the pressed key
-            patternSearchName = textSearch.Text;
-                //Display the first page
+                //set the search value with the search bar content
+                patternSearchName = textSearch.Text;
+                //Display the first page of the search results
                 page = 0;
                 ImageLoader();
             }
@@ -329,9 +346,8 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         /// <author>Antoine SAKKALIS</author>
         private void textNumPage_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Enter)
+            if (e.Key == System.Windows.Input.Key.Enter) //If the user press enter
             {
-                //If the user press enter
                 try
                 {
                     //Get the page number
@@ -344,13 +360,13 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                         page = numPage - 1;
                         ImageLoader();
                     }
-                    else if (numPage > maxPage)
+                    else if (numPage > maxPage) //if the page number is too high
                     {
-                        //Display the first page
+                        //Display the last page
                         page = maxPage - 1;
                         ImageLoader();
                     }
-                    else
+                    else //if the page number is too low
                     {
                         //Display the first page
                         page = 0;
@@ -359,6 +375,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
                 }
                 catch (Exception)
                 {
+                    //Display the actual page
                     textNumPage.Text = (page + 1).ToString();
                     System.Windows.MessageBox.Show("Veuillez entrer un nombre");
                 }

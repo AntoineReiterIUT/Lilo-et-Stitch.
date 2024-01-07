@@ -13,13 +13,14 @@
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
 
+        
         <Viewbox Margin="0,0,0,3" Grid.Row="1">
             <Grid Margin="0,0,0,0">
                 <TextBlock Margin="0,0,0,80" Name="PatternName" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" FontStretch="Normal" FontSize="200" Grid.Row="1"/>
             </Grid>
         </Viewbox>
         
-        <Image Margin="3" VerticalAlignment="Top" HorizontalAlignment="Center" x:Name="PatternImage" Source="C:\\Users\\as530011\\source\\repos\\dept-info-iut-dijon\\Lilo-et-Stitch\\Lilo-et-Stitch\\View\\Images\\logo.png">
+        <Image Margin="3" VerticalAlignment="Top" HorizontalAlignment="Center" x:Name="PatternImage">
             <Image.Clip>
                 <RectangleGeometry RadiusX="20" RadiusY="20" Rect="-1,-1,190,500" />
             </Image.Clip>
@@ -28,8 +29,6 @@
         <Rectangle Grid.Column="0" Grid.Row="0" Margin="3,0,3,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Visible"  Fill="Black" Stretch="UniformToFill" Height="3" />
 
         <Button Grid.RowSpan="2" Content="" Foreground="Transparent" BorderBrush="Black" BorderThickness="3" Margin="3" Style="{StaticResource TrsfrmAppButton}" Name="PatternButton" Background="Transparent"/>
-
-
 
     </Grid>
 </UserControl>

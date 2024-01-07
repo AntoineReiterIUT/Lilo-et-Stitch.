@@ -8,8 +8,10 @@
         Icon="../Images/logo.png"
         mc:Ignorable="d"
         Title="Publication" Height="400" Width="700">
+    
     <Viewbox>
         <Grid Height="150" Width="280">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="4*"/>
@@ -25,10 +27,8 @@
             <Label Content="Nom du patron :" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="0" FontFamily="Arial" Margin="41,0,0,39" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
             <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalContentAlignment="Center" Name="PatternName" />
 
-            <Button Style="{StaticResource TrsfrmAppButton}" Grid.Row="2" Grid.Column="1" Content="Valider" Background="#9b572a" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="61" Click="AjouterButton_Click"/>
+            <Button Style="{StaticResource TrsfrmAppButton}" Grid.Row="2" Grid.Column="1" Content="Valider" Background="#9b572a" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="61" Click="AddButton_Click"/>
             <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Foreground="Red" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Name="ReturnMessage" VerticalAlignment="Bottom"/>
-
-
 
         </Grid>
     </Viewbox>

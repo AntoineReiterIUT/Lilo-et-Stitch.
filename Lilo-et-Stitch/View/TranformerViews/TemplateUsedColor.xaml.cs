@@ -22,6 +22,7 @@ namespace Lilo_et_Stitch.View
     public partial class TemplateUsedColorColor : UserControl
     {
         #region operations 
+
         /// <summary>
         /// Constructor of the template
         /// </summary>
@@ -30,6 +31,7 @@ namespace Lilo_et_Stitch.View
         {       
             InitializeComponent();
         }
+
 
         /// <summary>
         /// Will set the values of the template.
@@ -44,6 +46,7 @@ namespace Lilo_et_Stitch.View
             colorDisplay.Height = 80;
             colorDmc.Content = code;
         }
+
         #endregion
     }
 }

@@ -10,7 +10,6 @@
         Title="Fenêtre de transformation" MinHeight="500" MinWidth="800">
 
     <Grid>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="47*"/>
@@ -121,7 +120,7 @@
                 <Canvas Name="gridColorCanva" Background="Black"  Margin="10,50,14,1"/>
                 <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,15,14,22" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
-
         </Viewbox>
+        
     </Grid>
 </Window>

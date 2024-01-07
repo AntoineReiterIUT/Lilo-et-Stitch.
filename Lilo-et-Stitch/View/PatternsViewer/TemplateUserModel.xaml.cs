@@ -16,10 +16,13 @@ using System.Windows.Shapes;
 namespace Lilo_et_Stitch.View.PatternsViewer
 {
     /// <summary>
-    /// Logique d'interaction pour TemplateUserModel.xaml
+    /// Interaction logic for TemplateUserModel.xaml
     /// </summary>
     public partial class TemplateUserModel : UserControl
     {
+        /// <summary>
+        /// Constor of the TemplateUserModel
+        /// </summary>
         public TemplateUserModel()
         {
             InitializeComponent();

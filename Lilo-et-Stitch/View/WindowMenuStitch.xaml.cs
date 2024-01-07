@@ -24,12 +24,15 @@ namespace Lilo_et_Stitch.View
     public partial class WindowMenuStitch : Window
     {
         #region attributes
+
         private WindowTransformStitch stitchTransform;
         private WindowModelsStitch stitchModels;
         private IManager manager = new Manager();
+
         #endregion
 
         #region operations
+
         /// <summary>
         /// Constructor of the main menu
         /// </summary>
@@ -48,9 +51,12 @@ namespace Lilo_et_Stitch.View
         /// <author>Mattis GALOPPIN</author>
         private void NewModel_Click(object sender, RoutedEventArgs e)
         {
-            stitchTransform = new WindowTransformStitch(manager); //Create a new page
-            stitchTransform.Show();  //Display the new page
-            this.Close();  //Close the the first one
+            //Display the new page
+            stitchTransform = new WindowTransformStitch(manager); 
+            stitchTransform.Show();
+
+            //Close the the first one
+            this.Close();  
         }
 
 
@@ -62,10 +68,14 @@ namespace Lilo_et_Stitch.View
         /// <author>Mattis GALOPPIN</author>
         private void ModelServ_Click(object sender, RoutedEventArgs e)
         {
-            stitchModels = new WindowModelsStitch(manager); //Create a new page
-            stitchModels.Show(); //Display the new page 
-            this.Close(); //Close the first one
+            //Display the new page 
+            stitchModels = new WindowModelsStitch(manager); 
+            stitchModels.Show();
+
+            //Close the first one
+            this.Close(); 
         }
+
         #endregion
     }
 }

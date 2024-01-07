@@ -33,6 +33,7 @@ namespace Lilo_et_Stitch.View.TranformerViews
         /// The constructor of the WindowAddPattern
         /// </summary>
         /// <param name="manager">The used manager</param>
+        /// <author>Antoine SAKKALIS</author>
         public WindowAddPattern(IManager manager)
         {
             InitializeComponent();
@@ -40,16 +41,21 @@ namespace Lilo_et_Stitch.View.TranformerViews
         }
 
         /// <summary>
-        /// Will call the publish of the manager with the choosed name
+        /// Will call the publish of the manager with the chosen name
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void AjouterButton_Click(object sender, RoutedEventArgs e)
+        /// <exception cref="Exception">If the name is already used</exception>
+        /// <author>Antoine SAKKALIS</author>
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                //Publish the pattern
                 await manager.Publish(PatternName.Text);
                 MessageBox.Show("Le patron a bien été ajouté");
+
+                //Close the window
                 this.Close();
             }
             catch (Exception ex)
