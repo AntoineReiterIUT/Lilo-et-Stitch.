@@ -16,28 +16,45 @@ namespace Lilo_et_Stitch.Model
     /// </summary>
     public interface IManager
     {
-
         /// <summary>
         /// Import the path of the image to the model
         /// </summary>
         /// <param name="path">Path to the image</param>
-        /// <author>Antoine SAKKALIS</author>
+        /// <author>Maxime LAFFAYE</author>
         public void Import(string path);
 
 
         /// <summary>
-        /// Load a BitmapImage to display in the IHM
+        /// Will create the PDF using the given path
         /// </summary>
-        /// <returns>A BitmapImage</returns>
+        /// <param name="path">Path to save the file</param>
+        /// <exception cref="Exception">If the generatedImage doesn't exists</exception>
+        /// <author>Maxime LAFFAYE</author>
+        public void ExportPDF(string path);
+
+
+        /// <summary>
+        /// Load a BitmapImage to display in the HMI
+        /// </summary>
+        /// <returns>The BitmapImage to display</returns>
         /// <author>Maxime LAFFAYE</author>
         public BitmapImage LoadBitmapImage();
 
 
         /// <summary>
-        /// Will reset the palette to it's original form
+        /// Will update the palette from the given path
+        /// </summary>
+        /// <param name="path">Path to the new palette</param>
+        /// <author>Maxime LAFFAYE</author>
+        public void UpdatePalette(string path);
+
+
+        /// <summary>
+        /// Will reset the palette to the default one in the app files
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
         public void ResetPalette();
+
 
         /// <summary>
         /// Gives the list of all the colors in the palette
@@ -45,13 +62,6 @@ namespace Lilo_et_Stitch.Model
         /// <returns>The dictionary of all color names and their values</returns>
         /// <author>Antoine SAKKALIS</author>
         public Dictionary<string, System.Windows.Media.Color> GetPalette();
-
-        /// <summary>
-        /// Will update the palette with the given path
-        /// </summary>
-        /// <param name="path">Path to the new palette</param>
-        /// <author>Antoine SAKKALIS</author>
-        public void UpdatePalette(string path);
 
 
         /// <summary>
@@ -66,33 +76,32 @@ namespace Lilo_et_Stitch.Model
 
 
         /// <summary>
-        /// Will create the PDF using the given path
-        /// </summary>
-        /// <param name="path">Path to save the file</param>
-        /// <author>Maxime LAFFAYE</author>
-        public void ExportPDF(string path);
-
-        /// <summary>
         /// Publish the pattern to the database
         /// </summary>
         /// <param name="name">The name of the pattern to save</param>
-        /// <author>Antoine SAKKALIS</author>
+        /// <exception cref="Exception">Exception returned if the user didn't follow the steps or if there's a server error (folder already existing...)</exception>
+        /// <author>Maxime LAFFAYE</author>
         public Task Publish(string name);
+
 
         /// <summary>
         /// Get the dictionary of up to 6 patterns
         /// </summary>
-        /// <returns>A dictionary with the id, the name and the image itself</returns>
-        /// <author>Antoine SAKKALIS</author>
+        /// <param name="page">The page to get the patterns from</param>
+        /// <param name="patternName">The name of the pattern to search for</param>
+        /// <returns>A dictionary with the ids, the names and the images themselves</returns>
+        /// <author>Maxime LAFFAYE</author>
         Task<(int, Dictionary<int, Dictionary<string, BitmapImage>>)> GetImages(int page,string? patternName);
+
 
         /// <summary>
         /// Get the parameters of the pattern
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns>step,colorMax,colorGrid(hex)</returns>
+        /// <param name="id">The Id of the pattern</param>
+        /// <returns>An instance of Parameters containing all the values</returns>
         /// <author>Antoine SAKKALIS</author>
         public Task<Parameters> GetSettings(int id);
+
 
         /// <summary>
         /// Download the pattern from the database

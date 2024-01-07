@@ -17,6 +17,7 @@ namespace Lilo_et_Stitch.Model
     public class GeneratedImage
     {
         #region attributes
+
         private Dictionary<string, Color> usedColor;
         private Color gridColor;
         private int step;
@@ -27,10 +28,12 @@ namespace Lilo_et_Stitch.Model
         private DrawImage image;
         private Bitmap bitmap;
         private BitmapImage bitmapImage;
+
         #endregion
 
 
-        #region  properties
+        #region properties
+
         /// <summary>
         /// Property : Read or edit the list of used color
         /// </summary>
@@ -56,13 +59,13 @@ namespace Lilo_et_Stitch.Model
         public int Step { get => step; set => step = value; }
 
         /// <summary>
-        /// Width of the generated image
+        /// Property : Read or edit the width of the generated image
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public int Width { get => width; set => width = value; }
 
         /// <summary>
-        /// Height of the generated image
+        /// Property : Read or edit the height of the generated image
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public int Height { get => height; set => height = value; }
@@ -94,7 +97,7 @@ namespace Lilo_et_Stitch.Model
         #region operations
 
         /// <summary>
-        /// Constructor of the class. (Initialize the list + dictionnary
+        /// Constructor of the class. (Initialize the list + dictionary)
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public GeneratedImage()
@@ -102,7 +105,6 @@ namespace Lilo_et_Stitch.Model
             this.cases = new List<Case>();  
             this.usedColor = new Dictionary<string, Color>();
         }
-
 
         #endregion
 

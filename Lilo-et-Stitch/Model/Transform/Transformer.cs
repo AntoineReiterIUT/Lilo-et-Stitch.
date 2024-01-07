@@ -30,12 +30,16 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <param name="step">Step for each "case/pixel"</param>
         /// <param name="colorMax">Max amount of color to be used</param>
         /// <param name="gridColor">Color of the grid</param>
+        /// <param name="imageStitch">Image to transform</param>
+        /// <param name="colorPalette">Color palette to use</param>
         /// <returns>The image that was just generated</returns>
         /// <author>Maxime LAFFAYE</author>
         public GeneratedImage TransformImage(int step, int colorMax, System.Windows.Media.Color gridColor, ImageStitch imageStitch, Dictionary<string, System.Windows.Media.Color> colorPalette)
         {
+            //Set the current color palette
             this.colorPalette = colorPalette;
 
+            //Set the new image's attributes from the imageStitch
             newImage.Width = imageStitch.Width;
             newImage.Height = imageStitch.Height;
             newImage.Step = step;
@@ -56,7 +60,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <param name="cases">List of cases</param>
         /// <param name="img">The ImageStitch</param>
-        /// <param name="generatedImage">The newly generated image</param>
+        /// <param name="colorMax">Max amount of color to be used</param>
         /// <author>Maxime LAFFAYE</author>
         public void FillPixels(List<Case> cases, ImageStitch img, int colorMax)
         {
@@ -67,9 +71,9 @@ namespace Lilo_et_Stitch.Model.Transform
                 CaseAverage(c, bitNewImage, colorMax);
 
             //Then, select the most used colors to have the best result with less colors
-            UpdateColorsToUse(colors, colorMax);
+            UpdateColorsToUse(colorMax);
 
-            //for each case, transform the color to the closest DMC color
+            //For each case, transform the color to the closest DMC color
             foreach (Case c in cases)
             {
                 c.TransformedColor = colorTool.ToDMC(c.BaseColor, colorsToUse);
@@ -95,6 +99,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <param name="caseToCheck">The case to calculate the average from</param>
         /// <param name="bitMap">The bitmap to get the colors from</param>
+        /// <param name="maxColors">Max amount of color to be used</param>
         /// <author>Maxime LAFFAYE</author>
         public void CaseAverage(Case caseToCheck, Bitmap bitMap, int maxColors)
         {
@@ -110,31 +115,35 @@ namespace Lilo_et_Stitch.Model.Transform
                     System.Drawing.Color DrawingColor = bitMap.GetPixel(i, j);
                     System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(DrawingColor.A, DrawingColor.R, DrawingColor.G, DrawingColor.B);
 
-                    //If the color is almost visible use it
+                    //If the color is almost visible, use it
                     if (color.A >= 200)
                     {
-                        //Add the color to the sum
+                        //Make the sum of each color's value
                         sumR += color.R;
                         sumG += color.G;
                         sumB += color.B;
                         sumOpacity += color.A;
 
+                        //Increment the number of used pixels
                         pixelCount++;
 
 
                         if (colors.ContainsKey(color))
+                            //Increment the number of occurrences of the color
                             colors[color] = colors[color] + 1;
-                        else
+
+                        else //If the color is not already in the dictionary
+                            //Create it with 1 occurrence
                             colors.Add(color, 1);
                     }
                 }
             }
 
-            if (pixelCount == 0)
-                //If the case is empty, use a blank one
+            if (pixelCount == 0) //If the case is empty (transparent)
+                //Set it as a blank one
                 caseToCheck.BaseColor = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
 
-            else
+            else //If the case is not empty
                 //Calculate the average color of the case
                 caseToCheck.BaseColor = colorTool.CalculateAverageColor(caseToCheck, sumR, sumG, sumB, sumOpacity, pixelCount);
         }
@@ -146,7 +155,7 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <param name="colors">Dictionary of colors used and their number of occurrences</param>
         /// <param name="maxColors">Maximum number of colors to be used</param>
         /// <author>Antoine SAKKALIS</author>
-        private void UpdateColorsToUse(Dictionary<System.Windows.Media.Color, int> colors, int maxColors)
+        private void UpdateColorsToUse(int maxColors)
         {
             //Sort the colors by the number of times they are used and put them in an array
             System.Windows.Media.Color[] sortedColors = colors
@@ -157,9 +166,10 @@ namespace Lilo_et_Stitch.Model.Transform
             //Add the colors to the list of colors to use
             foreach (System.Windows.Media.Color color in sortedColors)
             {
-                //If the color is not already in the list and the list is not full, add it
+                //If the number of colors is under maxColors and the color is not already in the list
                 if (colorsToUse.Count < maxColors && !colorsToUse.Contains(colorTool.ToDMC(color, colorPalette.Values.ToList())))
                 {
+                    //Add the color to the list
                     colorsToUse.Add(colorTool.ToDMC(color, colorPalette.Values.ToList()));
                 }
             }
@@ -203,13 +213,15 @@ namespace Lilo_et_Stitch.Model.Transform
         /// <author>Maxime LAFFAYE</author>
         private void RebuildImage(List<Case> cases, Bitmap img, GeneratedImage generatedImage)
         {
+            //For each case
             foreach (Case c in cases)
             {
-                //the pixels/cases
+                //Fill the case with the DMC color
                 for (int i = c.Coord1.X; i < c.Coord2.X; i++) //Foreach pixel of the case's line
                 {
                     for (int j = c.Coord1.Y; j < c.Coord2.Y; j++) //Foreach pixel of the case's column
                     {
+                        //Set the pixel's color
                         img.SetPixel(i, j, System.Drawing.Color.FromArgb(c.BaseColor.A, c.TransformedColor.R, c.TransformedColor.G, c.TransformedColor.B));
                     }
                 }
