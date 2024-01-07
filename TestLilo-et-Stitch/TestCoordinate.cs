@@ -14,6 +14,7 @@ namespace TestLilo_et_Stitch
     public class TestCoordinate
     {
         #region operations
+
         /// <summary>
         /// Will test if the coordinate is created properly.
         /// </summary>
@@ -29,6 +30,7 @@ namespace TestLilo_et_Stitch
             Assert.Equal(16,coord1.Y);
 
         }
+
         #endregion
     }
 }

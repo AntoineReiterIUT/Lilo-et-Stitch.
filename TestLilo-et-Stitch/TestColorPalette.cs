@@ -9,6 +9,7 @@ namespace TestLilo_et_Stitch
     public class TestColorPalette
     {
         #region operations
+
         /// <summary>
         /// Tests the color palette loading method
         /// </summary>
@@ -16,6 +17,7 @@ namespace TestLilo_et_Stitch
         [Fact]
         public void TestGetPalette()
         {
+            //Creating a manager with a new palette
             ManagerCreator manager = new();
             manager.ManagerWithNewPalette();
             Manager paletteManager = manager.Manager;
@@ -25,6 +27,7 @@ namespace TestLilo_et_Stitch
             Assert.Equal(paletteManager.GetPalette()["3685"], Color.FromArgb(0, 136,21,49));
             Assert.Equal(paletteManager.GetPalette()["White"], Color.FromArgb(0, 252, 251, 248));
         }
+
         #endregion
     }
 }

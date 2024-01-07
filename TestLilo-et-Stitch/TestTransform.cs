@@ -14,22 +14,36 @@ using Color = System.Windows.Media.Color;
 namespace TestLilo_et_Stitch
 {
     /// <summary>
-    /// This class will run tests to check if the "Transformer is working as expected" class is working as intented
+    /// This class will run tests to check if the "Transformer is working as expected" class is working as intended
     /// </summary>
     public class TestTransform
     {
 
         #region attributes
+
         private ManagerCreator creator;
         private GeneratedImage? generatedImage;
         private int stepForTests = 4;
         private int maxColorForTests = 454;
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(255, 0, 0);
+
         #endregion
 
-
-
         #region operations
+
+        /// <summary>
+        /// Constructor of the test
+        /// </summary>
+        /// <author>Antoine SAKKALIS - Maxime LAFFAYE</author>
+        public TestTransform()
+        {
+            //Create a new manager with an image, a new palette and a generated image
+            this.creator = new ManagerCreator();
+            creator.ManagerWithImage();
+            creator.ManagerWithNewPalette();
+            generatedImage = this.creator.ManagerWithGeneratedImage(this.stepForTests, this.maxColorForTests, gridColor);
+        }
+
 
         /// <summary>
         /// Test the Grid Creation with a 800 x 800 image 
@@ -39,10 +53,8 @@ namespace TestLilo_et_Stitch
         public void TestMakeGrid()
         {
             //the size of the image to test is 8 by 3
-
             Assert.Equal(2, generatedImage.Cases.Count);
         }
-
 
         /*
        /// <summary>
@@ -67,9 +79,9 @@ namespace TestLilo_et_Stitch
            //Check if the average color is correct
            RGB expectedAverageColor = new RGB(85, 85, 85);
            Assert.Equal(expectedAverageColor, testCase.ColorRGB);
-       }
-        
+       } 
         */
+
         /// <summary>
         /// Tests the method to convert RGB colors to the nearest DMC value
         /// </summary>
@@ -80,20 +92,6 @@ namespace TestLilo_et_Stitch
             //Check if the found color (written in the generated image) is the closest to the DMC one
             Assert.Equal(Color.FromArgb(0, 4, 196, 202), this.generatedImage.Cases[0].TransformedColor);
             Assert.Equal(Color.FromArgb(0, 252, 251, 248).B, this.generatedImage.Cases[1].TransformedColor.B);
-        }
-
-
-        /// <summary>
-        /// Constructor of the test
-        /// </summary>
-        /// <author>Antoine SAKKALIS - Maxime LAFFAYE</author>
-
-        public TestTransform()
-        {
-            this.creator = new ManagerCreator();
-            creator.ManagerWithImage();
-            creator.ManagerWithNewPalette();
-            generatedImage = this.creator.ManagerWithGeneratedImage(this.stepForTests, this.maxColorForTests,gridColor);
         }
 
 
@@ -109,7 +107,7 @@ namespace TestLilo_et_Stitch
         
 
         /// <summary>
-        /// Test function FillPixel, the coordonates of the pixels in the case number 3
+        /// Test function FillPixel, the coordinates of the pixels in the case number 3
         /// </summary>
         /// <author>Mattis GALOPPIN</author>
         [Fact]
@@ -150,7 +148,6 @@ namespace TestLilo_et_Stitch
         {
             step = nbFois * step;
             return step;
-
         }
         */
 

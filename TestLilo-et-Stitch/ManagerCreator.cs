@@ -9,21 +9,23 @@ namespace TestLilo_et_Stitch
     internal class ManagerCreator
     {
         #region Attributes
+
         private Manager manager;
         private string projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Public property to access the manager (Manager)
+        /// Property : gets the manager
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
         public Manager Manager { get { return manager; } }
 
         #endregion
 
-        #region Constructors
+        #region Operations
 
         /// <summary>
         /// Initializes a new instance of the class
@@ -31,12 +33,10 @@ namespace TestLilo_et_Stitch
         /// <author>Antoine SAKKALIS</author>
         public ManagerCreator()
         {
+            //Create a new manager
             manager = new Manager();
         }
 
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Creates a manager with a specified image.
@@ -53,6 +53,7 @@ namespace TestLilo_et_Stitch
         /// <summary>
         /// Creates a manager with a new palette specified.
         /// </summary>
+        /// <author>Antoine SAKKALIS</author>
         public void ManagerWithNewPalette()
         {
             //Path of the file of the palette to load it
@@ -67,10 +68,11 @@ namespace TestLilo_et_Stitch
         /// <param name="step">The transformation step</param>
         /// <param name="colorMax">The maximum number of colors</param>
         /// <param name="gridColor">The color of the grid</param>
-        /// <author>Antoine SAKKALIS</author>
         /// <returns>The newly generated image</returns>
+        /// <author>Antoine SAKKALIS</author>
         public GeneratedImage ManagerWithGeneratedImage(int step, int colorMax, System.Windows.Media.Color gridColor)
         {
+            ManagerWithNewPalette();
             return manager.TransformImage(step, colorMax, gridColor);
         }
 
