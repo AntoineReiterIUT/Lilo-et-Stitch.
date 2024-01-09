@@ -68,7 +68,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur : " + ex.Message);
+                throw new Exception(ex.Message);
             }
 
             return (nbPages, dico);
@@ -148,7 +148,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
 
             catch (Exception ex)
             {
-                throw new Exception("Erreur : " + ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 

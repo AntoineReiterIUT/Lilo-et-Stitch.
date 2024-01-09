@@ -81,9 +81,9 @@ namespace Lilo_et_Stitch.View
                     }
 
                 }
-                catch (Exception excepiton)
+                catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(excepiton.Message);
+                    System.Windows.MessageBox.Show("Erreur : " + ex.Message);
                 }
                     
             }
@@ -323,7 +323,7 @@ namespace Lilo_et_Stitch.View
                 catch (Exception ex)
                 {
                     //Show a dialog box with the error message
-                    System.Windows.MessageBox.Show("Une erreur s'est produite : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
+                    System.Windows.MessageBox.Show("Erreur : le fichier selectioné est soit incompatible, soit il est ouvert dans un autre fichier");
                 }
             }
         }
@@ -348,7 +348,7 @@ namespace Lilo_et_Stitch.View
             catch (Exception ex)
             {
                 //Show a dialog box with the error message
-                System.Windows.MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show("Erreur : " + ex.Message);
             }
         }
 

@@ -72,7 +72,7 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
             
             catch (Exception ex) 
             {
-                throw new Exception("Erreur : " + ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 

@@ -133,7 +133,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
             }
             catch (Exception e)
             {
-                throw new Exception("Erreur : La palette de couleur est soit introuvable soit invalide (l'application a été altérée) : " + e.Message);
+                throw new Exception("La palette de couleur est soit introuvable soit invalide (l'application a été altérée) : " + e.Message);
             }
         }
 
