@@ -13,7 +13,7 @@ using Lilo_et_Stitch.Data.DAO_PDF;
 namespace TestLilo_et_Stitch
 {
     /// <summary>
-    /// Multiple tests will be ran to check if the class named coordinate works correctly.
+    /// Class to test the PDF generation
     /// </summary>
     public class TestPDF
     {

@@ -15,6 +15,7 @@ namespace TestLilo_et_Stitch
 
         #endregion
 
+
         #region Properties
 
         /// <summary>
@@ -24,6 +25,7 @@ namespace TestLilo_et_Stitch
         public Manager Manager { get { return manager; } }
 
         #endregion
+
 
         #region Operations
 

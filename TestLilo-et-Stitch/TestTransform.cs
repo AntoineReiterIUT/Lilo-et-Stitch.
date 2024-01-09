@@ -14,7 +14,7 @@ using Color = System.Windows.Media.Color;
 namespace TestLilo_et_Stitch
 {
     /// <summary>
-    /// This class will run tests to check if the "Transformer is working as expected" class is working as intended
+    /// This class will run tests to check that the Transformer class is working as intended
     /// </summary>
     public class TestTransform
     {
@@ -28,6 +28,7 @@ namespace TestLilo_et_Stitch
         private System.Windows.Media.Color gridColor = System.Windows.Media.Color.FromRgb(255, 0, 0);
 
         #endregion
+
 
         #region operations
 
@@ -46,36 +47,35 @@ namespace TestLilo_et_Stitch
 
 
         /// <summary>
-        /// Test the Grid Creation with a 800 x 800 image 
+        /// Test the Grid Creation with a 8 x 3 image 
         /// </summary>
         /// <authors>Mattis GALOPPIN</authors>
         [Fact]
         public void TestMakeGrid()
         {
-            //the size of the image to test is 8 by 3
+            //The number of cases in the generated image should be 2 as the image is 8x3 and the step is 4 (8/4 = 2)
             Assert.Equal(2, generatedImage.Cases.Count);
         }
 
-        
-       /// <summary>
-       /// Test caseAverage with color pixels
-       /// </summary>
-       /// <author>Maxime LAFFAYE</author>
-       [Fact]
-       public void TestCaseAverage()
-       {
-           //Create a case with pixels of different colors
-           Case testCase = new Case(new Coordinate(0, 0), new Coordinate(10, 10));
-            testCase.BaseColor = this.gridColor;
-            testCase.TransformedColor= this.gridColor;
-            Transformer a = new Transformer();
-             string projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string file = Path.Combine(projectFolder, @"../TestImages/pierre-d-argent800.jpg");
-            Bitmap x = new Bitmap(file);
-            a.CaseAverage(testCase,x,maxColorForTests);
-            Assert.NotEqual(testCase.BaseColor,testCase.TransformedColor);
-       } 
-        
+
+        /// <summary>
+        /// Tests the CaseAverage method to see if it calculates the correct average color
+        /// </summary>
+        /// <author>Antoine SAKKALIS - Maxime LAFFAYE</author>
+        [Fact]
+        public void TestCaseAverage()
+        {
+            //Create a new case with the size of the image
+            Case testCase = new Case(new Coordinate(0, 0), new Coordinate(8, 3));
+
+            //Calculate the average color of the case from the image
+            Transformer transformer = new Transformer();
+            transformer.CaseAverage(testCase, (Bitmap)creator.Manager.ImageStitch.Image);
+
+            //Verify that the average color is correct from a manually calculated value
+            Assert.Equal(Color.FromRgb(127, 223, 226), testCase.BaseColor);
+        }
+
 
         /// <summary>
         /// Tests the method to convert RGB colors to the nearest DMC value
@@ -129,22 +129,6 @@ namespace TestLilo_et_Stitch
             }
             Assert.True(testSuccess);
         }
-
-        /*
-        
-        /// <summary>
-        /// Give the result of the number of step
-        /// </summary>
-        /// <param name="nbFois">number of step</param>
-        /// <param name="step">the step of the Grid</param>
-        /// <returns>the step * nbFois</returns>
-        /// <authors>Mattis GALOPPIN</authors>
-        public int Nbstep(int nbFois,int step)
-        {
-            step = nbFois * step;
-            return step;
-        }
-        */
 
         #endregion
 
