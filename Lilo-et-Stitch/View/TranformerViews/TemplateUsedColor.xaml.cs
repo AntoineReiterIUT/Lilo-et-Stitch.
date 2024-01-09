@@ -42,9 +42,7 @@ namespace Lilo_et_Stitch.View
         public void setValues(string code, Color color)
         {
             colorDisplay.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)color.R, (byte)color.G, (byte)color.B));
-            colorDisplay.Width = 250;
-            colorDisplay.Height = 80;
-            colorDmc.Content = code;
+            colorDmc.Text = code;
         }
 
         #endregion
