@@ -7,12 +7,15 @@
     public class Coordinate
     {
         #region attributes 
+
         private int x;
         private int y;
+
         #endregion
 
 
         #region properties
+
         /// <summary>
         /// Property : read or edit the X value
         /// </summary>
@@ -25,10 +28,12 @@
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
         public int Y { get { return y; } set { y = value; } }
+
         #endregion
 
 
         #region operations
+
         /// <summary>
         /// Constructor of the coordinate
         /// </summary>
@@ -40,6 +45,7 @@
             this.x = x;
             this.y = y;
         }
+
         #endregion
     }
 }

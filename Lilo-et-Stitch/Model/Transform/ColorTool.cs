@@ -11,8 +11,14 @@ namespace Lilo_et_Stitch.Model.Transform
     /// </summary>
     internal class ColorTool
     {
+        #region attributes
+
         private Dictionary<System.Windows.Media.Color, System.Windows.Media.Color> colorMatches = new Dictionary<System.Windows.Media.Color, System.Windows.Media.Color>();
 
+        #endregion
+
+
+        #region operations
 
         /// <summary>
         /// Change an ARGB color into an existing DMC color from the color of a case
@@ -78,5 +84,7 @@ namespace Lilo_et_Stitch.Model.Transform
             //Return the average color channels in ARGB
             return System.Windows.Media.Color.FromArgb((byte)avgOpacity, (byte)avgR, (byte)avgG, (byte)avgB);
         }
+
+        #endregion
     }
 }

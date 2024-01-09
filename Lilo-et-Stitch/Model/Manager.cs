@@ -178,7 +178,9 @@ namespace Lilo_et_Stitch.Model
 
             try
             {
+                //Check if the pattern already exists
                 await daoPublish.CheckIfExist(name);
+                //If it doesn't exists (exception unraised), publish it
                 await daoPublish.Publish(name, generatedImage.Step, generatedImage.UsedColor.Count, generatedImage.GridColor, daoPDF.GetPath(), daoColorPalette.GetPath(), generatedImage.BitmapImage);
             }
             catch (Exception ex)

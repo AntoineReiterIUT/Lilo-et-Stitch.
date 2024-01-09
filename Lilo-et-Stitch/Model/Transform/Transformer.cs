@@ -22,6 +22,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
         #endregion
 
+
         #region operations
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
             //For each case, calculate the average color
             foreach (Case c in cases)
-                CaseAverage(c, bitNewImage, colorMax);
+                CaseAverage(c, bitNewImage);
 
             //Then, select the most used colors to have the best result with less colors
             UpdateColorsToUse(colorMax);
@@ -99,9 +100,8 @@ namespace Lilo_et_Stitch.Model.Transform
         /// </summary>
         /// <param name="caseToCheck">The case to calculate the average from</param>
         /// <param name="bitMap">The bitmap to get the colors from</param>
-        /// <param name="maxColors">Max amount of color to be used</param>
         /// <author>Maxime LAFFAYE</author>
-        public void CaseAverage(Case caseToCheck, Bitmap bitMap, int maxColors)
+        public void CaseAverage(Case caseToCheck, Bitmap bitMap)
         {
             int pixelCount = 0;
             int sumR = 0, sumG = 0, sumB = 0, sumOpacity = 0;

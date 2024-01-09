@@ -8,17 +8,19 @@ namespace Lilo_et_Stitch.Model.Transform
     /// </summary>
     public class Case
     {
-
         #region attributes
+
         private Coordinate coord1;
         private Coordinate coord2;
 
         private Color baseColor;
         private Color transformedColor;
+
         #endregion
 
 
         #region properties
+
         /// <summary>
         /// Property : read or edit the Coord1 value.
         /// </summary>
@@ -47,6 +49,7 @@ namespace Lilo_et_Stitch.Model.Transform
 
 
         #region operations
+
         /// <summary>
         /// Constructor of the case
         /// </summary>
@@ -62,6 +65,7 @@ namespace Lilo_et_Stitch.Model.Transform
             this.coord1 = c1;
             this.coord2 = c2;
         }
+
         #endregion
     }
 }
