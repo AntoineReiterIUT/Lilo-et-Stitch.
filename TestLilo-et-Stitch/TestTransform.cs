@@ -56,7 +56,7 @@ namespace TestLilo_et_Stitch
             Assert.Equal(2, generatedImage.Cases.Count);
         }
 
-        /*
+        
        /// <summary>
        /// Test caseAverage with color pixels
        /// </summary>
@@ -66,21 +66,16 @@ namespace TestLilo_et_Stitch
        {
            //Create a case with pixels of different colors
            Case testCase = new Case(new Coordinate(0, 0), new Coordinate(10, 10));
-           testCase.Pixels.Add(new Pixel(new RGB(255, 0, 0), new Coordinate(0, 0),1));
-           testCase.Pixels.Add(new Pixel(new RGB(0, 255, 0), new Coordinate(5, 5),1));
-           testCase.Pixels.Add(new Pixel(new RGB(0, 0, 255), new Coordinate(10, 10),1));
-
-           //Add the case to the list of cases in ImgTransform
-           transImg.Cases.Add(testCase);
-
-           //Call the CaseAverage method
-           transImg.CaseAverage(testCase);
-
-           //Check if the average color is correct
-           RGB expectedAverageColor = new RGB(85, 85, 85);
-           Assert.Equal(expectedAverageColor, testCase.ColorRGB);
+            testCase.BaseColor = this.gridColor;
+            testCase.TransformedColor= this.gridColor;
+            Transformer a = new Transformer();
+             string projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string file = Path.Combine(projectFolder, @"../TestImages/pierre-d-argent800.jpg");
+            Bitmap x = new Bitmap(file);
+            a.CaseAverage(testCase,x,maxColorForTests);
+            Assert.NotEqual(testCase.BaseColor,testCase.TransformedColor);
        } 
-        */
+        
 
         /// <summary>
         /// Tests the method to convert RGB colors to the nearest DMC value
