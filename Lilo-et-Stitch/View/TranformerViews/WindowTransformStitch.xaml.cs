@@ -77,7 +77,7 @@ namespace Lilo_et_Stitch.View
                     if (path != "")
                     {
                         manager.ExportPDF(path);
-                        System.Windows.MessageBox.Show("Exporté avec sucès!");
+                        System.Windows.MessageBox.Show("Exporté avec succès!");
                     }
 
                 }
