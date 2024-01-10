@@ -24,7 +24,7 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
 
         private Dictionary<int, Dictionary<string, BitmapImage>> dico = new Dictionary<int, Dictionary<string, BitmapImage>>();
         private HttpClient client = new HttpClient();
-        private string address = "https://localhost:7199/GetData";
+        private string address = ConsAPI.ipAPI + "/GetData";
 
         #endregion
 
