@@ -28,6 +28,7 @@ namespace Lilo_et_Stitch.Data.DAO_GetParameters
 
         #endregion
 
+
         #region opertations
 
         /// <summary>

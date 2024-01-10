@@ -23,6 +23,7 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// <author>Antoine SAKKALIS</author>
         void ChangePalette(string csvPath);
 
+
         /// <summary>
         /// Reset the palette to the default DMC colors
         /// </summary>
@@ -30,12 +31,14 @@ namespace Lilo_et_Stitch.Data.DAOColorPalette
         /// <author>Antoine SAKKALIS</author>
         void ResetPalette();
 
+
         /// <summary>
         /// Gives the list of all the colors in the palette
         /// </summary>
         /// <returns>Dictionary of all the colors in the palette with their names</returns>
         /// <author>Antoine SAKKALIS</author>
         Dictionary<string, Color> GetPalette();
+
 
         /// <summary>
         /// Get the path of where the palette is saved

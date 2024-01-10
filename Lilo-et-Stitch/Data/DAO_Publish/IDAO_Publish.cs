@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 namespace Lilo_et_Stitch.Data.DAO_Publish
 {
     /// <summary>
-    /// Interface pour la publication des patrons terminés
+    /// Interface for the DAO_Publish class
     /// </summary>
     public interface IDAO_Publish
     {

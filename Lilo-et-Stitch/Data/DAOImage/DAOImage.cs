@@ -48,18 +48,32 @@ public class DAOImage : IDAOImage
         }
     }
 
+    /// <summary>
+    /// Get the image
+    /// </summary>
+    /// <returns>The image</returns>
+    /// <author>Maxime LAFFAYE</author>
     public Image LoadImage()
     {
         return image;
     }
 
-
+    /// <summary>
+    /// Get the bitmapImage
+    /// </summary>
+    /// <returns>The bitmapImage</returns>
+    /// <author>Maxime LAFFAYE</author>
     public BitmapImage LoadBitmapImage()
     {
         return bitmapImage;
     }
 
 
+    /// <summary>
+    /// Method to convert a bitmap into a bitmapImage
+    /// </summary>
+    /// <param name="bitmap">The bitmap to convert</param>
+    /// <returns>The converted bitmapImage</returns>
     public BitmapImage BitmapToBitmapImage(Bitmap bitmap)
     {
         //Creation of the bitmapImage
@@ -68,9 +82,11 @@ public class DAOImage : IDAOImage
         //Convert it into a bitmapImage
         using (MemoryStream memoryStream = new MemoryStream())
         {
+            //Save the bitmap into a memory stream
             bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
             memoryStream.Seek(0, SeekOrigin.Begin);
 
+            //Load the memory stream into the bitmapImage
             bitmapImage.BeginInit();
             bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
             bitmapImage.StreamSource = memoryStream;
