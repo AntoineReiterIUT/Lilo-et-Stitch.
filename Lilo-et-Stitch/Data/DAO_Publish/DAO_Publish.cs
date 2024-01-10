@@ -1,0 +1,233 @@
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using PdfSharp.BigGustave;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
+using static System.Net.WebRequestMethods;
+using Aspose.Pdf.Operators;
+using SixLabors.ImageSharp.PixelFormats;
+using System.Net;
+
+namespace Lilo_et_Stitch.Data.DAO_Publish
+{
+    /// <summary>
+    /// This class will handle the connection with the API
+    /// </summary>
+    public class DAO_Publish : IDAO_Publish
+    {
+        #region attributes
+
+        private HttpClient client = new HttpClient();
+        private string address = ConsAPI.ipAPI + "/SendData";
+
+        #endregion
+
+
+        #region operations
+
+        /// <summary>
+        /// Will check if the name of the pattern doesn't exist already
+        /// </summary>
+        /// <param name="name">Name of the directory to be checked</param>
+        /// <returns>Result of the request</returns>
+        /// <author>Maxime LAFFAYE</author>
+        public async Task CheckIfExist(string name)
+        {
+            try
+            {
+                char[] invalidChars = { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
+                //Checking if it doesn't contain weird caracters (can't be used to create a directory)
+                bool containsInvalidChars = name.Any(c => invalidChars.Contains(c));
+
+                if(containsInvalidChars)throw new FormatException("Les caractères spéciaux sont interdits!");
+                if(name.Count() >41) throw new FormatException("Le nom doit avoir 40 caractères maximum!");
+                //API endpoint
+                string endPoint = $"{address}/CheckIfExist?name={name}";
+
+                //GetRequest and await it's response
+                HttpResponseMessage response = await client.GetAsync(endPoint);
+
+
+                //if it didn't succeed
+                if (!response.IsSuccessStatusCode)
+                {
+                    // If it's a Bad Request
+                    if (response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        throw new FormatException($"Un patron a déjà ce nom ! {name}");
+                    }
+                    else // for anything else
+                    {
+                        throw new FormatException($"Code non attendu: {response.StatusCode}");
+                    }
+                }
+            }
+            catch (HttpRequestException ex) // for network issues
+            {
+                throw new FormatException("Veuillez vous connecter à internet!");
+            }
+            catch (Exception ex) // anything else
+            {
+                throw new FormatException($"{ex.Message}");
+            }
+        }
+
+
+        /// <summary>
+        /// Will publish the PDF
+        /// </summary>
+        /// <param name="name">Name of the pattern</param>
+        /// <param name="step">Step for the cases</param>
+        /// <param name="maxColors">Max amount of colors to be used</param>
+        /// <param name="gridColor">Color of the grid</param>
+        /// <param name="pathPdf">Path to the pdf</param>
+        /// <param name="pathPalette">Path to the used palette</param>
+        /// <param name="transformedImage">The transformedImage as a bitmapImage</param>
+        /// <returns>Result of the request</returns>
+        /// <author>Maxime LAFFAYE</author>
+        public async Task Publish(string name, int step, int maxColors, Color gridColor, string pathPdf, string pathPalette, BitmapImage transformedImage)
+        {
+            try // Will execute all the requests we need to publish a pattern
+            {
+
+                //Sending the parameters:
+                SendParameters(name, step, maxColors, gridColor);
+
+                //Sending the image
+                SendImage(transformedImage, name);
+
+                //Sending the PDF:
+                SendPDF(pathPdf,name);
+
+                //Sending the palette:
+                SendPalette(pathPalette, name);    
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new FormatException("Une erreur HTTP s'est produite, veuillez vous connecter à internet.");
+            }
+            catch
+            {
+                throw new FormatException($"Paramètres manquant!");
+            }
+        }
+
+
+        /// <summary>
+        /// Will send the parameters through the API
+        /// </summary>
+        /// <param name="name">Name of the pattern</param>
+        /// <param name="step">Step for the cases</param>
+        /// <param name="maxColors">Max amount of colors to be used</param>
+        /// <param name="gridColor">Color of the grid</param>
+        /// <author>Maxime LAFFAYE</author>
+        private async void SendParameters(string name, int step, int maxColors, Color gridColor)
+        {
+            //Removing # at the start of the HEX color
+            string newColor = gridColor.ToString().Substring(3);
+
+            //And now sending them
+            string endPoint = string.Format($"{address}/SendParameters?name={name}&step={step}&maxColors={maxColors}&gridColor={newColor}");
+            await client.GetAsync(endPoint);
+        }
+
+
+        /// <summary>
+        /// Will send the PDF with the name through the API
+        /// </summary>
+        /// <param name="path">Path to the PDF file</param>
+        /// <param name="name">Name of the pattern</param>
+        /// <author>Maxime LAFFAYE</author>
+        private async void SendPDF(string path,string name)
+        {
+            try
+            {
+                //PDF into bytes
+                byte[] pdfContent = System.IO.File.ReadAllBytes(path);
+
+                //And now sending it
+                string endPoint = string.Format($"{address}/AddPDF?name={name}");
+                await client.PostAsJsonAsync(endPoint,pdfContent);
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Will send the Palette (csv) with the name through the API
+        /// </summary>
+        /// <param name="path">Path to the CSV file</param>
+        /// <param name="name">Name of the pattern</param>
+        /// <author>Maxime LAFFAYE</author>
+        private async void SendPalette(string path,string name)
+        {
+            try
+            {
+                //CSV into bytes
+                byte[] csvContent = System.IO.File.ReadAllBytes(path);
+
+                //And now sending it
+                string endPoint = string.Format($"{address}/AddCSV?name={name}");
+                await client.PostAsJsonAsync(endPoint, csvContent);
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Will send the transformed image with the name through the API
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="name"></param>
+        /// <author>Maxime LAFFAYE</author>
+        private async void SendImage(BitmapImage image,string name)
+        {
+            try
+            {
+                //Image into bytes
+                byte[] imageContent;
+
+                //Encoding it
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+
+                    //Adding the image to the encoder
+                    encoder.Frames.Add(BitmapFrame.Create(image));
+                    encoder.Save(stream);
+
+                    //Into an array
+                    imageContent = stream.ToArray();
+                }
+
+                //And now sending it
+                string endPoint = string.Format($"{address}/AddIMG?name={name}");
+                await client.PostAsJsonAsync(endPoint, imageContent);
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        #endregion
+    }
+}

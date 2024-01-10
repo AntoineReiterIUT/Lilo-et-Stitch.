@@ -13,6 +13,7 @@ namespace TestLilo_et_Stitch
     public class TestCase
     {
         #region operations
+
         /// <summary>
         /// Test creation case
         /// </summary>
@@ -31,6 +32,7 @@ namespace TestLilo_et_Stitch
             Assert.Equal(coord1, myCase.Coord1);
             Assert.Equal(coord2, myCase.Coord2);
         }
+
         #endregion
     }
 }

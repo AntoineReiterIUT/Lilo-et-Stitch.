@@ -1,10 +1,5 @@
 ﻿using Lilo_et_Stitch.Model;
-using Lilo_et_Stitch.Model.Transform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace TestLilo_et_Stitch
 {
@@ -14,22 +9,25 @@ namespace TestLilo_et_Stitch
     public class TestColorPalette
     {
         #region operations
+
         /// <summary>
         /// Tests the color palette loading method
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
         [Fact]
-        public void TestLoadColors()
+        public void TestGetPalette()
         {
-            //Creation of the color palette
-            ColorPalette testPalette = new();
-            testPalette.LoadColors();
+            //Creating a manager with a new palette
+            ManagerCreator manager = new();
+            manager.ManagerWithNewPalette();
+            Manager paletteManager = manager.Manager;
 
             //Checking if the colors have been properly loaded
-            Assert.Equal(testPalette.DMCColors["315"], new RGB(129, 73, 82));
-            Assert.Equal(testPalette.DMCColors["3350"], new RGB(188, 67, 101));
-            Assert.Equal(testPalette.DMCColors["White"], new RGB(252, 251, 248));
+            Assert.Equal(paletteManager.GetPalette()["315"], Color.FromArgb(0,129, 73, 82));
+            Assert.Equal(paletteManager.GetPalette()["3685"], Color.FromArgb(0, 136,21,49));
+            Assert.Equal(paletteManager.GetPalette()["White"], Color.FromArgb(0, 252, 251, 248));
         }
+
         #endregion
     }
 }

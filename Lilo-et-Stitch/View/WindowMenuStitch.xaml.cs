@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Lilo_et_Stitch.Model;
+using Lilo_et_Stitch.View.PatternsViewer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,21 +19,26 @@ using System.Windows.Shapes;
 namespace Lilo_et_Stitch.View
 {
     /// <summary>
-    /// Main menu of the app
+    /// Window for the main menu of the Lilo & Stitch application
     /// </summary>
-    public partial class StitchMenu : Window
+    public partial class WindowMenuStitch : Window
     {
         #region attributes
-        StitchTransform stitchTransform = new StitchTransform();
-        StitchModels stitchModels = new StitchModels();
+
+        private WindowTransformStitch stitchTransform;
+        private WindowModelsStitch stitchModels;
+        private IManager manager = new Manager();
+
         #endregion
 
+
         #region operations
+
         /// <summary>
         /// Constructor of the main menu
         /// </summary>
         /// <author>Antoine SAKKALIS</author>
-        public StitchMenu()
+        public WindowMenuStitch()
         {
             InitializeComponent();
         }
@@ -45,8 +52,12 @@ namespace Lilo_et_Stitch.View
         /// <author>Mattis GALOPPIN</author>
         private void NewModel_Click(object sender, RoutedEventArgs e)
         {
-            stitchTransform.Show();  //Display the new page
-            this.Close();  //Close the the first one
+            //Display the new page
+            stitchTransform = new WindowTransformStitch(manager); 
+            stitchTransform.Show();
+
+            //Close the the first one
+            this.Close();  
         }
 
 
@@ -58,9 +69,14 @@ namespace Lilo_et_Stitch.View
         /// <author>Mattis GALOPPIN</author>
         private void ModelServ_Click(object sender, RoutedEventArgs e)
         {
-            stitchModels.Show(); //Display the new page 
-            this.Close(); //Close the first one
+            //Display the new page 
+            stitchModels = new WindowModelsStitch(manager); 
+            stitchModels.Show();
+
+            //Close the first one
+            this.Close(); 
         }
+
         #endregion
     }
 }

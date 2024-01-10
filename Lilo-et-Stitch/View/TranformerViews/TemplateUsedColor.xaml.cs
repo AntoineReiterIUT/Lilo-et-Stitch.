@@ -17,19 +17,21 @@ using System.Windows.Shapes;
 namespace Lilo_et_Stitch.View
 {
     /// <summary>
-    /// This class represents a template for each color used
+    /// Represents the template of the used color
     /// </summary>
-    public partial class UsedColorTemplate : UserControl
+    public partial class TemplateUsedColorColor : UserControl
     {
         #region operations 
+
         /// <summary>
         /// Constructor of the template
         /// </summary>
         /// <author>Maxime LAFFAYE</author>
-        public UsedColorTemplate()
+        public TemplateUsedColorColor()
         {       
             InitializeComponent();
         }
+
 
         /// <summary>
         /// Will set the values of the template.
@@ -37,13 +39,12 @@ namespace Lilo_et_Stitch.View
         /// <param name="code">DMC Code</param>
         /// <param name="rgb">code RGB</param>
         /// <author>Maxime LAFFAYE</author>
-        public void setValues(string code, RGB rgb)
-        {  
-            colorDisplay.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)rgb.R, (byte)rgb.G, (byte)rgb.B));
-            colorDisplay.Width = 250;
-            colorDisplay.Height = 80;
-            colorDmc.Content = code;
+        public void setValues(string code, Color color)
+        {
+            colorDisplay.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)color.R, (byte)color.G, (byte)color.B));
+            colorDmc.Text = code;
         }
+
         #endregion
     }
 }

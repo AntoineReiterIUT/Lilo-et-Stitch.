@@ -1,4 +1,4 @@
-﻿<Window x:Class="Lilo_et_Stitch.View.StitchTransform"
+﻿<Window x:Class="Lilo_et_Stitch.View.WindowTransformStitch"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,11 +6,10 @@
         xmlns:local="clr-namespace:Lilo_et_Stitch.View"
         WindowState="Maximized"
         mc:Ignorable="d"
-        Icon="Images/logo.png"
-        Title="StitchTransform" MinHeight="500" MinWidth="800">
+        Icon="../Images/logo.png"
+        Title="Fenêtre de transformation" MinHeight="500" MinWidth="800">
 
     <Grid>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="47*"/>
@@ -37,21 +36,23 @@
         <StackPanel Grid.ColumnSpan="11">
             <Menu DockPanel.Dock="Top" Height="51">
 
-                <Image Source="Images/logo.png" Mouse.MouseDown="MenuItem_Click"/>
+                <Image Source="../Images/logo.png" Mouse.MouseDown="MenuItem_Click"/>
 
                 <MenuItem Header="_Fichier" Height="50" Width="77" FontSize="20" >
                     <MenuItem Header="_Menu principal" Click="MenuItem_Click" >
                         <MenuItem.Icon>
-                            <Image Source="Images/homeIcon.png" />
+                            <Image Source="../Images/homeIcon.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="_Changer la palette" Click="ChangePalette_Click"/>
                     <MenuItem Header="_Réinitialiser la palette" Click="ResetPalette_Click" />
                     <Separator />
+                    <MenuItem Header="_/!\ Taille des cases manuel" Click="ManualCase_Click" />
+                    <Separator />
                     <MenuItem Header="_Quitter" Click="Exit_Click" >
                         <MenuItem.Icon>
-                            <Image Source="Images/exit.png"  />
+                            <Image Source="../Images/exit.png"  />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -63,13 +64,13 @@
         </Viewbox>
         <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="4" VerticalAlignment="Bottom">
             <Grid Width="140" Height="30">
-                <Button Content="Insérer une image"  Click="SelectionnerIMG_Click"  Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Content="Insérer une image"  Click="IMG_Click"  Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="4" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="15,0,15,0">
             <Grid Width="100" Height="50">
-                <Button Margin="6" Name="TransformBtn" Background="#9b572a" Content="Transformer"  Click="TransformBtn_Click_1" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Margin="33,6,-21,6" Name="TransformBtn" Background="#9b572a" Content="Transformer"  Click="TransformBtn_Click_1" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 
@@ -81,15 +82,15 @@
 
         <Viewbox Stretch="Uniform" Grid.Column="8" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <Grid Width="100" Height="50">
-                <Button Name="PublishBtn" Content="Publier" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Name="PublishBtn" Click="PublishBtn_Click" Content="Publier" Margin="0,15,0,0" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="3">
             <Grid>
-                <TextBox Name="ChangeStepText" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="30" RenderTransformOrigin="-0.297,0.271" Margin="74,34,4,0" KeyUp="OnTextBoxKeyUp" />
-                <Slider Name="ChangeStepSlider" TickFrequency="1"  Minimum="5" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
-                <Label Name="ChangeStepTitle" Content="Taille cases :" Margin="11,28,44,12" />
+                <TextBox Name="NbStepText" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="30" RenderTransformOrigin="-0.297,0.271" Margin="74,34,4,0" KeyUp="OnTextBoxKeyUpStep" />
+                <Slider Name="NbStepSlider" TickFrequency="1"  Minimum="4" Maximum="35" ValueChanged="changeStepValueChanged" IsSnapToTickEnabled="True" Margin="10,10,15,40" Background="#9b572a" Height="15" Foreground="White" Style="{StaticResource CustomBrownSlider}"/>
+                <Label Name="NbStepTitle" Content="Taille cases :" Margin="11,28,44,12" />
             </Grid>
         </Viewbox>
 
@@ -101,9 +102,9 @@
             </Grid>
         </Viewbox>
 
-        <Canvas Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,10,0,0" Background="Gray" ></Canvas>
-        <ScrollViewer Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="3" VerticalScrollBarVisibility="Auto" Margin="1,11,1,1" Background="White">
-            <StackPanel x:Name="usedColorList" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Canvas Grid.Column="7" Grid.ColumnSpan="2" Grid.Row="3" Margin="169,10,35,0" Background="Gray" ></Canvas>
+        <ScrollViewer Grid.Column="7" Grid.ColumnSpan="2" Grid.Row="3" VerticalScrollBarVisibility="Auto" Margin="170,11,36,1" Background="White">
+            <WrapPanel x:Name="usedColorList" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </ScrollViewer>
 
         <Viewbox Grid.Row="2" Grid.ColumnSpan="11" VerticalAlignment="Bottom">
@@ -119,7 +120,7 @@
                 <Canvas Name="gridColorCanva" Background="Black"  Margin="10,50,14,1"/>
                 <Button Name="gridColorBtn" Content="Couleur grille" Click="change_grid_color" Width="118" Margin="10,15,14,22" Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
-
         </Viewbox>
+        
     </Grid>
 </Window>
