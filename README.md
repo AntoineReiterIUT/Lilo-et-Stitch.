@@ -28,7 +28,7 @@
 
 ## Page de transformation
 <p align="center">
-  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134507319/5eb61970-68dd-491f-9cab-0fdceab02b76" alt="La page de transformation" width="100%">
+  <img src="https://github.com/dept-info-iut-dijon/Lilo-et-Stitch/assets/134505521/8d8c9723-44f8-4b72-9c89-fcdf3320add0" alt="La page de transformation" width="100%">
 </p>
 
 ## Page de consultation des patrons de conception
