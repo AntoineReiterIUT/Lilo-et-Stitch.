@@ -27,6 +27,7 @@ namespace Lilo_et_Stitch.View.TranformerViews
 
         #endregion
 
+
         #region Operations
 
         /// <summary>

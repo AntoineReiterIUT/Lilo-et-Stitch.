@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace Lilo_et_Stitch.View
 {
     /// <summary>
-    /// This class represents a template for each color used
+    /// Represents the template of the used color
     /// </summary>
     public partial class TemplateUsedColorColor : UserControl
     {

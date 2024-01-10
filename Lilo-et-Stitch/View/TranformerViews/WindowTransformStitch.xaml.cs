@@ -21,7 +21,7 @@ using Lilo_et_Stitch.View.TranformerViews;
 namespace Lilo_et_Stitch.View
 {
     /// <summary>
-    /// Logique d'interaction pour StitchTransform.xaml
+    /// Logique d'interaction pour WindowTransformStitch.xaml
     /// </summary>
     public partial class WindowTransformStitch : Window
     {
@@ -110,7 +110,7 @@ namespace Lilo_et_Stitch.View
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <autor>Antoine REITER</autor>
-        private void SelectionnerIMG_Click(object sender, RoutedEventArgs e)
+        private void IMG_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
 

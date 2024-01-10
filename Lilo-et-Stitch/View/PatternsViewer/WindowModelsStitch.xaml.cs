@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 namespace Lilo_et_Stitch.View.PatternsViewer
 {
     /// <summary>
-    /// Interaction logic for WindowModelsStitch
+    /// Interaction logic for WindowModelsStitch.xaml
     /// </summary>
     public partial class WindowModelsStitch : Window
     {
@@ -28,6 +28,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         private string patternSearchName = "";
 
         #endregion
+
 
         #region operations
 
@@ -151,6 +152,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
         }
 
         #endregion
+
 
         #region events
 

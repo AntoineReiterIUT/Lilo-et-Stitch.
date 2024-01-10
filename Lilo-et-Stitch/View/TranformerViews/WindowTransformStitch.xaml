@@ -64,7 +64,7 @@
         </Viewbox>
         <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="4" VerticalAlignment="Bottom">
             <Grid Width="140" Height="30">
-                <Button Content="Insérer une image"  Click="SelectionnerIMG_Click"  Style="{StaticResource TrsfrmAppButton}"/>
+                <Button Content="Insérer une image"  Click="IMG_Click"  Style="{StaticResource TrsfrmAppButton}"/>
             </Grid>
         </Viewbox>
 

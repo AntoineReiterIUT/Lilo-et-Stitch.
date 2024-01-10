@@ -21,7 +21,7 @@ namespace Lilo_et_Stitch.View.PatternsViewer
     public partial class TemplateUserModel : UserControl
     {
         /// <summary>
-        /// Constor of the TemplateUserModel
+        /// Constructor of the TemplateUserModel window
         /// </summary>
         public TemplateUserModel()
         {

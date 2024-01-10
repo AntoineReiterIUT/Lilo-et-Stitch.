@@ -19,7 +19,7 @@ using System.Windows.Shapes;
 namespace Lilo_et_Stitch.View
 {
     /// <summary>
-    /// Main menu of the app
+    /// Window for the main menu of the Lilo & Stitch application
     /// </summary>
     public partial class WindowMenuStitch : Window
     {
@@ -30,6 +30,7 @@ namespace Lilo_et_Stitch.View
         private IManager manager = new Manager();
 
         #endregion
+
 
         #region operations
 
