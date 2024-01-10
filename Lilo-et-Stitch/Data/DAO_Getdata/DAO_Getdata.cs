@@ -21,7 +21,7 @@ namespace Lilo_et_Stitch.Data.DAO_Getdata
         #region attributes
 
         private HttpClient client = new HttpClient();
-        private string address = "https://localhost:7199/GetData";
+        private string address = ConsAPI.ipAPI + "/GetData";
 
         #endregion
 

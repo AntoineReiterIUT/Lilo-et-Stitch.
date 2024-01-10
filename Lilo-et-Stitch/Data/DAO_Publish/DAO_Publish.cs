@@ -26,7 +26,7 @@ namespace Lilo_et_Stitch.Data.DAO_Publish
         #region attributes
 
         private HttpClient client = new HttpClient();
-        private string address = "https://localhost:7199/SendData";
+        private string address = ConsAPI.ipAPI + "/SendData";
 
         #endregion
 
